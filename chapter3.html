@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Descriptive statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="chapter3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="chapter3_files/libs/quarto-html/quarto.js"></script>
+<script src="chapter3_files/libs/quarto-html/popper.min.js"></script>
+<script src="chapter3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="chapter3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="chapter3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="chapter3_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="chapter3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="chapter3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="chapter3_files/libs/bootstrap/bootstrap-1bc8a17f135ab3d594c857e9f48e611b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#graphical-data-presentations" id="toc-graphical-data-presentations" class="nav-link active" data-scroll-target="#graphical-data-presentations">Graphical data presentations</a>
+  <ul class="collapse">
+  <li><a href="#summarising-qualitative-data-frequency-and-relative-fre-quency" id="toc-summarising-qualitative-data-frequency-and-relative-fre-quency" class="nav-link" data-scroll-target="#summarising-qualitative-data-frequency-and-relative-fre-quency">Summarising qualitative data: frequency and relative fre quency</a></li>
+  <li><a href="#cumulative-frequency-distribution" id="toc-cumulative-frequency-distribution" class="nav-link" data-scroll-target="#cumulative-frequency-distribution">Cumulative Frequency Distribution</a></li>
+  <li><a href="#scatter-diagram-and-trend-line" id="toc-scatter-diagram-and-trend-line" class="nav-link" data-scroll-target="#scatter-diagram-and-trend-line">Scatter diagram and trend line</a></li>
+  </ul></li>
+  <li><a href="#numerical-descriptive-measures" id="toc-numerical-descriptive-measures" class="nav-link" data-scroll-target="#numerical-descriptive-measures">Numerical Descriptive Measures</a>
+  <ul class="collapse">
+  <li><a href="#measures-of-location" id="toc-measures-of-location" class="nav-link" data-scroll-target="#measures-of-location">Measures of location</a></li>
+  <li><a href="#measures-of-variability" id="toc-measures-of-variability" class="nav-link" data-scroll-target="#measures-of-variability">Measures of variability</a></li>
+  <li><a href="#the-five-number-summary-and-boxplots" id="toc-the-five-number-summary-and-boxplots" class="nav-link" data-scroll-target="#the-five-number-summary-and-boxplots">The five-number summary and boxplots</a></li>
+  <li><a href="#probability-density-functions-and-the-normal-distribution" id="toc-probability-density-functions-and-the-normal-distribution" class="nav-link" data-scroll-target="#probability-density-functions-and-the-normal-distribution">Probability density functions and the normal distribution</a></li>
+  <li><a href="#cumulative-distribution-function-cdf" id="toc-cumulative-distribution-function-cdf" class="nav-link" data-scroll-target="#cumulative-distribution-function-cdf">Cumulative distribution function (CDF)</a></li>
+  <li><a href="#skewness" id="toc-skewness" class="nav-link" data-scroll-target="#skewness">Skewness</a></li>
+  <li><a href="#z-scores" id="toc-z-scores" class="nav-link" data-scroll-target="#z-scores">Z-Scores</a></li>
+  </ul></li>
+  <li><a href="#measures-of-association" id="toc-measures-of-association" class="nav-link" data-scroll-target="#measures-of-association">Measures of Association</a>
+  <ul class="collapse">
+  <li><a href="#the-weighted-mean-and-grouped-data-mean" id="toc-the-weighted-mean-and-grouped-data-mean" class="nav-link" data-scroll-target="#the-weighted-mean-and-grouped-data-mean">The weighted mean and grouped data mean</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Descriptive statistics</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="graphical-data-presentations" class="level2">
+<h2 class="anchored" data-anchor-id="graphical-data-presentations">Graphical data presentations</h2>
+<p>Even a small set of data is often difficult to interpret straight from its values. These, so called <em>raw data</em>, are organised into tables and are displayed using plots and other graphics.</p>
+<section id="summarising-qualitative-data-frequency-and-relative-fre-quency" class="level3">
+<h3 class="anchored" data-anchor-id="summarising-qualitative-data-frequency-and-relative-fre-quency">Summarising qualitative data: frequency and relative fre quency</h3>
+<p>For a <strong>qualitative</strong> data set we can construct <em>frequency</em> and <em>relative frequency</em> distributions.</p>
+<ul>
+<li>A frequency distribution is a tabular summary of data showing the number (frequency) of items in each of several non-overlapping classes. Often displayed using a <em>bar chart</em>.</li>
+<li>A releative frequency distribution displays the frequency of each item in a class divided by the number of the elements in the whole data set. Often displayed using a <em>pie chart</em>.</li>
+</ul>
+<p>With <em>n</em> observations, <span class="math display">\[
+\text{Relative frequency of class} = \frac{\text{Frequency of class}}{n}.
+\]</span></p>
+<blockquote class="blockquote">
+<h4 id="example-last-names" class="anchored">Example: Last Names</h4>
+<p>This example data set includes 50 individuals with one of the six most common last names in Ireland. The data file <code>names.txt</code> is on Blackboard.</p>
+</blockquote>
+<p>We can draw a bar chart to show the frequencies of last names within the dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"names.txt"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>field_name <span class="ot">&lt;-</span> <span class="st">"last_names"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>names_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">name =</span> names[<span class="sc">-</span><span class="dv">1</span>], <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(names_df) <span class="ot">&lt;-</span> field_name</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Find frequencies</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>frequency_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">table</span>(names_df[[<span class="dv">1</span>]]))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(frequency_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(field_name, <span class="st">"Frequency"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Draw a bar plot with lime green coloured bars</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(frequency_df, <span class="fu">aes</span>(<span class="at">x=</span>last_names, <span class="at">y =</span> Frequency)) <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"limegreen"</span>) <span class="sc">+</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Frequency of Last Names"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> names[<span class="dv">1</span>],</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The relative frequency is defined in the same way as for quantitative data and represents the proportion of the observations belonging to a specific class.</p>
+<blockquote class="blockquote">
+<h4 id="example-computer-usage" class="anchored">Example: Computer Usage</h4>
+<p>This example includes data on personal computer usage by persons aged 12 and older during one week for a sample of 50 persons in hours. The data can be found in the file computer.txt on the Blackboard site.</p>
+</blockquote>
+<p>A <em>histogram</em> is a graphical representation of quantitative data that shows frequency or relative frequency of data values within classes. It is useful for understanding the shape or <em>skewness</em> of the numerical variable. We define skewness below.</p>
+<p>How does a histogram differ from a bar chart? A histogram displays numerical data whereas a bar chart is typically used for categorical data.</p>
+<p>The frequency or relative frequency of each class is shown by drawing a rectangle whose base is determined by the class limits on the horizontal axis and whose height is the corresponding frequency or relative frequency.</p>
+<p>We can draw a histogram of the computer hour data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in computer data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>computer <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"computer.txt"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>computer_field_name <span class="ot">&lt;-</span> <span class="st">"Hours"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>computer_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">computer =</span> computer[<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(computer_df)<span class="ot">&lt;-</span> computer_field_name</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>computer_df<span class="sc">$</span>Hours <span class="ot">&lt;-</span> <span class="fu">as.double</span>(computer_df<span class="sc">$</span>Hours)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Draw Histogram</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(computer_df, <span class="fu">aes</span>(<span class="at">x=</span>Hours)) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">bins=</span><span class="dv">12</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span><span class="st">"orange"</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Histogram of hours spent on a computer"</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Hours"</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/HistogramofHours.png" class="img-fluid figure-img"></p>
+<figcaption>Histogram of computer hours</figcaption>
+</figure>
+</div>
+</section>
+<section id="cumulative-frequency-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="cumulative-frequency-distribution">Cumulative Frequency Distribution</h3>
+<p>The <em>cumulative frequency distribution</em> shows the number of data items with values less than or equal to the upper class limit of each class. We come back to this later in the chapter when we introduce the cumulative distribution function.</p>
+<p>Similarly, the <em>cumulative relative frequency distribution</em> shows the proportion of data items with values less then or equal to the upper limit of each class.</p>
+<p>A graph of cumulative distribution is called an <em>ogive</em>. An ogive shows data values on the horizontal axis and cumulative frequencies or cumulative relative frequency on the vertical axis.</p>
+<p>For example, we can plot the empirical cumulative distribution function (ECDF) for the computer example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(computer_df, <span class="fu">aes</span>(<span class="at">x=</span>Hours)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>() <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Cumulative Distribution Function of Hours"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Hours"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span> <span class="st">"Cumulative Probability"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/EmpiricalCDFofComputerHours.png" class="img-fluid figure-img"></p>
+<figcaption>ECDF of computer hours</figcaption>
+</figure>
+</div>
+</section>
+<section id="scatter-diagram-and-trend-line" class="level3">
+<h3 class="anchored" data-anchor-id="scatter-diagram-and-trend-line">Scatter diagram and trend line</h3>
+<p>A scatter diagram is a graphical representation of the relationship between two quantitative variables. A trend line is a line that gives an approximation of the relationship.</p>
+<p>As an illustration of a scatter diagram, we describe data from an equipment store below.</p>
+<blockquote class="blockquote">
+<h4 id="example-computer-store" class="anchored">Example: Computer Store</h4>
+<p>The data has three columns showing the week number, the number of commercials shown and the volume of sales at the equipment store that week. It is available to download on Blackboard on store.txt.</p>
+</blockquote>
+<p>We can draw a scatterplot to illustrate the relationship between the number of commercials and sales volume.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Read in equipment store data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>equipment_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"store.txt"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(equipment_df, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">`</span><span class="at">No..of.Commercials</span><span class="st">`</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Sales.Volume</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()  <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Commercials vs Sales Volume"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of Commercials"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Sales Volume"</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/scatterStore.png" class="img-fluid figure-img"></p>
+<figcaption>Scatter plot of equipment store data</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="numerical-descriptive-measures" class="level2">
+<h2 class="anchored" data-anchor-id="numerical-descriptive-measures">Numerical Descriptive Measures</h2>
+<p>Numerical descriptive measures are measures of location, dispersion, shape and association. If the measures are calculated for sample data, they are called <em>sample statistics</em>. If the measures are calculated for population data, they are called <em>population parameters</em>. A sample statistic is referred to as the <em>point estimator</em> of the corresponding population parameter.</p>
+<p>In what follows, we follow the convention for statistical notation:</p>
+<ul>
+<li><span class="math inline">\(X\)</span> (capital <span class="math inline">\(X\)</span>) denotes a variable, whose observations can be made;</li>
+<li><span class="math inline">\(x\)</span> (small <span class="math inline">\(x\)</span>) denotes the generic value that the variable <span class="math inline">\(X\)</span> may take.</li>
+</ul>
+<p>For example, <span class="math inline">\(X\)</span> could be the height variable of people, and <span class="math inline">\(x = 185cm\)</span> is a value of <span class="math inline">\(X\)</span> for a particular person.</p>
+<section id="measures-of-location" class="level3">
+<h3 class="anchored" data-anchor-id="measures-of-location">Measures of location</h3>
+<p>The <em>mean</em> or the <em>average value</em> is the most frequently used measure of central location. The sample mean is the mean of a sample of data, <span class="math inline">\(\mathbf{x} = (x_{1}, x_{2}, \ldots, x_{n})\)</span>, and is denoted by <span class="math inline">\(\bar{x}\)</span>. The population mean is the mean of a population <span class="math inline">\(\mathbf{x} = (x_{1}, x_{2}, \ldots, x_{N})\)</span> and is denoted by <span class="math inline">\(\mu\)</span>. They are calculated as <span class="math display">\[
+\bar{x} = \frac{\sum^n_{i=1}x_i}{n} \qquad \text{and}\qquad \mu = \frac{\sum^N_{i=1}x_i}{N},
+\]</span> where <span class="math inline">\(n\)</span> is the size of the sample, <span class="math inline">\(N\)</span> the size of the population and <span class="math inline">\(x_i\)</span> is the value of the variable <span class="math inline">\(X\)</span> on the <span class="math inline">\(i\)</span>-th observation.</p>
+<p>The expression for the mean includes all values of the data set and, as a result, it is sensitive to outliers.</p>
+<p>The <em>median</em> is the value of the `middle’ term when the data are arranged in increasing order. Where <span class="math inline">\(n\)</span> is an odd number, it is the middle value and where <span class="math inline">\(n\)</span> is an even number, it is the average of the two middle values. The median is not influenced by outliers.</p>
+<p>The <em>mode</em> is the value in a data set that occurs with the highest frequency. It can be determined for quantitative and qualitative data. A data set can have no mode (if all values appear with equal frequency), one mode, or several modes (if two or more values appear with equal highest frequency). The modes in a multimodal data are not very helpful.</p>
+<blockquote class="blockquote">
+<h4 id="example-trades-of-lloyds-bank-group-shares" class="anchored">Example: Trades of Lloyds Bank Group Shares</h4>
+<p>The table below contains the last 5 trades of Lloyds Bank Group shares on the day of September 22, 2017 (data from London Stock Exchange).</p>
+</blockquote>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Time</th>
+<th style="text-align: left;">Price</th>
+<th style="text-align: left;">Volume</th>
+<th style="text-align: left;">Trade value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">17:11:37</td>
+<td style="text-align: left;">66.98</td>
+<td style="text-align: left;">93,163</td>
+<td style="text-align: left;">62,400.53</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">17:11:29</td>
+<td style="text-align: left;">67.03</td>
+<td style="text-align: left;">80,204</td>
+<td style="text-align: left;">53,760.78</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">17:11:29</td>
+<td style="text-align: left;">67.03</td>
+<td style="text-align: left;">13,178</td>
+<td style="text-align: left;">8,833.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">17:03:06</td>
+<td style="text-align: left;">67.15</td>
+<td style="text-align: left;">70,800</td>
+<td style="text-align: left;">47,542.20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">17:02:36</td>
+<td style="text-align: left;">67.00</td>
+<td style="text-align: left;">9,064</td>
+<td style="text-align: left;">6,072.64</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>mean</strong> of the price is <span class="math display">\[
+\bar{p} = \frac{66.98+67.03+67.03+67.15+67}{5} = 67.038 \approx 67.04 (2DP).
+\]</span> For these data, <span class="math inline">\(n=5\)</span>; therefore the <strong>median</strong> is the third highest price. The ordered list of prices is <span class="math inline">\((66.98, 67.00, 67.03, 67.03, 67.15)\)</span> and the third value is 67.03.</p>
+<p>The price of 67.03 appears twice and this would be the <strong>mode</strong>. For continuous numerical data, it may be more appropriate to find the range of values that contains the most datapoints.</p>
+<p>Deciding which measure to use (mean, median or mode), will depend on your dataset.</p>
+</section>
+<section id="measures-of-variability" class="level3">
+<h3 class="anchored" data-anchor-id="measures-of-variability">Measures of variability</h3>
+<p>The most common measures of variability are: range, interquartile range, variance and standard deviation. The <em>range</em> is the difference between the largest and the smallest values. The range is based only on two observations and it is highly influenced by outliers.</p>
+<p>The <em>interquartile range</em> is the range of the middle 50% of the data, and so does not depend on outliers.</p>
+<p>The <em>variance</em> is a measure of variability that takes into account all of the data. It is based on the difference between the value of each observation <span class="math inline">\(x_i\)</span> and the mean <span class="math inline">\(\bar{x}\)</span> <span class="math display">\[
+x_i - \bar{x},
+\]</span> called the <em>deviation about the mean</em>.</p>
+<p>The population variance <span class="math inline">\(\sigma^2\)</span>, for a population of size <span class="math inline">\(N\)</span> and with population mean <span class="math inline">\(\mu\)</span>, is given by <span class="math display">\[
+\sigma^2 = \frac{\sum^N_{i=1}(x_i-\mu)^2}{N-1}.
+\]</span> The sample variance <span class="math inline">\(s^2\)</span> for a sample of size <span class="math inline">\(n\)</span> and mean <span class="math inline">\(\bar{x}\)</span> is calculated as <span class="math display">\[
+s^2 = \frac{\sum^n_{i=1}(x_i-\bar{x})^2}{n-1}.
+\]</span> The statistic <span class="math inline">\(s^{2}\)</span> gives an unbiased estimate for the population variance. Note that the sum of the squared deviations about the sample mean is divided by <span class="math inline">\((n - 1)\)</span>, not <span class="math inline">\(n\)</span> as one might expect.</p>
+<p>The variance is a useful measure when comparing variability between two or more variables, samples or populations. The variable, sample or population with the largest variance will show the greatest variability.</p>
+<p>The <em>standard deviation</em> is the positive square root of the variance. The standard deviation is measured in the same units as the original data and consequently it is commonly used in practice.</p>
+<p>A descriptive statistic that indicates how large is the standard deviation relative to the mean is called The <em>coefficient of variation</em> measures how large the standard deviation is relative to the mean and is given by <span class="math display">\[
+\frac{\text{Standard deviation}}{\text{mean}} \times 100\%,
+\]</span> the ratio of the standard deviation and the mean.</p>
+<p>A <em>percentile</em> provides information on how the ordered data are spread over the range of the data. The <span class="math inline">\(p\)</span>-th percentile is a value such that at least <span class="math inline">\(p\)</span> percent of the data are less than or equal to this value and at least <span class="math inline">\((100-p)\)</span> percent of the data are greater than or equal to this value.</p>
+<p>To calculate percentiles for a sample data <span class="math inline">\(x_1,x_2,...,x_n\)</span>, follow the steps below.</p>
+<ol type="1">
+<li>Arrange data in increasing order denoted by <span class="math inline">\(x_{(1)},x_{(2)},...,x_{(n)}\)</span> i.e.&nbsp;<span class="math inline">\(x_{(1)} \leq x_{(2)} \leq ... \leq x_{(n)}\)</span>.</li>
+<li>Calculate <span class="math inline">\(i = (\frac{p}{100})n\)</span> where <span class="math inline">\(p\)</span> is the percentile of interest and <span class="math inline">\(n\)</span> the size of the sample.</li>
+<li>If <span class="math inline">\(i\)</span> is not an integer, round up and the resulting value of <span class="math inline">\(i\)</span> gives the position of the <span class="math inline">\(p\)</span>-th percentile. If <span class="math inline">\(i\)</span> is an integer, the <span class="math inline">\(p\)</span>-th percentile is the average of the values in the positions <span class="math inline">\(i\)</span> and <span class="math inline">\(i + 1\)</span>.</li>
+</ol>
+<blockquote class="blockquote">
+<h4 id="example-waiting-time" class="anchored">Example: Waiting Time</h4>
+<p>The waiting time data is a list of 24 values, which describe the time spent waiting for a service. They can be found in the file WaitingTime.txt.</p>
+</blockquote>
+<ol type="a">
+<li><p>Compute the <span class="math inline">\(30\)</span>-th percentile. We note that <span class="math inline">\(n=24\)</span> and <span class="math inline">\(p = 30\)</span>. First, we compute the location <span class="math display">\[
+i = \left(  \frac{p}{100} \right) \times n = \frac{30}{100} \times 24 = 7.2.
+\]</span> Hence, the <span class="math inline">\(30\)</span>-th percentile is <span class="math display">\[
+x_{(\lceil i \rceil)} = x_{(\lceil 7.2 \rceil)} = x_{(8)} = 30,
+\]</span> where <span class="math inline">\(\lceil i \rceil\)</span> is the smallest integer that is greater than or equal to <span class="math inline">\(i\)</span>.</p></li>
+<li><p>Compute the <span class="math inline">\(25\)</span>-th percentile. We note that <span class="math inline">\(n=24\)</span> and <span class="math inline">\(p = 25\)</span>. First, we compute the location <span class="math display">\[
+i = \left(  \frac{p}{100} \right) \times n = \frac{25}{100} \times 24 = 6.
+\]</span> Hence, the <span class="math inline">\(25\)</span>-th percentile is <span class="math display">\[
+Q_1 = \frac{x_{(i)} + x_{(i+1)}}{2} = \frac{x_{(6)} + x_{(7)}}{2} = \frac{26+28}{2} = 27.
+\]</span></p></li>
+<li><p>Compute the <span class="math inline">\(75\)</span>-th percentile. We note that <span class="math inline">\(n=24\)</span> and <span class="math inline">\(p = 75\)</span>. First, we compute the location <span class="math display">\[
+i = \left(  \frac{p}{100} \right) \times n = \frac{75}{100} \times 24 = 18.
+\]</span> Hence, the <span class="math inline">\(75\)</span>-th percentile is <span class="math display">\[
+Q_3 = \frac{x_{(i)} + x_{(i+1)}}{2} = \frac{x_{(18)} + x_{(19)}}{2} = \frac{61+62}{2} = 61.5.
+\]</span></p></li>
+</ol>
+<p>The <em>quartiles</em> <span class="math inline">\(Q_1\)</span>, <span class="math inline">\(Q_2\)</span> and Q3 divide an ordered set of data into four equal parts. The first quartile <span class="math inline">\(Q_1\)</span> is the same as 25th percentile, i.e.&nbsp;25% of the data set are equal to or smaller then <span class="math inline">\(Q_1\)</span>. The second quartile <span class="math inline">\(Q_2\)</span> is equal to the median and the third quartile <span class="math inline">\(Q_3\)</span> is equal to the 75-th percentile. The difference <span class="math inline">\((Q_3 - Q_1)\)</span> is called the interquartile range (IQR); IQR = <span class="math inline">\(Q_3 - Q_1\)</span>.</p>
+<p>The steps to calculate the quartiles are as follows:</p>
+<ol type="1">
+<li>Arrange the observations in non-decreasing order and locate the median <span class="math inline">\(M\)</span>.</li>
+<li>The first quartile <span class="math inline">\(Q_1\)</span> is the median of the observations whose positions in the ordered list is to the left of the location of <span class="math inline">\(M\)</span>.<br>
+</li>
+<li>The third quartiles <span class="math inline">\(Q_3\)</span> is the median of the observation whose position in the ordered list is to the right of the location of <span class="math inline">\(M_1\)</span>.</li>
+</ol>
+</section>
+<section id="the-five-number-summary-and-boxplots" class="level3">
+<h3 class="anchored" data-anchor-id="the-five-number-summary-and-boxplots">The five-number summary and boxplots</h3>
+<p>The five number summary of a set of observations consists of the smallest observation, the first quartile, the median, the third quartile, and the largest observation: <span class="math display">\[
+\text{Minimum}, \quad Q_1, \quad M, \quad Q_3, \quad \text{Maximum}.
+\]</span></p>
+<p>These five numbers are well represented in a <em>boxplot</em>, which consists of the following:</p>
+<ul>
+<li>A central box spans the quartiles <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(Q_3\)</span></li>
+<li>A line in the box marks the median <span class="math inline">\(M\)</span><br>
+</li>
+<li>Lines extend from the box out to the lower limits and upper limits.<br>
+</li>
+<li><span class="math inline">\(1.5\times \text{IQR}\)</span> rule to determine the lower and the upper limits as follows: <span class="math display">\[
+\begin{aligned}
+\text{lower limit} &amp;= M - 1.5 \times \text{IQR} \\
+\text{upper limit} &amp;= M + 1.5 \times \text{IQR}
+\end{aligned}
+\]</span></li>
+<li>All other observations beyond the lower and upper limits are marked as whiskers in the box plot. They are suspected outliers.</li>
+</ul>
+<p>We consider the waiting time example. We have calculated <span class="math display">\[
+Q_1 = 27, \quad  M = 45.5, \quad Q_3 = 61.5.
+\]</span> Hence, the Inter-Quartile Range (IQR) is <span class="math display">\[
+  \text{IQR} = Q_3 - Q_1 = 61.5 - 27 = 34.5.
+\]</span> The lower limit is <span class="math display">\[
+  L = M - 1.5  \times \text{IQR} = 45.5 - 1.5 \times 34.5 = -6.25
+\]</span> and the upper limit is <span class="math display">\[
+U = M + 1.5  \times \text{IQR} = 45.5 + 1.5 \times 34.5 = 117.15.
+\]</span> <img src="Figures/BoxPlotWaiting.png" class="img-fluid" alt="Boxplot for the waiting time data set"></p>
+</section>
+<section id="probability-density-functions-and-the-normal-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="probability-density-functions-and-the-normal-distribution">Probability density functions and the normal distribution</h3>
+<p>A probability density function <span class="math inline">\(f(x)\)</span> or PDF (to be defined later) provides a more complete description of how the data are distributed.</p>
+<p>For example, we might fit a distribution to the waiting time data in the example above.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(waiting_df, <span class="fu">aes</span>(<span class="at">x =</span> Waiting.Time)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">13</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"limegreen"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> dnorm,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">args =</span> <span class="fu">list</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">mean =</span> <span class="fu">mean</span>(waiting_df<span class="sc">$</span>Waiting.Time),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">sd =</span> <span class="fu">sd</span>(waiting_df<span class="sc">$</span>Waiting.Time)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"blue"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">1</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Waiting times"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/WaitingHistogramNormal.png" class="img-fluid figure-img"></p>
+<figcaption>Histogram of the waiting times data with a fitted normal distribution</figcaption>
+</figure>
+</div>
+<p>The curve we used is completely determined by the sample mean (<span class="math inline">\(\bar{x} = 47.04\)</span>) and the standard deviation (<span class="math inline">\(s = 31.87\)</span>) of the data. Mathematically, the density function takes the sample mean as its true mean <span class="math inline">\(\mu\)</span> and the sample standard deviation as its true standard deviation <span class="math inline">\(\sigma\)</span> to determine the curve, which has the mathematical representation <span class="math display">\[
+  f(x) = \frac{1}{ \sqrt{2 \pi \sigma^{2}}} e^{-  \frac{(x - \mu)^2}{2\sigma^2}  }.
+\]</span> This is a normal (or Gaussian) distribution and is often denoted by <span class="math inline">\(N(\mu, \sigma)\)</span>. The location and shape of this curve is completely determined by the two quantities <span class="math inline">\((\mu, \sigma)\)</span>. The density function of the normal distribution is symmetric around point <span class="math inline">\(\mu\)</span>.</p>
+<p>This function is described as a density function because of the following two properties: (i) <span class="math inline">\(f(x) \ge 0\)</span> for all <span class="math inline">\(x \in \Re\)</span>. (ii) The area underneath the curve is <span class="math inline">\(1\)</span>: <span class="math display">\[
+\int_{-\infty}^{+\infty} \ f(x) dx = 1.
+\]</span></p>
+<p>Although different <span class="math inline">\((\mu, \sigma)\)</span> generate different curves, there exists a common feature of normal distributions, widely known as the <span class="math inline">\(68-95-99.7\)</span> Rule:</p>
+<ul>
+<li>In the normal distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>:</li>
+<li>Approximately <span class="math inline">\(68\%\)</span> of the observations fall within <span class="math inline">\(\sigma\)</span> of the mean <span class="math inline">\(\mu\)</span>.</li>
+<li>Approximately <span class="math inline">\(95\%\)</span> of the observations fall within <span class="math inline">\(2\sigma\)</span> of the mean <span class="math inline">\(\mu\)</span>.</li>
+<li>Approximately <span class="math inline">\(99.7\%\)</span> of the observations fall within <span class="math inline">\(3\sigma\)</span> of the mean <span class="math inline">\(\mu\)</span>.</li>
+</ul>
+<section id="standard-normal" class="level4">
+<h4 class="anchored" data-anchor-id="standard-normal">Standard Normal</h4>
+<p>If we introduce a new variable <span class="math inline">\(Z\)</span> such that <span class="math display">\[
+  Z = \frac{X - \mu}{\sigma},
+\]</span> then we have <span class="math display">\[
+  X = \sigma Z + \mu.
+\]</span> It follows from the property that the probability density function <span class="math inline">\(f(x)\)</span> integrates to 1 over the range <span class="math inline">\([-\infty, \infty]\)</span> that <span class="math display">\[
+\begin{align}
+    1 &amp;=&amp; \int_{-\infty}^{+\infty} \ f(x) dx \\
+      &amp;=&amp; \int_{-\infty}^{+\infty} \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac 12 \left(  \frac{x - \mu}{\sigma} \right)^2 } dx \\
+      &amp;=&amp; \int_{-\infty}^{+\infty} \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac 12 z^2 } (\sigma) dz \\
+      &amp;=&amp; \int_{-\infty}^{+\infty} \frac{1}{\sqrt{2 \pi}} e^{-\frac 12 z^2 } dz.
+\end{align}
+\]</span> The function <span class="math display">\[
+  \phi(z) = \frac{1}{\sqrt{2 \pi}} e^{-\frac 12 z^2 }
+\]</span> is a new density function that equates to a normal distribution with mean <span class="math inline">\(0\)</span> and standard deviation <span class="math inline">\(\sigma = 1\)</span>. Its distribution is denoted as <span class="math inline">\(N(0, 1)\)</span> and it is known as the <em>standard normal distribution</em>.</p>
+</section>
+</section>
+<section id="cumulative-distribution-function-cdf" class="level3">
+<h3 class="anchored" data-anchor-id="cumulative-distribution-function-cdf">Cumulative distribution function (CDF)</h3>
+<p>Let <span class="math inline">\(X\)</span> follow a distribution with probability density function (pdf) <span class="math inline">\(f(x)\)</span>. The cumulative distribution at a given value <span class="math inline">\(x\)</span> is defined as follows: <span class="math display">\[
+F(x) = \int_{-\infty}^x \ f(t) dt.
+\]</span></p>
+<p>The CDF of the standard normal distribution is frequently used to estimate confidence intervals on estimates. We will see later why this is the case. For now, we show how this can be used.</p>
+<p>Let <span class="math inline">\(Z\)</span> have the standard normal distribution <span class="math inline">\(N(0, 1)\)</span> with <span class="math inline">\(\phi(z)\)</span> as given immediately below being its density function. The cumulative distribution at a given value <span class="math inline">\(z\)</span> is defined as follows: <span class="math display">\[
+\Phi(z) = \int_{-\infty}^z \ \phi(t) dt.
+\]</span> It follows from the <span class="math inline">\(Z\)</span> transformation that <span class="math display">\[
+F(x) = \Phi \left(   \frac{x-\mu}{\sigma} \right).
+\]</span> This implies that the cumulative distribution of <span class="math inline">\(F(x)\)</span> can be obtained through that of <span class="math inline">\(\Phi(z)\)</span> with <span class="math inline">\(z= (x-\mu)/\sigma\)</span>. Tables listing the values of <span class="math inline">\(\Phi(z)\)</span> are widely available and can be used to obtain the <span class="math inline">\(z\)</span> value from <span class="math inline">\(x\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/NormalDistributionZTransformation.jpg" class="img-fluid figure-img"></p>
+<figcaption>Relationship between <span class="math inline">\(F(x)\)</span> and <span class="math inline">\(\Phi(z)\)</span> (source: Internet)</figcaption>
+</figure>
+</div>
+</section>
+<section id="skewness" class="level3">
+<h3 class="anchored" data-anchor-id="skewness">Skewness</h3>
+<p>As seen above, the normal distribution has a symmetric shape. But there are many nonsymmetric shapes. For example, a shape may be skewed to the left or right. The measure of skewness is defined as follows: <span class="math display">\[
+  \texttt{skewness} = \frac{n}{(n - 1)(n - 2)} \sum^n_{i=1}\left(\frac{x_i - \bar{x}}{s}\right)^3
+\]</span> The skewness can be easily calculated using statistical software.</p>
+<p>The following figure displays the skewness graphically.</p>
+<ul>
+<li>A distribution is said to be skewed to the left, or negatively skewed, if its tail extends further to the left.<br>
+</li>
+<li>A distribution is right skewed if its tail extends further to the right.</li>
+<li>A distribution is symmetrical if there is no obvious skewness.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/skewness.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Examples of different values of skewness</figcaption>
+</figure>
+</div>
+</section>
+<section id="z-scores" class="level3">
+<h3 class="anchored" data-anchor-id="z-scores">Z-Scores</h3>
+<p>The <em>z-scores</em> give the relative location of data items within a data set. In a sample of <span class="math inline">\(n\)</span> observations <span class="math inline">\(x_1,x_2,...,x_n\)</span>, the z-score <span class="math inline">\(z_i\)</span>, for observation <span class="math inline">\(x_i\)</span> is calculated as <span class="math display">\[
+z_i = \frac{x_i-\bar{x}}{s}, \qquad i = 1,2,...,n
+\]</span> where <span class="math inline">\(\bar{x}\)</span> is the sample mean and <span class="math inline">\(s\)</span> the sample standard deviation. We observe the similarity between the z-score and the <span class="math inline">\(Z\)</span> transformation. The z-score is often called the standardized value and can be interpreted as the number of standard deviations <span class="math inline">\(x_i\)</span> is from the mean <span class="math inline">\(\bar{x}\)</span>. For example, <span class="math inline">\(z_1\)</span> = 1.7 would indicate that <span class="math inline">\(x_1\)</span> is 1.7 standard deviations greater than the mean and <span class="math inline">\(z_1 = -0.5\)</span> would indicate that <span class="math inline">\(x_1\)</span> is <span class="math inline">\(0.5\)</span> standard deviations smaller than the mean.</p>
+<p>Extreme values (unusually large or unusually small values) of a data set are called <em>outliers</em>. Identification and review of outliers is important. Typically, any data value with a z-score less than <span class="math inline">\(-3\)</span> or greater than <span class="math inline">\(+3\)</span> is treated as an outlier.\</p>
+</section>
+</section>
+<section id="measures-of-association" class="level2">
+<h2 class="anchored" data-anchor-id="measures-of-association">Measures of Association</h2>
+<p>We are often interested in the relationship between two or more variables. For example, if we go back to the equipment store example which we drew a scatter plot for previously, this suggests a positive relationship between the number of commercials shown and the volume of sales. The plot also suggests that a straight line could be used as an approximation of the relationship. A positive relationship means that if the number of commercials increases, the number of sales also increases. A negative relationship would suggest that if the number of commercials increases, the number of sales decreases.</p>
+<p>The <em>covariance</em> is a measure of the linear relationship between two variables. For a sample of size <span class="math inline">\(n\)</span> with observations (<span class="math inline">\(x_1,y_1\)</span>), (<span class="math inline">\(x_2,y_2\)</span>),…,(<span class="math inline">\(x_n,y_n\)</span>), the sample covariance <span class="math inline">\(x_{xy}\)</span> is defined as <span class="math display">\[
+s_{xy} = \frac{\sum^n_{i=1}(x_i-\bar{x})(y_i-\bar{y})}{n-1},
+\]</span> and the covariance of a population of size <span class="math inline">\(N\)</span> is given using slightly different notation, as <span class="math display">\[
+\sigma_{xy} = \frac{\sum^N_{i=1}(x_i-\mu_x)(y_i-\mu_y)}{N-1}.
+\]</span></p>
+<blockquote class="blockquote">
+<p><strong>Exercise:</strong> Calculate the covariance <span class="math inline">\(s_{xy}\)</span> for the previous example. (Answer: 11)</p>
+</blockquote>
+<p>One of the problems with using the covariance as a measure of the strength of the linear relationship is that the value of the covariance depends on the units of measurements for the variables. We need a measure that is independent of the measurement units.</p>
+<p>The <strong>correlation coefficient</strong>, <span class="math inline">\(r_{xy}\)</span>, is a measure of the linear relationship between two variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> that is not affected by the units of measurement. The correlation coefficient is defined as <span class="math display">\[
+r_{xy} = \frac{s_{xy}}{s_xs_y}
+\]</span> where <span class="math inline">\(s_{xy}\)</span> is the sample covariance, <span class="math inline">\(s_x\)</span> is the sample standard deviation of x and <span class="math inline">\(s_y\)</span> is the sample standard deviation of <span class="math inline">\(y\)</span>.</p>
+<blockquote class="blockquote">
+<p><strong>Exercise</strong>: Calculate the sample correlation coefficient for the example above. Does this help with determining the strength of the relationship? (Answer: 0.93)</p>
+</blockquote>
+<p>As usual, somewhat different notation is used if the correlation coefficient is calculated from population data: <span class="math display">\[
+\rho_{xy} = \frac{\sigma_{xy}}{\sigma_x\sigma_y},
+\]</span> where <span class="math inline">\(\rho_{xy}\)</span> is the population correlation coefficient, <span class="math inline">\(\sigma_{xy}\)</span> is the population covariance, <span class="math inline">\(\sigma_x\)</span> the population standard deviation for <span class="math inline">\(x\)</span> and <span class="math inline">\(\sigma_y\)</span> the population standard deviation for <span class="math inline">\(y\)</span>. The correlation has a limited range, <span class="math inline">\(-1 \leq \rho_{xy} \leq 1\)</span>, where <span class="math inline">\(1\)</span> indicates perfect positive linear relation, <span class="math inline">\(-1\)</span> perfect negative relation and <span class="math inline">\(\rho_{xy}\)</span> = 0 indicates that there is no relation between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p>
+<blockquote class="blockquote">
+<p><strong>Exercise:</strong> Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be random variables with finite means and variances. Using the expression for <span class="math inline">\(\rho_{xy}\)</span> above, show that <span class="math inline">\(Y = a + bX\)</span> if and only if <span class="math inline">\(\rho = \pm1\)</span>.</p>
+</blockquote>
+<section id="the-weighted-mean-and-grouped-data-mean" class="level3">
+<h3 class="anchored" data-anchor-id="the-weighted-mean-and-grouped-data-mean">The weighted mean and grouped data mean</h3>
+<p>The weighted sample mean is a mean that can attach more importance (weight) to some observations than to others. It is calculated as <span class="math display">\[
+\bar{x} = \frac{\sum^n_{i=1}w_ix_i}{\sum^n_{i=1}w_i},
+\]</span> where <span class="math inline">\(x_i\)</span> is the values of observation i and <span class="math inline">\(w_i\)</span> is the weight for the observation i.</p>
+<p>If data are grouped into k classes (also called groups or bins) with mid values <span class="math inline">\(M_1,M_2,...,M_k\)</span> and corresponding class frequencies <span class="math inline">\(f_1,f_2,...,f_k\)</span>, the mean is given as <span class="math display">\[
+\bar{x} = \frac{\sum^k_{i=1}f_iM_i}{n}
+\]</span> and the sample variance for grouped data is <span class="math display">\[
+s^2 = \frac{\sum^k_{i=1}f_i(M_i-\bar{x})^2}{n-1},
+\]</span> where <span class="math inline">\(f_1 + f_2 +... +f_k = n\)</span>.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

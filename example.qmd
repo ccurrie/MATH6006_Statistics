@@ -1,0 +1,27 @@
+---
+title: "Quarto Test"
+format: html
+---
+
+# Discrete random variables
+
+The expected value of a random variable is
+
+$$
+E[X] = \sum_x x\,P(X=x).
+$$
+
+For a Bernoulli random variable with parameter $p$,
+
+$$
+P(X=1)=p, \qquad P(X=0)=1-p,
+$$
+so
+
+$$
+E[X]=p,
+\qquad
+\mathrm{Var}(X)=p(1-p).
+$$
+
+This file was rendered with Quarto.
