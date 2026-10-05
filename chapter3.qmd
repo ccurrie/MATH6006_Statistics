@@ -312,13 +312,14 @@ These five numbers are well represented in a *boxplot*, which consists of the fo
 
 * A central box spans the quartiles $Q_1$ and $Q_3$	
 * A line in the box marks the median $M$	
-* Lines extend from the box out to the lower limits and upper limits.	
-* $1.5\times \text{IQR}$ rule to determine the lower and the upper limits as follows:
+* Lines extend from the box out to the lower limits and upper limits, following the rule below.
+
 $$
+{\color{blue}
 \begin{aligned}
-\text{lower limit} &= M - 1.5 \times \text{IQR} \\
-\text{upper limit} &= M + 1.5 \times \text{IQR}
-\end{aligned}
+\text{lower limit} &= \max \left\{\text{Minimum}, M - 1.5 \times \text{IQR} \right\} \\
+\text{upper limit} &= \min \left\{\text{Maximum}, M + 1.5 \times \text{IQR} \right\}
+\end{aligned}}
 $$
 * All other observations beyond the lower and upper limits are marked as whiskers in the box plot. They are suspected outliers.
 
@@ -332,11 +333,19 @@ $$
 $$
 The lower limit is
 $$
-  L = M - 1.5  \times \text{IQR} = 45.5 - 1.5 \times 34.5 = -6.25
+{\color{blue}
+\begin{aligned}
+  L &= \max \left\{\text{Minimum}, M - 1.5 \times \text{IQR} \right\}\\
+    & = \max \left\{2 , 45.5 - 1.5 \times 34.5 = -6.25\right\} = 2
+\end{aligned}}
 $$
 and the upper limit is
 $$
- U = M + 1.5  \times \text{IQR} = 45.5 + 1.5 \times 34.5 = 117.15.
+{\color{blue}
+\begin{aligned}
+ U & = \min \left\{\text{Maximum}, M + 1.5 \times \text{IQR} \right\} \\
+   & = \min \left\{150, 45.5 + 1.5 \times 34.5 = 97.25 \right\} = 97.25.
+\end{aligned}}
 $$
 ![Boxplot for the waiting time data set](Figures/BoxPlotWaiting.png)
 	

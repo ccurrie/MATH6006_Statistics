@@ -102,3 +102,72 @@ ggplot(waiting_df, aes(x = Waiting.Time)) +
     x = "Waiting times",
     y = "Density"
   )
+
+#Sample data from three different binomial distributions and include on the same plot
+
+# Sample binomial data
+n_trials <- 100
+sample_size <- 1000
+sim_data_1 <- rbinom(n=sample_size, size = n_trials, prob = 0.1)
+sim_data_2 <- rbinom(n=sample_size, size = n_trials, prob = 0.5)
+sim_data_3 <- rbinom(n=sample_size, size = n_trials, prob = 0.8)
+sim_df <- data.frame(successes = c(sim_data_1, sim_data_2, sim_data_3),
+                     distribution = rep(c("p = 0.1", "p = 0.5", "p = 0.8"),
+                                        each = sample_size))
+
+# Plot the data on a histogram
+ggplot(sim_df, aes(x=successes, fill = distribution)) +
+  geom_histogram(binwidth = 1,
+                 center = 0) +
+  scale_fill_manual(values = c("p = 0.1" = "limegreen", "p = 0.5" = "tomato", "p = 0.8" = "royalblue")) +
+  labs(title = "Comparison of Binomial Distributions",
+       x = "Number of Successes",
+       y = "Frequency",
+       fill = "Probability (p)")
+
+# Sample hypergeometric data
+N_pop <- 200
+n_sample <- 20
+sample_size <- 1000
+hg_sim_data_1 <- rhyper(nn = sample_size, m = 30, n = N_pop - 30, k = n_sample)
+hg_sim_data_2 <- rhyper(nn = sample_size, m = 170, n = N_pop - 170, k = n_sample)
+
+sim_df <- data.frame(successes = c(hg_sim_data_1, hg_sim_data_2),
+                     distribution = rep(c("m = 30", "m = 170"),
+                                        each = sample_size))
+
+# Plot the data on a histogram
+ggplot(sim_df, aes(x=successes, fill = distribution)) +
+  geom_histogram(binwidth = 1,
+                 center = 0,
+                 color = "white") +
+  scale_fill_manual(values = c("m = 30" = "limegreen", "m = 170" = "tomato")) +
+  labs(title = "Comparison of Hypergeometric Distributions",
+       x = "Number of Successes",
+       y = "Frequency",
+       fill = "Successes in Pop (m)")
+
+
+# Sample Poisson data
+sample_size <- 1000
+poisson_sim_data_1 <- rpois(n = sample_size, lambda = 1)
+poisson_sim_data_2 <- rpois(n = sample_size, lambda = 20)
+poisson_sim_data_3 <- rpois(n = sample_size, lambda = 60)
+
+
+sim_df <- data.frame(successes = c(poisson_sim_data_1, poisson_sim_data_2, poisson_sim_data_3),
+                     distribution = rep(c("lambda = 1", "lambda = 20", "lambda = 60"),
+                                        each = sample_size))
+
+# Plot the data on a histogram
+ggplot(sim_df, aes(x=successes, fill = distribution)) +
+  geom_histogram(binwidth = 1,
+                 center = 0,
+                 color = "white") +
+  scale_fill_manual(values = c("lambda = 1" = "limegreen", "lambda = 20" = "tomato", "lambda = 60" = "royalblue")) +
+  labs(title = "Comparison of Poisson Distributions",
+       x = "Number of Events",
+       y = "Frequency",
+       fill = "lambda")
+
+

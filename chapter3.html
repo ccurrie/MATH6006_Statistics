@@ -415,24 +415,31 @@ Q_3 = \frac{x_{(i)} + x_{(i+1)}}{2} = \frac{x_{(18)} + x_{(19)}}{2} = \frac{61+6
 <li>A central box spans the quartiles <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(Q_3\)</span></li>
 <li>A line in the box marks the median <span class="math inline">\(M\)</span><br>
 </li>
-<li>Lines extend from the box out to the lower limits and upper limits.<br>
-</li>
-<li><span class="math inline">\(1.5\times \text{IQR}\)</span> rule to determine the lower and the upper limits as follows: <span class="math display">\[
-\begin{aligned}
-\text{lower limit} &amp;= M - 1.5 \times \text{IQR} \\
-\text{upper limit} &amp;= M + 1.5 \times \text{IQR}
-\end{aligned}
-\]</span></li>
-<li>All other observations beyond the lower and upper limits are marked as whiskers in the box plot. They are suspected outliers.</li>
+<li>Lines extend from the box out to the lower limits and upper limits, following the rule below.</li>
 </ul>
+<p><span class="math display">\[
+{\color{blue}
+\begin{aligned}
+\text{lower limit} &amp;= \max \left\{\text{Minimum}, M - 1.5 \times \text{IQR} \right\} \\
+\text{upper limit} &amp;= \min \left\{\text{Maximum}, M + 1.5 \times \text{IQR} \right\}
+\end{aligned}}
+\]</span> * All other observations beyond the lower and upper limits are marked as whiskers in the box plot. They are suspected outliers.</p>
 <p>We consider the waiting time example. We have calculated <span class="math display">\[
 Q_1 = 27, \quad  M = 45.5, \quad Q_3 = 61.5.
 \]</span> Hence, the Inter-Quartile Range (IQR) is <span class="math display">\[
   \text{IQR} = Q_3 - Q_1 = 61.5 - 27 = 34.5.
 \]</span> The lower limit is <span class="math display">\[
-  L = M - 1.5  \times \text{IQR} = 45.5 - 1.5 \times 34.5 = -6.25
+{\color{blue}
+\begin{aligned}
+  L &amp;= \max \left\{\text{Minimum}, M - 1.5 \times \text{IQR} \right\}\\
+    &amp; = \max \left\{2 , 45.5 - 1.5 \times 34.5 = -6.25\right\} = 2
+\end{aligned}}
 \]</span> and the upper limit is <span class="math display">\[
-U = M + 1.5  \times \text{IQR} = 45.5 + 1.5 \times 34.5 = 117.15.
+{\color{blue}
+\begin{aligned}
+U &amp; = \min \left\{\text{Maximum}, M + 1.5 \times \text{IQR} \right\} \\
+   &amp; = \min \left\{150, 45.5 + 1.5 \times 34.5 = 117.15 \right\} = 117.5.
+\end{aligned}}
 \]</span> <img src="Figures/BoxPlotWaiting.png" class="img-fluid" alt="Boxplot for the waiting time data set"></p>
 </section>
 <section id="probability-density-functions-and-the-normal-distribution" class="level3">
