@@ -313,12 +313,12 @@ window.Quarto = {
 \]</span> This does not depend on the sampling size <span class="math inline">\(n\)</span>.</li>
 <li>Assuming that <span class="math inline">\(X_i\)</span> are independently, identically distributed (i.i.d.), then the variance of <span class="math inline">\(\overline{X}\)</span> is <span class="math display">\[
   \begin{align}
-  \sigma_{\overline{X}}^2 &amp; = &amp; Var(\overline{X}) \\
-  &amp; = &amp; Var \left( \frac 1n \sum_{i=1}^n X_i  \right)  \\
-      &amp; = &amp; \frac 1{n^2} Var \left( \sum_{i=1}^n X_i  \right) \\
-      &amp; = &amp;  \frac 1{n^2} \sum_{i=1}^n Var \left( X_i  \right) \\
-      &amp; = &amp; \frac 1{n^2} \sum_{i=1}^n \sigma^2 \\
-      &amp; = &amp; \frac{\sigma^2}{n}.
+  \sigma_{\overline{X}}^2  = &amp; Var(\overline{X}) \\
+   = &amp; Var \left( \frac 1n \sum_{i=1}^n X_i  \right)  \\
+       = &amp; \frac 1{n^2} Var \left( \sum_{i=1}^n X_i  \right) \\
+       = &amp;  \frac 1{n^2} \sum_{i=1}^n Var \left( X_i  \right) \\
+       = &amp; \frac 1{n^2} \sum_{i=1}^n \sigma^2 \\
+       = &amp; \frac{\sigma^2}{n}.
   \end{align}
 \]</span> The standard deviation of <span class="math inline">\(\overline{X}\)</span> (also known as the <em>Sample Standard Error</em>) is <span class="math display">\[
    \sigma_{\overline{X}} = \frac{\sigma}{\sqrt{n}}.
@@ -398,18 +398,18 @@ Var(\overline{X}) = Var(X_i)/n = \frac{1}{n\lambda^2} = 400.
 \]</span></p>
 <p>It follows from the Central Limit Theorem that <span class="math display">\[
 \begin{align}
-  P(90 \le \overline{X} \le 110) &amp; &amp; \\
-&amp;\approx &amp; P \left(
+  P(90 \le \overline{X} \le 110)  &amp; \\
+\approx &amp; P \left(
      \frac{90 - E[\overline{X}]}{\sqrt{Var(\overline{X})}} \le
      \frac{\overline{X} - E[\overline{X}]}{\sqrt{Var(\overline{X})}}
      \le \frac{110 - E[\overline{X}]}{\sqrt{Var(\overline{X})}}
   \right) \\
-  &amp;=&amp; P \left(
+  =&amp; P \left(
   \frac{90 - 100}{20} \le
   Z
   \le \frac{110 - 100}{20}
   \right) \\
-  &amp;=&amp; P \left(
+  =&amp; P \left(
   - \frac{1}{2} \le
   Z
   \le \frac{1}{2}
@@ -428,7 +428,7 @@ Var(\overline{X}) = Var(X_i)/n = \frac{1}{n\lambda^2} = 400.
 <p>The solution matches that for the first example as the CLT does not rely on whether or not the data came from the exponential distribution. We just need the mean and the variance.</p>
 <blockquote class="blockquote">
 <h3 id="example-southampton-football-club" class="anchored">Example: Southampton Football Club</h3>
-<p>Southampton Football Club play <span class="math inline">\(38\)</span> independent games every season. each of the games they have probability <span class="math inline">\(0.7\)</span> of winning. What is the probability they win at least <span class="math inline">\(25\)</span> games?</p>
+<p>Southampton Football Club play <span class="math inline">\(38\)</span> independent games every season. They have a probability of <span class="math inline">\(0.7\)</span> of winning each of the games. What is the probability they win at least <span class="math inline">\(25\)</span> games?</p>
 </blockquote>
 </section>
 <section id="solution-2" class="level3">
@@ -436,29 +436,29 @@ Var(\overline{X}) = Var(X_i)/n = \frac{1}{n\lambda^2} = 400.
 <p>Note that we assumed that each game is independent with the winning probability of <span class="math inline">\(p = 0.7\)</span>. That is, <span class="math inline">\(Y \sim bin(38, 0.7)\)</span>. We need to calculate <span class="math inline">\(P (Y \ge 25)\)</span>. We now use the CLT to approximate this probability.</p>
 <p><span class="math display">\[
 \begin{align}
-P (Y \ge 25) &amp;&amp; \\
-&amp;\approx&amp; P  \left(
+P (Y \ge 25) &amp; \\
+\approx&amp; P  \left(
 Z \ge \frac{25 - np}{\sqrt{npq}} \right) \\
-&amp;=&amp; P \left(
+=&amp; P \left(
 Z \ge \frac{25 - 26.6}{\sqrt{7.98}} \right) \\
-&amp;=&amp; P \left(
+=&amp; P \left(
 Z \ge \frac{25 - 26.6}{\sqrt{7.98}} \right) \\
-&amp;=&amp; P \left(
+=&amp; P \left(
 Z \ge -0.5664 \right) = P \left(
 Z \le 0.5664 \right) \approx 71.57\%.
 \end{align}
 \]</span></p>
 <p>Second Solution: <span class="math display">\[
     \begin{align}
-     P (Y \ge 25) &amp; = &amp;  P (Y \ge 25 - 0.5)
+     P (Y \ge 25)  = &amp;  P (Y \ge 25 - 0.5)
          \qquad (\mbox{``Continuity correction''})  \\
-    &amp;\approx&amp; P  \left(
+    \approx&amp; P  \left(
     Z \ge \frac{24.5 - np}{\sqrt{npq}} \right) \\
-    &amp;=&amp; P \left(
+    =&amp; P \left(
     Z \ge \frac{24.5 - 26.6}{\sqrt{7.98}} \right) \\
-    &amp;=&amp; P \left(
+    =&amp; P \left(
     Z \ge \frac{24.5 - 26.6}{\sqrt{7.98}} \right) \\
-    &amp;=&amp; P \left(
+    =&amp; P \left(
     Z \ge -0.7434 \right) = P \left(
     Z \le 0.7434 \right) \approx 77.04\%.
     \end{align}
@@ -474,16 +474,16 @@ Z \le 0.5664 \right) \approx 71.57\%.
 <p>The Central Limit Theorem implies that the sample mean follows a normal distribution. This enables us to estimate the probability of the sample mean bigger than <span class="math inline">\(128,000\)</span> RMB if the population mean is <span class="math inline">\(\mu = 120,000\)</span>.</p>
 <p><span class="math display">\[
 \begin{align}
-     P (\overline{X} \ge 128000) &amp;&amp; \\
-    &amp;\approx &amp; P \left(
+     P (\overline{X} \ge 128000) &amp; \\
+    \approx &amp; P \left(
     \frac{\overline{X} - E[\overline{X}]}{\sqrt{Var(\overline{X})}}
     \ge \frac{128000 - E[\overline{X}]}{\sqrt{Var(\overline{X})}}
     \right) \\
-    &amp;=&amp; P \left(
+    =&amp; P \left(
     Z
     \ge \frac{128000 - 120000}{\sigma/\sqrt{100}}
     \right) \\
-    &amp;=&amp; P \left(
+    =&amp; P \left(
     Z
     \ge 1.33  
     \right) = 1 - \Phi(1.33) = 1 - 0.9082 = 0.0918.

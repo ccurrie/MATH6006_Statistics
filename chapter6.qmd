@@ -106,12 +106,12 @@ $$
 	then the variance of $\overline{X}$ is
 $$
 	\begin{align}
-    \sigma_{\overline{X}}^2 & = & Var(\overline{X}) \\
-    & = & Var \left( \frac 1n \sum_{i=1}^n X_i  \right)  \\ 
-		& = & \frac 1{n^2} Var \left( \sum_{i=1}^n X_i  \right) \\
-		& = &  \frac 1{n^2} \sum_{i=1}^n Var \left( X_i  \right) \\ 
-		& = & \frac 1{n^2} \sum_{i=1}^n \sigma^2 \\
-		& = & \frac{\sigma^2}{n}.
+    \sigma_{\overline{X}}^2  = & Var(\overline{X}) \\
+     = & Var \left( \frac 1n \sum_{i=1}^n X_i  \right)  \\ 
+		 = & \frac 1{n^2} Var \left( \sum_{i=1}^n X_i  \right) \\
+		 = &  \frac 1{n^2} \sum_{i=1}^n Var \left( X_i  \right) \\ 
+		 = & \frac 1{n^2} \sum_{i=1}^n \sigma^2 \\
+		 = & \frac{\sigma^2}{n}.
     \end{align}
 $$ 
 The standard deviation of $\overline{X}$ (also known as the *Sample Standard Error*) is
@@ -236,18 +236,18 @@ $$
 It follows from the Central Limit Theorem that
 $$
 \begin{align}
-  P(90 \le \overline{X} \le 110) & & \\ 
- &\approx & P \left(
+  P(90 \le \overline{X} \le 110)  & \\ 
+ \approx & P \left(
      \frac{90 - E[\overline{X}]}{\sqrt{Var(\overline{X})}} \le
      \frac{\overline{X} - E[\overline{X}]}{\sqrt{Var(\overline{X})}}
      \le \frac{110 - E[\overline{X}]}{\sqrt{Var(\overline{X})}} 
   \right) \\ 
-  &=& P \left(
+  =& P \left(
   \frac{90 - 100}{20} \le
   Z
   \le \frac{110 - 100}{20} 
   \right) \\ 
-  &=& P \left(
+  =& P \left(
   - \frac{1}{2} \le
   Z
   \le \frac{1}{2} 
@@ -269,8 +269,8 @@ The solution matches that for the first example as the CLT does not rely on whet
 came from the exponential distribution. We just need the mean and the variance.
 
 > ### Example: Southampton Football Club ###
-> 	Southampton Football Club play $38$ independent games every season. 
-> 	each of the games they have probability $0.7$ of winning.
+> 	Southampton Football Club play $38$ independent games every season. They have a probability of $0.7$ of 
+> 	winning each of the games.
 > 	What is the probability they win at least $25$ games?
 
 ### Solution ### 
@@ -280,14 +280,14 @@ $P (Y \ge 25)$. We now use the CLT to approximate this probability.
 
 $$
 \begin{align}
- P (Y \ge 25) && \\ 
-&\approx& P  \left(
+ P (Y \ge 25) & \\ 
+\approx& P  \left(
 Z \ge \frac{25 - np}{\sqrt{npq}} \right) \\ 
-&=& P \left(
+=& P \left(
 Z \ge \frac{25 - 26.6}{\sqrt{7.98}} \right) \\ 
-&=& P \left(
+=& P \left(
 Z \ge \frac{25 - 26.6}{\sqrt{7.98}} \right) \\ 
-&=& P \left(
+=& P \left(
 Z \ge -0.5664 \right) = P \left(
 Z \le 0.5664 \right) \approx 71.57\%.
 \end{align}
@@ -296,15 +296,15 @@ $$
 Second Solution: 
 $$ 
     \begin{align}
-	 P (Y \ge 25) & = &  P (Y \ge 25 - 0.5) 
+	 P (Y \ge 25)  = &  P (Y \ge 25 - 0.5) 
 	     \qquad (\mbox{``Continuity correction''})  \\ 
-	&\approx& P  \left(
+	\approx& P  \left(
 	Z \ge \frac{24.5 - np}{\sqrt{npq}} \right) \\ 
-	&=& P \left(
+	=& P \left(
 	Z \ge \frac{24.5 - 26.6}{\sqrt{7.98}} \right) \\ 
-	&=& P \left(
+	=& P \left(
 	Z \ge \frac{24.5 - 26.6}{\sqrt{7.98}} \right) \\ 
-	&=& P \left(
+	=& P \left(
 	Z \ge -0.7434 \right) = P \left(
 	Z \le 0.7434 \right) \approx 77.04\%.
     \end{align}
@@ -329,16 +329,16 @@ $128,000$ RMB if the population mean is $\mu = 120,000$.
 
 $$
 \begin{align}
-	 P (\overline{X} \ge 128000) && \\ 
-	&\approx & P \left(
+	 P (\overline{X} \ge 128000) & \\ 
+	\approx & P \left(
 	\frac{\overline{X} - E[\overline{X}]}{\sqrt{Var(\overline{X})}}
 	\ge \frac{128000 - E[\overline{X}]}{\sqrt{Var(\overline{X})}} 
 	\right) \\ 
-	&=& P \left(
+	=& P \left(
 	Z
 	\ge \frac{128000 - 120000}{\sigma/\sqrt{100}} 
 	\right) \\ 
-	&=& P \left(
+	=& P \left(
 	Z
 	\ge 1.33  
 	\right) = 1 - \Phi(1.33) = 1 - 0.9082 = 0.0918. 
