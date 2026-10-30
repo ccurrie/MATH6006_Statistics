@@ -1,0 +1,409 @@
+---
+title: "Estimation and Confidence Intervals"
+format:
+  html:
+    toc: true
+    number-sections: false
+execute:
+  eval: false
+  echo: false
+  warning: false
+  error: false
+---
+
+
+From this chapter and onwards, we will derive inference on population parameters such as
+mean and variance, which are usually unknown. One key objective of sampling is to 
+estimate their values. We may also estimate a range (interval) that contains
+the true value of each parameter with certain confidence.
+The former inference is called *Point Estimation* and the latter is called 
+*Confidence Interval Estimation*.
+
+
+## Point Estimation ##
+
+Suppose $X_1, \ldots, X_n$ are i.i.d. of a random variable $X$, which has mean $\mu$
+and variance $\sigma^2$. It follows from the preceding chapter that the sample mean
+$$
+  \overline{X} = \frac 1n (X_1 + X_2 + \cdots + X_n)
+$$
+is also a random variable and its mean is $\mu$. 
+Hence $\overline{X}$ is often called an *estimator* of $\mu$ (the population parameter). If $X_i$ takes an actual value $x_i$, then the actual average
+$$
+  \overline{x} = \frac 1n (x_1 + x_2 + \cdots + x_n)
+$$
+is called the *estimate*. That is, the *estimate* is a particular value of
+the *estimator*, which is a random variable.
+
+There might be several estimators for one population parameter. For example, the sample mean and the sample median are two widely used estimators of the population mean $\mu$. 
+
+We may also be interested in a number of population parameters; for example when parameterising the normal distribution, $\mu$
+and $\sigma$ are both being estimated. The variable $\theta$ is often used to represent a generic population parameter. 
+
+A good estimator will be unbiased, as we define below.
+
+> ### Unbiased Estimator ###
+> A point estimator $\hat{\theta}$ is said to be an *unbiased estimator* of a population parameter $\theta$ if its expected value is equal to that parameter; that is, if
+> $$
+>   E[\hat{\theta}] = \theta,
+> $$	
+> then $\hat{\theta}$ is an unbiased estimator of $\theta$.
+
+
+Using this definition, we can see the following.
+
+* The sample mean is an unbiased estimator of $\mu$:
+	$$
+	E[\overline{X}] = \mu.
+	$$
+* The sample variance is an unbiased estimator of $\sigma^2$:
+	$$
+	  E[S^2] = \sigma^2.
+	$$
+
+We can also define the bias of an estimator.
+
+> ### Definition: Bias ###
+> Let $\hat{\theta}$ be an estimator of $\theta$. The *bias* in $\hat{\theta}$ is defined as
+> the difference between its mean and $\theta$,
+> $$
+> \texttt{bias}(\hat{\theta})  = E[\hat{\theta}] - \theta.
+> $$
+
+It follows that the bias of an unbiased estimator is $0$.
+
+An estimator $\hat{\theta}$ of a parameter $\theta$ is a function of a given sample $\{X_i\}$, and thus is a random
+variable. We sometimes write $\hat{\theta} = \hat{\theta}(X_1,...,X_n)$ to indicate that $\hat{\theta}$ depends on $(X_1,...,X_n)$. 
+
+Another important concept is the *consistency* of an estimator.
+
+> ### Definition: Consistency ###
+> An estimator $\hat{\theta}$ is *consistent* if the expected squared error
+> tends to zero as the size of the sample n tends to $\infty$, i.e.
+> $$
+> 	E[(\hat{\theta} - \theta)^2] \rightarrow 0 \ \mbox{as} \ n \rightarrow \infty.
+> $$
+
+
+Suppose we have two unbiased estimators $\hat{\theta}_1$ and $\hat{\theta}_2$ of an unknown
+parameter  $\theta$. We use the estimator with the smaller variance. For example,
+if
+$$
+  Var( \hat{\theta}_1 ) \le  Var( \hat{\theta}_2 ),
+$$
+then $\hat{\theta}_1$ is preferred over $\hat{\theta}_2$.
+
+The method of moments can be useful in parameterising continuous distributions. An alternative, which is widely used, but we do not discuss here, is to maximise the likelihood.
+
+## Method of Moments ##
+The method of moments equates the sample moments (e.g. mean and variance) with the theoretical moments of the distribution being fitted. 
+
+> ### Example ###
+> A sample $X_1,...,X_n \sim exp(\lambda)$. We would like to estimate $\lambda$ using the sample.
+> 
+> First, we compute the sample mean
+> $$
+> 	\bar{x} = \frac 1n(x_1 + x_2 + \ldots + x_n).
+> $$
+>  We then use the fact that $\mu = 1/\lambda$ to get
+> $$
+>   \bar{x} = \frac{1}{\hat{\lambda}}.
+> $$
+> Hence, the estimated $\hat{\lambda}$ is
+> $$
+> \hat{\lambda} = \frac{1}{\bar{x}}.
+> $$
+
+If a model has two parameters, $\theta_1$ and $\theta_2$, then we typically use the mean and variance. By considering the distribution, we can say that
+$$
+ \mu(\hat{\theta}_1,\hat{\theta}_2) = \hat{X} \qquad \mbox{and} \qquad \sigma^2(\hat{\theta}_1,\hat{\theta}_2) = S^2.
+$$
+We then solve the system of equations for $\hat{\theta}_1$ and $\hat{\theta}_2$.
+
+
+> ### Exercise: Estimate $\theta$ Using the Method of Moments ###
+> Let $x_1, x_2, \ldots, x_n$ be a random sample from a distribution with pdf
+> $$
+> f(x;\theta) = \frac{1}{\theta}x^{(1-\theta)/\theta}, \qquad 0 < x < 1,
+> $$
+> where $\theta \in \Theta = \left\{\theta | 0 < \theta < \infty \right\}$. Use the method of moments to estimate $\theta$.
+
+We first find the expected value using the distribution $f(x)$
+$$
+ \bar{x} = \int_{0}^{1} x \frac{x^{(1-\theta)/\theta}}{\theta}dx
+$$
+Organising the powers of $x$,
+$$
+\bar{x} = \frac{1}{\theta}\int_{0}^{1} x^{1/\theta} dx = \frac{1}{1+\theta}.
+$$
+We can then rearrange to find the estimator $\tilde{\theta} = \frac{1}{x} - 1$.
+
+## Confidence Interval Estimation ##
+
+A confidence interval (CI) is a method of expressing the accuracy of an estimate. Suppose
+$\hat{\theta} = \hat{\theta}(X_1,...,X_n)$ is an estimator for $\theta$, then if we can find functions $U$ and
+$L$ such that
+\begin{align*}
+P(\theta > U(\hat{\theta}) = & U(X_1,...,X_n)) = \alpha /2 \\
+P(\theta < L(\hat{\theta}) = & L(X_1,...,X_n)) = \alpha /2,
+\end{align*}
+we say that $(L(x_1,...,x_n), U(x_1,...,x_n))$ is a 100(1 - $\alpha$)\% Confidence Interval (CI) for
+$\theta$.
+The most common form of CI is a 95\% CI for the mean of a distribution. Note that the CI does not need to be symmetric.
+
+### Confidence Interval for $\mu$ ###
+
+1. The case when $\sigma$ is known.
+
+For this case, the Central Limit Theorem will allow us to construct a confidence interval for $\mu$.
+
+Let $X_1,...,X_n$ be i.i.d.
+variable with mean $\mu$ and variance $\sigma^2$. We know that the r.v. $\overline{X}$ is an estimator for $\mu$.
+Further, we standardize $\overline{X}$ and get $Z = \sqrt{n}(\overline{X} - \mu)/\sigma$: Now we need to determine
+$z_{\alpha/2}$ such that
+$$
+P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1 - \alpha
+$$
+or after rearranging,
+$$
+P \left(\overline{X} -z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \leq \mu \leq \overline{X} +z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \right) =
+1 - \alpha
+$$
+By the Central Limit Theorem for large $n$ we have
+$$
+Z = \frac{\bar{x}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N(0,1)
+$$
+Therefore, we can easily calculate $z_{\alpha/2}$ for a given $\alpha$. 
+
+For example, for $95\%$ confidence intervals and known $\sigma$, the confidence intervals can be written as
+$$
+ \left[ \bar{x} -1.96 \frac{\sigma}{\sqrt{n}},\bar{x} + 1.96 \frac{\sigma}{\sqrt{n}} \right]
+ $$
+
+Summarising:
+
+1. The $100(1-\alpha)\%$ Confidence Interval (CI) is given by
+	$$
+	 \left[
+	  \bar{x} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \ 
+	  \bar{x} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+	 \right]
+	$$
+2.  The *Margin of Error* (ME) (also known as the sample error) is
+	$$
+	  \texttt{ME} = z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+	$$
+	Note that $\frac{\sigma}{\sqrt{n}}$ is called the *sample standard error*.
+	The *Width* $w$ is equivalent to twice the margin of error:
+	$$
+	   w = 2 (\texttt{ME}).
+	$$
+3. The *Upper Confidence Limit* (UCL) is
+	$$
+	  \texttt{UCL} = \bar{x} + \texttt{ME}
+	$$
+	and the *Lower Confidence Limit* (LCL) is
+	$$
+	\texttt{LCL} = \bar{x} - \texttt{ME}.
+	$$
+
+Taking $\alpha$ = 0.05 we construct the 95\% interval for $\mu$ :
+\begin{align*}
+0.95 & = P(-1.96 < Z < 1.96) \\
+& = P\left(-1.96 < \frac{\overline{X}-\mu}{\sigma/\sqrt{n}} < 1.96 \right) \\
+& = P \left(-1.96\frac{\sigma}{\sqrt{n}} < \overline{X}-\mu < 1.96\frac{\sigma}{\sqrt{n}} \right) \\
+& = P\left(\overline{X}-1.96\frac{\sigma}{\sqrt{n}} < \mu < \overline{X}+1.96\frac{\sigma}{\sqrt{n}} \right).
+\end{align*}
+So $[\bar{x} - 1.96\sigma/\sqrt{n},\ \bar{x} + 1.96\sigma/\sqrt{n}]$ is a 95\% CI for $\mu$.
+
+
+> ### Example: Student Waiting Times ###
+> Suppose that the waiting times for students at a university student service centre are 
+> normally distributed with known population standard deviation of $18$ minutes.
+> A random sample of $81$ students in the center has a mean waiting time of $25$ minutes.
+> Find the sample standard error, the margin of error, and the upper and lower confidence limits,	
+> of a $95\%$ CI for the population mean $\mu$	
+
+We have the following information:
+$$
+ \bar{x} = 25, \qquad \sigma = 18, \qquad n = 81, \qquad \mbox{and} \qquad
+ \alpha = 5\%.
+$$
+
+* The sample standard error of the estimator $\overline{X}$ is
+$$
+\frac{\sigma}{\sqrt{n}} = \frac{18}{\sqrt{81}} = 2.
+$$
+* The margin of error is
+$$
+\texttt{ME} = z_{\alpha/2} \frac{\sigma}{\sqrt{n}} = 1.96 \times 2 = 3.92.
+$$
+* The upper confidence limit is
+$$
+\texttt{UCL} = \bar{x} + \texttt{ME} = 25 + 3.92 = 28.92.
+$$
+* The Lower confidence limit is
+$$
+\texttt{LCL} = \bar{x} - \texttt{ME} = 25 - 3.92 = 21.08.
+$$
+
+
+The interpretation of the $95\%$ CI is as follows. 
+This particular sampling of $81$ students gives CI $[21.08,\ 28.92]$ but if we drew another sample of $81$ students, the $95\%$ CI would likely be different.
+
+Suppose we take a large number of independent samples of $81$ students from
+a very large population and we calculate for each sample the corresponding $95\%$ CI.
+Then $95\%$ of those intervals would contain
+the true value of the population mean. 
+
+In summary, the interpretation is that *in repeated sampling*, $95\%$ of
+the time this interval will contain the true value of $\mu$; the size of the CI about $\bar{x}$ gives us an idea of how reliable an
+estimate is.
+
+2. The case when $\sigma$ is unknown
+
+If the variance is unknown we use the random sample variance
+$$
+S^2 = \frac{1}{n-1}\sum^n_{i=1}(X_i-\overline{X})^2.
+$$
+This gives
+$$
+\left( \bar{x} - 1.96\frac{s}{\sqrt{n}},\ \bar{x} + 1.96\frac{s}{\sqrt{n}} \right)
+$$
+as 95\% CI. The sample standard deviation $S$ has uncertainty of its own, which make us
+less sure about the accuracy of the CI. If the population is normally distributed, we have a more powerful method to
+construct the CIs. 
+
+The construction of CIs is based on the following result.
+
+If $X_1,...,X_n$ are i.i.d. and $N(\mu, \sigma^2)$, then $\overline{X}$ is normally distributed, i.e. $\overline{X} \sim N(\mu,
+\frac{\sigma^2}{n})$ exactly for all $n$.
+Let $S^2$ be the sample variance estimator. Then the random
+variable
+$$
+T_n = \frac{\overline{X}-\mu}{\sqrt{\frac{S^2}{n}}}\ \sim \ t_{n-1}
+$$
+has $t$-distribution with $n-1$ degrees of freedom.	The $t$-distribution is similar to $N(0,1)$: it is
+symmetric and has mean $0$. For a given $0<\alpha <1$, we define
+$t_{n-1, \alpha/2}$ (also known as the reliability factor) by
+$$
+  P \left(
+  - t_{n-1, \alpha/2} \le T_n \le t_{n-1, \alpha/2}
+  \right) = 1-\alpha.
+$$
+That is
+$$
+  F_{T_n}(-t_{n-1, \alpha/2}) = \frac{\alpha}{2} \qquad \mbox{or} \qquad
+  t_{n-1, \alpha/2} = - F_{T_n}^{-1} (\alpha/2),
+$$
+where $F_{T_n}(\cdot)$ is the cumulative distribution function of $T_n$.
+
+For unknown variance, the $100(1-\alpha) \%$ confidence interval for $\mu$ is
+$$
+ \left[
+  \bar{x} - t_{n-1, \alpha/2} \frac{s}{\sqrt{n}} , \ \bar{x} + t_{n-1, \alpha/2} \frac{s}{\sqrt{n}}
+  \right]
+$$
+
+> ### Example: Confidence Intervals for a Normal Distribution ###
+> Assume that the data $x_1, x_2,..., x_{20}$ comes from a normal population with
+> sample mean $0.6605$ and sample standard deviation $0.0925$. Obtain the $95\%$ CI
+> for the population mean $\mu$.	
+ 
+We have the following information:
+$$
+  n = 20, \ \ \bar{x} = 0.6605, \ \ s = 0.0925.
+$$
+Hence, the CI is
+$$
+\begin{align}
+\mbox{CI}  &= \left[  0.6605 - t_{19, 0.025} \frac{0.0925}{\sqrt{20}} , \
+  0.6605 + t_{19, 0.025} \frac{0.0925}{\sqrt{20}}
+\right] \\ 
+&= \left[  0.6605 - 2.093 \frac{0.0925}{\sqrt{20}} , \
+0.6605 + 2.093 \frac{0.0925}{\sqrt{20}}
+\right] \\ 
+& =  [0.6172,\ 07038],
+\end{align}
+$$ 
+where the value $t_{19, 0.025} = 2.093$  comes from the statistical tables.
+
+
+## Confidence interval for a proportion $p$ ##
+
+The results presented so far are for continuous random variables but they have counterparts for discrete random variables. For example, 
+we can estimate the parameter $p$ in the binomial distribution, remembering that a binomial variable is the sum of $n$ independent Bernoulli random variables. 
+We first introduce the concept of the *sample proportion*.  
+
+> ### Definition: Sample proportion ###
+> Let $X$ be the number of successes in a binomial sample of $n$ observations with the parameter $p$. The sample proportion is
+> $$
+>   \widehat{P} = \frac Xn.
+> $$
+
+We note that $X$ is the sum of a set of $n$ independent Bernoulli random variables, each
+with probability of success $p$. As a result, $\widehat{P}$ is the mean of a set of independent random variables. Hence, 
+$\widehat{P}$ is the *point estimator* of $p$ and 
+$$
+  \hat{p} = x/n
+$$
+is the *estimate*. The Central Limit Theorem can also be used to derive
+confidence intervals for $p$.
+
+In particular, 
+	\begin{align*}
+	E[ \widehat{P} ] = & p\\
+	\sigma_{\widehat{P}} = & \sqrt{\frac{p(1-p)}{n}}.
+	\end{align*}
+If the sample size $n$ is large, the random variable
+	$$
+	  Z = \frac{ \widehat{P} - p}{\sigma_{\widehat{P}}}
+	$$
+	is approximately distributed as the standard normal. This approximation is good if
+	$$
+	  np(1-p) > 5.
+	$$
+
+
+For a given $\alpha$ there is a percentage point $z_{\alpha/2}$ such that
+$$
+P(-z_{\alpha/2} < Z < z_{\alpha/2}) = 1 - \alpha
+$$
+This allows us to say that the $100(1 - \alpha)\%$ CI for the parameter $p$ is given
+by
+$$
+\left[  \hat{p} - z_{\alpha/2} \sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n},\ \ \
+ \hat{p} + z_{\alpha/2} \sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n} \right].
+$$
+
+
+> ### Example: television sets ###
+> In a random sample of $n = 500$ families owning television sets in a village in
+> Hampshire, it is found that $x = 340$ families subscribed to Netflix. Find a 95\% CI
+> for the actual proportion of families in this village who subscribe to Netflix.
+
+From the problem, we know that
+$$
+  n = 500, \qquad  x = 340, \qquad \mbox{and} \qquad \alpha = 0.05.
+$$
+We already calculated from the standard normal that
+$z_{\alpha/2} = 1.96$ and 
+$$
+ \hat{p} = \frac{340}{500} =\frac{17}{25}, \qquad
+ \sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n} = 0.0209.
+$$
+Hence,
+$$
+ \hat{p} - z_{\alpha/2} \sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n}
+ =  0.6391
+$$
+and 
+$$
+\hat{p} + z_{\alpha/2} \sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n}
+=  0.7209.
+$$
+The $95\%$ CI is
+$$
+  [0.6391, \ 0.7209].
+$$
+

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Estimation and Confidence Intervals</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="chapter7_files/libs/clipboard/clipboard.min.js"></script>
+<script src="chapter7_files/libs/quarto-html/quarto.js"></script>
+<script src="chapter7_files/libs/quarto-html/popper.min.js"></script>
+<script src="chapter7_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="chapter7_files/libs/quarto-html/anchor.min.js"></script>
+<link href="chapter7_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="chapter7_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="chapter7_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="chapter7_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="chapter7_files/libs/bootstrap/bootstrap-1bc8a17f135ab3d594c857e9f48e611b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#point-estimation" id="toc-point-estimation" class="nav-link active" data-scroll-target="#point-estimation">Point Estimation</a></li>
+  <li><a href="#method-of-moments" id="toc-method-of-moments" class="nav-link" data-scroll-target="#method-of-moments">Method of Moments</a></li>
+  <li><a href="#confidence-interval-estimation" id="toc-confidence-interval-estimation" class="nav-link" data-scroll-target="#confidence-interval-estimation">Confidence Interval Estimation</a>
+  <ul class="collapse">
+  <li><a href="#confidence-interval-for-mu" id="toc-confidence-interval-for-mu" class="nav-link" data-scroll-target="#confidence-interval-for-mu">Confidence Interval for <span class="math inline">\(\mu\)</span></a></li>
+  </ul></li>
+  <li><a href="#confidence-interval-for-a-proportion-p" id="toc-confidence-interval-for-a-proportion-p" class="nav-link" data-scroll-target="#confidence-interval-for-a-proportion-p">Confidence interval for a proportion <span class="math inline">\(p\)</span></a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Estimation and Confidence Intervals</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>From this chapter and onwards, we will derive inference on population parameters such as mean and variance, which are usually unknown. One key objective of sampling is to estimate their values. We may also estimate a range (interval) that contains the true value of each parameter with certain confidence. The former inference is called <em>Point Estimation</em> and the latter is called <em>Confidence Interval Estimation</em>.</p>
+<section id="point-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="point-estimation">Point Estimation</h2>
+<p>Suppose <span class="math inline">\(X_1, \ldots, X_n\)</span> are i.i.d. of a random variable <span class="math inline">\(X\)</span>, which has mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. It follows from the preceding chapter that the sample mean <span class="math display">\[
+  \overline{X} = \frac 1n (X_1 + X_2 + \cdots + X_n)
+\]</span> is also a random variable and its mean is <span class="math inline">\(\mu\)</span>. Hence <span class="math inline">\(\overline{X}\)</span> is often called an <em>estimator</em> of <span class="math inline">\(\mu\)</span> (the population parameter). If <span class="math inline">\(X_i\)</span> takes an actual value <span class="math inline">\(x_i\)</span>, then the actual average <span class="math display">\[
+  \overline{x} = \frac 1n (x_1 + x_2 + \cdots + x_n)
+\]</span> is called the <em>estimate</em>. That is, the <em>estimate</em> is a particular value of the <em>estimator</em>, which is a random variable.</p>
+<p>There might be several estimators for one population parameter. For example, the sample mean and the sample median are two widely used estimators of the population mean <span class="math inline">\(\mu\)</span>.</p>
+<p>We may also be interested in a number of population parameters; for example when parameterising the normal distribution, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are both being estimated. The variable <span class="math inline">\(\theta\)</span> is often used to represent a generic population parameter.</p>
+<p>A good estimator will be unbiased, as we define below.</p>
+<blockquote class="blockquote">
+<h3 id="unbiased-estimator" class="anchored">Unbiased Estimator</h3>
+<p>A point estimator <span class="math inline">\(\hat{\theta}\)</span> is said to be an <em>unbiased estimator</em> of a population parameter <span class="math inline">\(\theta\)</span> if its expected value is equal to that parameter; that is, if <span class="math display">\[
+  E[\hat{\theta}] = \theta,
+\]</span><br>
+then <span class="math inline">\(\hat{\theta}\)</span> is an unbiased estimator of <span class="math inline">\(\theta\)</span>.</p>
+</blockquote>
+<p>Using this definition, we can see the following.</p>
+<ul>
+<li>The sample mean is an unbiased estimator of <span class="math inline">\(\mu\)</span>: <span class="math display">\[
+  E[\overline{X}] = \mu.
+  \]</span></li>
+<li>The sample variance is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>: <span class="math display">\[
+    E[S^2] = \sigma^2.
+  \]</span></li>
+</ul>
+<p>We can also define the bias of an estimator.</p>
+<blockquote class="blockquote">
+<h3 id="definition-bias" class="anchored">Definition: Bias</h3>
+<p>Let <span class="math inline">\(\hat{\theta}\)</span> be an estimator of <span class="math inline">\(\theta\)</span>. The <em>bias</em> in <span class="math inline">\(\hat{\theta}\)</span> is defined as the difference between its mean and <span class="math inline">\(\theta\)</span>, <span class="math display">\[
+\texttt{bias}(\hat{\theta})  = E[\hat{\theta}] - \theta.
+\]</span></p>
+</blockquote>
+<p>It follows that the bias of an unbiased estimator is <span class="math inline">\(0\)</span>.</p>
+<p>An estimator <span class="math inline">\(\hat{\theta}\)</span> of a parameter <span class="math inline">\(\theta\)</span> is a function of a given sample <span class="math inline">\(\{X_i\}\)</span>, and thus is a random variable. We sometimes write <span class="math inline">\(\hat{\theta} = \hat{\theta}(X_1,...,X_n)\)</span> to indicate that <span class="math inline">\(\hat{\theta}\)</span> depends on <span class="math inline">\((X_1,...,X_n)\)</span>.</p>
+<p>Another important concept is the <em>consistency</em> of an estimator.</p>
+<blockquote class="blockquote">
+<h3 id="definition-consistency" class="anchored">Definition: Consistency</h3>
+<p>An estimator <span class="math inline">\(\hat{\theta}\)</span> is <em>consistent</em> if the expected squared error tends to zero as the size of the sample n tends to <span class="math inline">\(\infty\)</span>, i.e. <span class="math display">\[
+  E[(\hat{\theta} - \theta)^2] \rightarrow 0 \ \mbox{as} \ n \rightarrow \infty.
+\]</span></p>
+</blockquote>
+<p>Suppose we have two unbiased estimators <span class="math inline">\(\hat{\theta}_1\)</span> and <span class="math inline">\(\hat{\theta}_2\)</span> of an unknown parameter <span class="math inline">\(\theta\)</span>. We use the estimator with the smaller variance. For example, if <span class="math display">\[
+  Var( \hat{\theta}_1 ) \le  Var( \hat{\theta}_2 ),
+\]</span> then <span class="math inline">\(\hat{\theta}_1\)</span> is preferred over <span class="math inline">\(\hat{\theta}_2\)</span>.</p>
+<p>The method of moments can be useful in parameterising continuous distributions. An alternative, which is widely used, but we do not discuss here, is to maximise the likelihood.</p>
+</section>
+<section id="method-of-moments" class="level2">
+<h2 class="anchored" data-anchor-id="method-of-moments">Method of Moments</h2>
+<p>The method of moments equates the sample moments (e.g.&nbsp;mean and variance) with the theoretical moments of the distribution being fitted.</p>
+<blockquote class="blockquote">
+<h3 id="example" class="anchored">Example</h3>
+<p>A sample <span class="math inline">\(X_1,...,X_n \sim exp(\lambda)\)</span>. We would like to estimate <span class="math inline">\(\lambda\)</span> using the sample.</p>
+<p>First, we compute the sample mean <span class="math display">\[
+  \bar{x} = \frac 1n(x_1 + x_2 + \ldots + x_n).
+\]</span> We then use the fact that <span class="math inline">\(\mu = 1/\lambda\)</span> to get <span class="math display">\[
+  \bar{x} = \frac{1}{\hat{\lambda}}.
+\]</span> Hence, the estimated <span class="math inline">\(\hat{\lambda}\)</span> is <span class="math display">\[
+\hat{\lambda} = \frac{1}{\bar{x}}.
+\]</span></p>
+</blockquote>
+<p>If a model has two parameters, <span class="math inline">\(\theta_1\)</span> and <span class="math inline">\(\theta_2\)</span>, then we typically use the mean and variance. By considering the distribution, we can say that <span class="math display">\[
+\mu(\hat{\theta}_1,\hat{\theta}_2) = \hat{X} \qquad \mbox{and} \qquad \sigma^2(\hat{\theta}_1,\hat{\theta}_2) = S^2.
+\]</span> We then solve the system of equations for <span class="math inline">\(\hat{\theta}_1\)</span> and <span class="math inline">\(\hat{\theta}_2\)</span>.</p>
+<blockquote class="blockquote">
+<h3 id="exercise-estimate-theta-using-the-method-of-moments" class="anchored">Exercise: Estimate <span class="math inline">\(\theta\)</span> Using the Method of Moments</h3>
+<p>Let <span class="math inline">\(x_1, x_2, \ldots, x_n\)</span> be a random sample from a distribution with pdf <span class="math display">\[
+f(x;\theta) = \frac{1}{\theta}x^{(1-\theta)/\theta}, \qquad 0 &lt; x &lt; 1,
+\]</span> where <span class="math inline">\(\theta \in \Theta = \left\{\theta | 0 &lt; \theta &lt; \infty \right\}\)</span>. Use the method of moments to estimate <span class="math inline">\(\theta\)</span>.</p>
+</blockquote>
+<p>We first find the expected value using the distribution <span class="math inline">\(f(x)\)</span> <span class="math display">\[
+\bar{x} = \int_{0}^{1} x \frac{x^{(1-\theta)/\theta}}{\theta}dx
+\]</span> Organising the powers of <span class="math inline">\(x\)</span>, <span class="math display">\[
+\bar{x} = \frac{1}{\theta}\int_{0}^{1} x^{1/\theta} dx = \frac{1}{1+\theta}.
+\]</span> We can then rearrange to find the estimator <span class="math inline">\(\tilde{\theta} = \frac{1}{x} - 1\)</span>.</p>
+</section>
+<section id="confidence-interval-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-interval-estimation">Confidence Interval Estimation</h2>
+<p>A confidence interval (CI) is a method of expressing the accuracy of an estimate. Suppose <span class="math inline">\(\hat{\theta} = \hat{\theta}(X_1,...,X_n)\)</span> is an estimator for <span class="math inline">\(\theta\)</span>, then if we can find functions <span class="math inline">\(U\)</span> and <span class="math inline">\(L\)</span> such that <span class="math display">\[\begin{align*}
+P(\theta &gt; U(\hat{\theta}) = &amp; U(X_1,...,X_n)) = \alpha /2 \\
+P(\theta &lt; L(\hat{\theta}) = &amp; L(X_1,...,X_n)) = \alpha /2,
+\end{align*}\]</span> we say that <span class="math inline">\((L(x_1,...,x_n), U(x_1,...,x_n))\)</span> is a 100(1 - <span class="math inline">\(\alpha\)</span>)% Confidence Interval (CI) for <span class="math inline">\(\theta\)</span>. The most common form of CI is a 95% CI for the mean of a distribution. Note that the CI does not need to be symmetric.</p>
+<section id="confidence-interval-for-mu" class="level3">
+<h3 class="anchored" data-anchor-id="confidence-interval-for-mu">Confidence Interval for <span class="math inline">\(\mu\)</span></h3>
+<ol type="1">
+<li>The case when <span class="math inline">\(\sigma\)</span> is known.</li>
+</ol>
+<p>For this case, the Central Limit Theorem will allow us to construct a confidence interval for <span class="math inline">\(\mu\)</span>.</p>
+<p>Let <span class="math inline">\(X_1,...,X_n\)</span> be i.i.d. variable with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. We know that the r.v. <span class="math inline">\(\overline{X}\)</span> is an estimator for <span class="math inline">\(\mu\)</span>. Further, we standardize <span class="math inline">\(\overline{X}\)</span> and get <span class="math inline">\(Z = \sqrt{n}(\overline{X} - \mu)/\sigma\)</span>: Now we need to determine <span class="math inline">\(z_{\alpha/2}\)</span> such that <span class="math display">\[
+P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1 - \alpha
+\]</span> or after rearranging, <span class="math display">\[
+P \left(\overline{X} -z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \leq \mu \leq \overline{X} +z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \right) =
+1 - \alpha
+\]</span> By the Central Limit Theorem for large <span class="math inline">\(n\)</span> we have <span class="math display">\[
+Z = \frac{\bar{x}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N(0,1)
+\]</span> Therefore, we can easily calculate <span class="math inline">\(z_{\alpha/2}\)</span> for a given <span class="math inline">\(\alpha\)</span>.</p>
+<p>For example, for <span class="math inline">\(95\%\)</span> confidence intervals and known <span class="math inline">\(\sigma\)</span>, the confidence intervals can be written as <span class="math display">\[
+\left[ \bar{x} -1.96 \frac{\sigma}{\sqrt{n}},\bar{x} + 1.96 \frac{\sigma}{\sqrt{n}} \right]
+\]</span></p>
+<p>Summarising:</p>
+<ol type="1">
+<li>The <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence Interval (CI) is given by <span class="math display">\[
+  \left[
+   \bar{x} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \
+   \bar{x} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+  \right]
+\]</span></li>
+<li>The <em>Margin of Error</em> (ME) (also known as the sample error) is <span class="math display">\[
+  \texttt{ME} = z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+\]</span> Note that <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span> is called the <em>sample standard error</em>. The <em>Width</em> <span class="math inline">\(w\)</span> is equivalent to twice the margin of error: <span class="math display">\[
+   w = 2 (\texttt{ME}).
+\]</span></li>
+<li>The <em>Upper Confidence Limit</em> (UCL) is <span class="math display">\[
+   \texttt{UCL} = \bar{x} + \texttt{ME}
+\]</span> and the <em>Lower Confidence Limit</em> (LCL) is <span class="math display">\[
+\texttt{LCL} = \bar{x} - \texttt{ME}.
+\]</span></li>
+</ol>
+<p>Taking <span class="math inline">\(\alpha\)</span> = 0.05 we construct the 95% interval for <span class="math inline">\(\mu\)</span> : <span class="math display">\[\begin{align*}
+0.95 &amp; = P(-1.96 &lt; Z &lt; 1.96) \\
+&amp; = P\left(-1.96 &lt; \frac{\overline{X}-\mu}{\sigma/\sqrt{n}} &lt; 1.96 \right) \\
+&amp; = P \left(-1.96\frac{\sigma}{\sqrt{n}} &lt; \overline{X}-\mu &lt; 1.96\frac{\sigma}{\sqrt{n}} \right) \\
+&amp; = P\left(\overline{X}-1.96\frac{\sigma}{\sqrt{n}} &lt; \mu &lt; \overline{X}+1.96\frac{\sigma}{\sqrt{n}} \right).
+\end{align*}\]</span> So <span class="math inline">\([\bar{x} - 1.96\sigma/\sqrt{n},\ \bar{x} + 1.96\sigma/\sqrt{n}]\)</span> is a 95% CI for <span class="math inline">\(\mu\)</span>.</p>
+<blockquote class="blockquote">
+<h3 id="example-student-waiting-times" class="anchored">Example: Student Waiting Times</h3>
+<p>Suppose that the waiting times for students at a university student service centre are normally distributed with known population standard deviation of <span class="math inline">\(18\)</span> minutes. A random sample of <span class="math inline">\(81\)</span> students in the center has a mean waiting time of <span class="math inline">\(25\)</span> minutes. Find the sample standard error, the margin of error, and the upper and lower confidence limits,<br>
+of a <span class="math inline">\(95\%\)</span> CI for the population mean <span class="math inline">\(\mu\)</span></p>
+</blockquote>
+<p>We have the following information: <span class="math display">\[
+\bar{x} = 25, \qquad \sigma = 18, \qquad n = 81, \qquad \mbox{and} \qquad
+\alpha = 5\%.
+\]</span></p>
+<ul>
+<li>The sample standard error of the estimator <span class="math inline">\(\overline{X}\)</span> is <span class="math display">\[
+\frac{\sigma}{\sqrt{n}} = \frac{18}{\sqrt{81}} = 2.
+\]</span></li>
+<li>The margin of error is <span class="math display">\[
+\texttt{ME} = z_{\alpha/2} \frac{\sigma}{\sqrt{n}} = 1.96 \times 2 = 3.92.
+\]</span></li>
+<li>The upper confidence limit is <span class="math display">\[
+\texttt{UCL} = \bar{x} + \texttt{ME} = 25 + 3.92 = 28.92.
+\]</span></li>
+<li>The Lower confidence limit is <span class="math display">\[
+\texttt{LCL} = \bar{x} - \texttt{ME} = 25 - 3.92 = 21.08.
+\]</span></li>
+</ul>
+<p>The interpretation of the <span class="math inline">\(95\%\)</span> CI is as follows. This particular sampling of <span class="math inline">\(81\)</span> students gives CI <span class="math inline">\([21.08,\ 28.92]\)</span> but if we drew another sample of <span class="math inline">\(81\)</span> students, the <span class="math inline">\(95\%\)</span> CI would likely be different.</p>
+<p>Suppose we take a large number of independent samples of <span class="math inline">\(81\)</span> students from a very large population and we calculate for each sample the corresponding <span class="math inline">\(95\%\)</span> CI. Then <span class="math inline">\(95\%\)</span> of those intervals would contain the true value of the population mean.</p>
+<p>In summary, the interpretation is that <em>in repeated sampling</em>, <span class="math inline">\(95\%\)</span> of the time this interval will contain the true value of <span class="math inline">\(\mu\)</span>; the size of the CI about <span class="math inline">\(\bar{x}\)</span> gives us an idea of how reliable an estimate is.</p>
+<ol start="2" type="1">
+<li>The case when <span class="math inline">\(\sigma\)</span> is unknown</li>
+</ol>
+<p>If the variance is unknown we use the random sample variance <span class="math display">\[
+S^2 = \frac{1}{n-1}\sum^n_{i=1}(X_i-\overline{X})^2.
+\]</span> This gives <span class="math display">\[
+\left( \bar{x} - 1.96\frac{s}{\sqrt{n}},\ \bar{x} + 1.96\frac{s}{\sqrt{n}} \right)
+\]</span> as 95% CI. The sample standard deviation <span class="math inline">\(S\)</span> has uncertainty of its own, which make us less sure about the accuracy of the CI. If the population is normally distributed, we have a more powerful method to construct the CIs.</p>
+<p>The construction of CIs is based on the following result.</p>
+<p>If <span class="math inline">\(X_1,...,X_n\)</span> are i.i.d. and <span class="math inline">\(N(\mu, \sigma^2)\)</span>, then <span class="math inline">\(\overline{X}\)</span> is normally distributed, i.e.&nbsp;<span class="math inline">\(\overline{X} \sim N(\mu,
+\frac{\sigma^2}{n})\)</span> exactly for all <span class="math inline">\(n\)</span>. Let <span class="math inline">\(S^2\)</span> be the sample variance estimator. Then the random variable <span class="math display">\[
+T_n = \frac{\overline{X}-\mu}{\sqrt{\frac{S^2}{n}}}\ \sim \ t_{n-1}
+\]</span> has <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom. The <span class="math inline">\(t\)</span>-distribution is similar to <span class="math inline">\(N(0,1)\)</span>: it is symmetric and has mean <span class="math inline">\(0\)</span>. For a given <span class="math inline">\(0&lt;\alpha &lt;1\)</span>, we define <span class="math inline">\(t_{n-1, \alpha/2}\)</span> (also known as the reliability factor) by <span class="math display">\[
+  P \left(
+  - t_{n-1, \alpha/2} \le T_n \le t_{n-1, \alpha/2}
+  \right) = 1-\alpha.
+\]</span> That is <span class="math display">\[
+  F_{T_n}(-t_{n-1, \alpha/2}) = \frac{\alpha}{2} \qquad \mbox{or} \qquad
+  t_{n-1, \alpha/2} = - F_{T_n}^{-1} (\alpha/2),
+\]</span> where <span class="math inline">\(F_{T_n}(\cdot)\)</span> is the cumulative distribution function of <span class="math inline">\(T_n\)</span>.</p>
+<p>For unknown variance, the <span class="math inline">\(100(1-\alpha) \%\)</span> confidence interval for <span class="math inline">\(\mu\)</span> is <span class="math display">\[
+\left[
+  \bar{x} - t_{n-1, \alpha/2} \frac{s}{\sqrt{n}} , \ \bar{x} + t_{n-1, \alpha/2} \frac{s}{\sqrt{n}}
+  \right]
+\]</span></p>
+<blockquote class="blockquote">
+<h3 id="example-confidence-intervals-for-a-normal-distribution" class="anchored">Example: Confidence Intervals for a Normal Distribution</h3>
+<p>Assume that the data <span class="math inline">\(x_1, x_2,..., x_{20}\)</span> comes from a normal population with sample mean <span class="math inline">\(0.6605\)</span> and sample standard deviation <span class="math inline">\(0.0925\)</span>. Obtain the <span class="math inline">\(95\%\)</span> CI for the population mean <span class="math inline">\(\mu\)</span>.</p>
+</blockquote>
+<p>We have the following information: <span class="math display">\[
+  n = 20, \ \ \bar{x} = 0.6605, \ \ s = 0.0925.
+\]</span> Hence, the CI is <span class="math display">\[
+\begin{align}
+\mbox{CI}  &amp;= \left[  0.6605 - t_{19, 0.025} \frac{0.0925}{\sqrt{20}} , \
+  0.6605 + t_{19, 0.025} \frac{0.0925}{\sqrt{20}}
+\right] \\
+&amp;= \left[  0.6605 - 2.093 \frac{0.0925}{\sqrt{20}} , \
+0.6605 + 2.093 \frac{0.0925}{\sqrt{20}}
+\right] \\
+&amp; =  [0.6172,\ 07038],
+\end{align}
+\]</span> where the value <span class="math inline">\(t_{19, 0.025} = 2.093\)</span> comes from the statistical tables.</p>
+</section>
+</section>
+<section id="confidence-interval-for-a-proportion-p" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-interval-for-a-proportion-p">Confidence interval for a proportion <span class="math inline">\(p\)</span></h2>
+<p>The results presented so far are for continuous random variables but they have counterparts for discrete random variables. For example, we can estimate the parameter <span class="math inline">\(p\)</span> in the binomial distribution, remembering that a binomial variable is the sum of <span class="math inline">\(n\)</span> independent Bernoulli random variables. We first introduce the concept of the <em>sample proportion</em>.</p>
+<blockquote class="blockquote">
+<h3 id="definition-sample-proportion" class="anchored">Definition: Sample proportion</h3>
+<p>Let <span class="math inline">\(X\)</span> be the number of successes in a binomial sample of <span class="math inline">\(n\)</span> observations with the parameter <span class="math inline">\(p\)</span>. The sample proportion is <span class="math display">\[
+  \widehat{P} = \frac Xn.
+\]</span></p>
+</blockquote>
+<p>We note that <span class="math inline">\(X\)</span> is the sum of a set of <span class="math inline">\(n\)</span> independent Bernoulli random variables, each with probability of success <span class="math inline">\(p\)</span>. As a result, <span class="math inline">\(\widehat{P}\)</span> is the mean of a set of independent random variables. Hence, <span class="math inline">\(\widehat{P}\)</span> is the <em>point estimator</em> of <span class="math inline">\(p\)</span> and <span class="math display">\[
+  \hat{p} = x/n
+\]</span> is the <em>estimate</em>. The Central Limit Theorem can also be used to derive confidence intervals for <span class="math inline">\(p\)</span>.</p>
+<p>In particular, <span class="math display">\[\begin{align*}
+    E[ \widehat{P} ] = &amp; p\\
+    \sigma_{\widehat{P}} = &amp; \sqrt{\frac{p(1-p)}{n}}.
+    \end{align*}\]</span> If the sample size <span class="math inline">\(n\)</span> is large, the random variable <span class="math display">\[
+      Z = \frac{ \widehat{P} - p}{\sigma_{\widehat{P}}}
+    \]</span> is approximately distributed as the standard normal. This approximation is good if <span class="math display">\[
+      np(1-p) &gt; 5.
+    \]</span></p>
+<p>For a given <span class="math inline">\(\alpha\)</span> there is a percentage point <span class="math inline">\(z_{\alpha/2}\)</span> such that <span class="math display">\[
+P(-z_{\alpha/2} &lt; Z &lt; z_{\alpha/2}) = 1 - \alpha
+\]</span> This allows us to say that the <span class="math inline">\(100(1 - \alpha)\%\)</span> CI for the parameter <span class="math inline">\(p\)</span> is given by <span class="math display">\[
+\left[  \hat{p} - z_{\alpha/2} \sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n},\ \ \
+\hat{p} + z_{\alpha/2} \sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n} \right].
+\]</span></p>
+<blockquote class="blockquote">
+<h3 id="example-television-sets" class="anchored">Example: television sets</h3>
+<p>In a random sample of <span class="math inline">\(n = 500\)</span> families owning television sets in a village in Hampshire, it is found that <span class="math inline">\(x = 340\)</span> families subscribed to Netflix. Find a 95% CI for the actual proportion of families in this village who subscribe to Netflix.</p>
+</blockquote>
+<p>From the problem, we know that <span class="math display">\[
+  n = 500, \qquad  x = 340, \qquad \mbox{and} \qquad \alpha = 0.05.
+\]</span> We already calculated from the standard normal that <span class="math inline">\(z_{\alpha/2} = 1.96\)</span> and <span class="math display">\[
+\hat{p} = \frac{340}{500} =\frac{17}{25}, \qquad
+\sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n} = 0.0209.
+\]</span> Hence, <span class="math display">\[
+\hat{p} - z_{\alpha/2} \sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n}
+=  0.6391
+\]</span> and <span class="math display">\[
+\hat{p} + z_{\alpha/2} \sqrt{\frac{\hat{p} \left(1- \hat{p} \right)}n}
+=  0.7209.
+\]</span> The <span class="math inline">\(95\%\)</span> CI is <span class="math display">\[
+  [0.6391, \ 0.7209].
+\]</span></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
