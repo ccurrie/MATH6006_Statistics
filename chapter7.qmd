@@ -136,7 +136,7 @@ Organising the powers of $x$,
 $$
 \bar{x} = \frac{1}{\theta}\int_{0}^{1} x^{1/\theta} dx = \frac{1}{1+\theta}.
 $$
-We can then rearrange to find the estimator $\tilde{\theta} = \frac{1}{x} - 1$.
+We can then rearrange to find the estimator $\hat{\theta} = \frac{1}{\bar{x}} - 1$.
 
 ## Confidence Interval Estimation ##
 
@@ -155,11 +155,12 @@ The most common form of CI is a 95\% CI for the mean of a distribution. Note tha
 
 1. The case when $\sigma$ is known.
 
-For this case, the Central Limit Theorem will allow us to construct a confidence interval for $\mu$.
+Where $\sigma$ is known, the Central Limit Theorem allows us to construct a confidence interval for $\mu$.
 
 Let $X_1,...,X_n$ be i.i.d.
 variable with mean $\mu$ and variance $\sigma^2$. We know that the r.v. $\overline{X}$ is an estimator for $\mu$.
-Further, we standardize $\overline{X}$ and get $Z = \sqrt{n}(\overline{X} - \mu)/\sigma$: Now we need to determine
+
+Standardize $\overline{X}$ and get $Z = \sqrt{n}(\overline{X} - \mu)/\sigma$. Now we need to determine
 $z_{\alpha/2}$ such that
 $$
 P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1 - \alpha
@@ -173,7 +174,7 @@ By the Central Limit Theorem for large $n$ we have
 $$
 Z = \frac{\bar{x}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N(0,1)
 $$
-Therefore, we can easily calculate $z_{\alpha/2}$ for a given $\alpha$. 
+We can then use tables or a look up function to calculate $z_{\alpha/2}$ for a given $\alpha$. 
 
 For example, for $95\%$ confidence intervals and known $\sigma$, the confidence intervals can be written as
 $$
@@ -257,7 +258,7 @@ Then $95\%$ of those intervals would contain
 the true value of the population mean. 
 
 In summary, the interpretation is that *in repeated sampling*, $95\%$ of
-the time this interval will contain the true value of $\mu$; the size of the CI about $\bar{x}$ gives us an idea of how reliable an
+the time this interval will contain the true value of $\mu$; the width of the CI about $\bar{x}$ gives us an idea of how reliable an
 estimate is.
 
 2. The case when $\sigma$ is unknown

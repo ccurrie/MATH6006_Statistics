@@ -180,7 +180,7 @@ f(x;\theta) = \frac{1}{\theta}x^{(1-\theta)/\theta}, \qquad 0 &lt; x &lt; 1,
 \bar{x} = \int_{0}^{1} x \frac{x^{(1-\theta)/\theta}}{\theta}dx
 \]</span> Organising the powers of <span class="math inline">\(x\)</span>, <span class="math display">\[
 \bar{x} = \frac{1}{\theta}\int_{0}^{1} x^{1/\theta} dx = \frac{1}{1+\theta}.
-\]</span> We can then rearrange to find the estimator <span class="math inline">\(\tilde{\theta} = \frac{1}{x} - 1\)</span>.</p>
+\]</span> We can then rearrange to find the estimator <span class="math inline">\(\hat{\theta} = \frac{1}{\bar{x}} - 1\)</span>.</p>
 </section>
 <section id="confidence-interval-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="confidence-interval-estimation">Confidence Interval Estimation</h2>
@@ -193,15 +193,16 @@ P(\theta &lt; L(\hat{\theta}) = &amp; L(X_1,...,X_n)) = \alpha /2,
 <ol type="1">
 <li>The case when <span class="math inline">\(\sigma\)</span> is known.</li>
 </ol>
-<p>For this case, the Central Limit Theorem will allow us to construct a confidence interval for <span class="math inline">\(\mu\)</span>.</p>
-<p>Let <span class="math inline">\(X_1,...,X_n\)</span> be i.i.d. variable with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. We know that the r.v. <span class="math inline">\(\overline{X}\)</span> is an estimator for <span class="math inline">\(\mu\)</span>. Further, we standardize <span class="math inline">\(\overline{X}\)</span> and get <span class="math inline">\(Z = \sqrt{n}(\overline{X} - \mu)/\sigma\)</span>: Now we need to determine <span class="math inline">\(z_{\alpha/2}\)</span> such that <span class="math display">\[
+<p>Where <span class="math inline">\(\sigma\)</span> is known, the Central Limit Theorem allows us to construct a confidence interval for <span class="math inline">\(\mu\)</span>.</p>
+<p>Let <span class="math inline">\(X_1,...,X_n\)</span> be i.i.d. variable with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. We know that the r.v. <span class="math inline">\(\overline{X}\)</span> is an estimator for <span class="math inline">\(\mu\)</span>.</p>
+<p>Standardize <span class="math inline">\(\overline{X}\)</span> and get <span class="math inline">\(Z = \sqrt{n}(\overline{X} - \mu)/\sigma\)</span>. Now we need to determine <span class="math inline">\(z_{\alpha/2}\)</span> such that <span class="math display">\[
 P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1 - \alpha
 \]</span> or after rearranging, <span class="math display">\[
 P \left(\overline{X} -z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \leq \mu \leq \overline{X} +z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \right) =
 1 - \alpha
 \]</span> By the Central Limit Theorem for large <span class="math inline">\(n\)</span> we have <span class="math display">\[
 Z = \frac{\bar{x}-\mu}{\frac{\sigma}{\sqrt{n}}} \approx N(0,1)
-\]</span> Therefore, we can easily calculate <span class="math inline">\(z_{\alpha/2}\)</span> for a given <span class="math inline">\(\alpha\)</span>.</p>
+\]</span> We can then use tables or a look up function to calculate <span class="math inline">\(z_{\alpha/2}\)</span> for a given <span class="math inline">\(\alpha\)</span>.</p>
 <p>For example, for <span class="math inline">\(95\%\)</span> confidence intervals and known <span class="math inline">\(\sigma\)</span>, the confidence intervals can be written as <span class="math display">\[
 \left[ \bar{x} -1.96 \frac{\sigma}{\sqrt{n}},\bar{x} + 1.96 \frac{\sigma}{\sqrt{n}} \right]
 \]</span></p>
@@ -255,7 +256,7 @@ of a <span class="math inline">\(95\%\)</span> CI for the population mean <span 
 </ul>
 <p>The interpretation of the <span class="math inline">\(95\%\)</span> CI is as follows. This particular sampling of <span class="math inline">\(81\)</span> students gives CI <span class="math inline">\([21.08,\ 28.92]\)</span> but if we drew another sample of <span class="math inline">\(81\)</span> students, the <span class="math inline">\(95\%\)</span> CI would likely be different.</p>
 <p>Suppose we take a large number of independent samples of <span class="math inline">\(81\)</span> students from a very large population and we calculate for each sample the corresponding <span class="math inline">\(95\%\)</span> CI. Then <span class="math inline">\(95\%\)</span> of those intervals would contain the true value of the population mean.</p>
-<p>In summary, the interpretation is that <em>in repeated sampling</em>, <span class="math inline">\(95\%\)</span> of the time this interval will contain the true value of <span class="math inline">\(\mu\)</span>; the size of the CI about <span class="math inline">\(\bar{x}\)</span> gives us an idea of how reliable an estimate is.</p>
+<p>In summary, the interpretation is that <em>in repeated sampling</em>, <span class="math inline">\(95\%\)</span> of the time this interval will contain the true value of <span class="math inline">\(\mu\)</span>; the width of the CI about <span class="math inline">\(\bar{x}\)</span> gives us an idea of how reliable an estimate is.</p>
 <ol start="2" type="1">
 <li>The case when <span class="math inline">\(\sigma\)</span> is unknown</li>
 </ol>
