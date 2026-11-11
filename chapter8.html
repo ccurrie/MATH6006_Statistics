@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Hypothesis Testing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="chapter8_files/libs/clipboard/clipboard.min.js"></script>
+<script src="chapter8_files/libs/quarto-html/quarto.js"></script>
+<script src="chapter8_files/libs/quarto-html/popper.min.js"></script>
+<script src="chapter8_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="chapter8_files/libs/quarto-html/anchor.min.js"></script>
+<link href="chapter8_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="chapter8_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="chapter8_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="chapter8_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="chapter8_files/libs/bootstrap/bootstrap-1bc8a17f135ab3d594c857e9f48e611b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#concepts-of-hypothesis-testing" id="toc-concepts-of-hypothesis-testing" class="nav-link active" data-scroll-target="#concepts-of-hypothesis-testing">Concepts of Hypothesis Testing</a></li>
+  <li><a href="#types-of-hypothesis-tests" id="toc-types-of-hypothesis-tests" class="nav-link" data-scroll-target="#types-of-hypothesis-tests">Types of Hypothesis Tests</a>
+  <ul class="collapse">
+  <li><a href="#test-statistics" id="toc-test-statistics" class="nav-link" data-scroll-target="#test-statistics">Test Statistics</a></li>
+  <li><a href="#rejection-region" id="toc-rejection-region" class="nav-link" data-scroll-target="#rejection-region">Rejection Region</a></li>
+  <li><a href="#p-values" id="toc-p-values" class="nav-link" data-scroll-target="#p-values"><span class="math inline">\(p\)</span>-Values</a></li>
+  </ul></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a>
+  <ul class="collapse">
+  <li><a href="#test-of-the-mean-of-a-normal-distribution-population-variance-known" id="toc-test-of-the-mean-of-a-normal-distribution-population-variance-known" class="nav-link" data-scroll-target="#test-of-the-mean-of-a-normal-distribution-population-variance-known">Test of the mean of a normal distribution: population variance known</a></li>
+  <li><a href="#test-of-the-mean-of-a-normal-distribution-population-variance-unknown" id="toc-test-of-the-mean-of-a-normal-distribution-population-variance-unknown" class="nav-link" data-scroll-target="#test-of-the-mean-of-a-normal-distribution-population-variance-unknown">Test of the mean of a normal distribution: population variance unknown</a></li>
+  <li><a href="#test-of-the-population-proportion-large-samples" id="toc-test-of-the-population-proportion-large-samples" class="nav-link" data-scroll-target="#test-of-the-population-proportion-large-samples">Test of the Population Proportion (Large Samples)</a></li>
+  <li><a href="#two-tailed-significance-tests-for-population-mean-and-confidence-intervals" id="toc-two-tailed-significance-tests-for-population-mean-and-confidence-intervals" class="nav-link" data-scroll-target="#two-tailed-significance-tests-for-population-mean-and-confidence-intervals">Two-Tailed Significance Tests for Population Mean and Confidence Intervals</a></li>
+  <li><a href="#optional-the-power-of-a-test" id="toc-optional-the-power-of-a-test" class="nav-link" data-scroll-target="#optional-the-power-of-a-test">(Optional) The Power of a Test</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Hypothesis Testing</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="concepts-of-hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="concepts-of-hypothesis-testing">Concepts of Hypothesis Testing</h2>
+<p>Hypothesis tests are used to determine whether a result is real or has happened by chance. It is not possible to claim this with certainty and consequently hypotehesis tests have a probability associated with them. We describe the basic process of a hypothesis test below.</p>
+<ol type="1">
+<li>Make a claim (e.g.&nbsp;the mean is less than or equal to some critical value) denoted by <span class="math inline">\(H_0\)</span> and an alternative claim (the mean is greater than the same critical value).<br>
+</li>
+<li>Develop a test statistic <span class="math inline">\(T\)</span>, which is based on <span class="math inline">\(H_0\)</span> being true and on the sample data.</li>
+<li>Check whether your statistic <span class="math inline">\(T\)</span> satisfies the conditions laid out in part 1 at a given significance level (typically <span class="math inline">\(\alpha = 0.05\)</span>).</li>
+</ol>
+<blockquote class="blockquote">
+<h3 id="example-breakfast-bars" class="anchored">Example: Breakfast Bars</h3>
+<p>In order to meet professional regulations, the manufacturer of breakfast bars should make sure each of the produced bars weights more than <span class="math inline">\(42\)</span>g. How could the company use sample data to check if it has met this target?</p>
+</blockquote>
+<ol type="1">
+<li>Set up a hypothesis test such that <span class="math display">\[
+    H_0 \qquad   \mu \le \mu_0 = 42
+\]</span> and the alternative is <span class="math display">\[
+   H_1 \qquad   \mu &gt; 42.
+\]</span></li>
+<li>Develop a test statistic <span class="math inline">\(T\)</span>. For example, it could be <span class="math display">\[
+    Z = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}}.
+\]</span> Here, <span class="math inline">\(Z\)</span> depends on <span class="math inline">\(H_0\)</span> (the value of <span class="math inline">\(\mu_0\)</span> assumed) and the sample used to determine <span class="math inline">\(\overline{X}\)</span> (assuming <span class="math inline">\(\sigma\)</span> is known).</li>
+<li>Check whether the statistic has met the standard at a given significance level and conclude that the test shows either: (i) Fail to reject <span class="math inline">\(H_0\)</span> or (ii) Reject <span class="math inline">\(H_0\)</span>.</li>
+</ol>
+<p>In what follows we define the new concepts used in the test procedure.</p>
+<blockquote class="blockquote">
+<h3 id="definition-null-and-alternative-hypothesis" class="anchored">Definition: Null and Alternative Hypothesis</h3>
+<p>A <em>null hypothesis</em> often represents a status quo, that will be maintained unless there is strong evidence against it. If we reject the null hypothesis, then the second hypothesis, known as the <em>alternative hypothesis</em>, will be accepted.</p>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="definition-test-statistic" class="anchored">Definition: Test Statistic</h3>
+<p>In hypothesis testing, a <em>test statistic</em>, often denoted by <span class="math inline">\(T\)</span>, is developed based on the null hpothesis and a sample. Usually, the distribution of <span class="math inline">\(T\)</span> is also known and this allows us to match with a significance level.</p>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="definition-significance-level" class="anchored">Definition: Significance Level</h3>
+<p>The <em>significance level</em>, <span class="math inline">\(\alpha\)</span>, denotes the probability of rejecting <span class="math inline">\(H_0\)</span> if <span class="math inline">\(H_{0}\)</span> is true. Typically <span class="math inline">\(\alpha = 0.05\)</span> or <span class="math inline">\(5\%\)</span>.</p>
+</blockquote>
+<p>Interpreting the result of a hypothesis test requires care.</p>
+<ul>
+<li>If there is strong evidence to reject <span class="math inline">\(H_0\)</span>, we accept the alternative <span class="math inline">\(H_1\)</span>. If there is not enough evidence to reject <span class="math inline">\(H_0\)</span>, we say that we <em>fail to reject <span class="math inline">\(H_0\)</span></em> (Note: we do not say that we accept <span class="math inline">\(H_0\)</span> in this case).</li>
+<li>When we fail to reject <span class="math inline">\(H_0\)</span>, either the null hypothesis or the alternative might be true.</li>
+<li>The choice of test statistic depends on the information available and the hypothesis.</li>
+<li>The significance level is also known as <em>Type I Error</em> (the probability of rejecting <span class="math inline">\(H_0\)</span> when it is actually true). <em>Type II Error</em> is the probability of failing to reject <span class="math inline">\(H_0\)</span> when it is actually false.</li>
+</ul>
+</section>
+<section id="types-of-hypothesis-tests" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-hypothesis-tests">Types of Hypothesis Tests</h2>
+<p>We will consider a five types of hypothesis tests in this module.</p>
+<ol type="1">
+<li>Testing the mean of a single population <span class="math inline">\(E[X] = \mu\)</span> (<span class="math inline">\(H_0: \mu = \mu_0\)</span>; <span class="math inline">\(H_1: \mu \neq \mu_0\)</span> or <span class="math inline">\(\mu &lt; \mu_0\)</span> or <span class="math inline">\(\mu &gt; \mu_0\)</span>).</li>
+<li>Testing the variance of a single population <span class="math inline">\(Var(X) = \sigma^2\)</span> (<span class="math inline">\(H_0: \sigma^2 = \sigma^2_0\)</span>; <span class="math inline">\(H_1: \sigma^2 \neq \sigma^2_0\)</span> or <span class="math inline">\(\sigma^2 &lt; \sigma^2_0\)</span> or <span class="math inline">\(\sigma^2 &gt; \sigma^2_0\)</span>).</li>
+<li>Comparing the means of two populations <span class="math inline">\(E[X] = \mu_X\)</span> and <span class="math inline">\(E[Y] = \mu_Y\)</span> (<span class="math inline">\(H_0: \mu_X = \mu_Y\)</span>; <span class="math inline">\(H_1: \mu_X \neq \mu_Y\)</span> or <span class="math inline">\(\mu_X &lt; \mu_Y\)</span> or <span class="math inline">\(\mu_X &gt; \mu_Y\)</span>).</li>
+<li>Comparing the variances of two populations <span class="math inline">\(Var(X) = \sigma^2_X\)</span> and <span class="math inline">\(VarY = \sigma^2_Y\)</span> (<span class="math inline">\(H_0: \sigma^2_X = \sigma^2_Y\)</span>; <span class="math inline">\(H_1: \sigma^2_X \neq \sigma^2_Y\)</span> or <span class="math inline">\(\sigma^2_X &lt; \sigma^2_Y\)</span> or <span class="math inline">\(\sigma^2_X &gt; \sigma^2_Y\)</span>).</li>
+<li>Testing the proportion <span class="math inline">\(p\)</span> of successes in a binomial trial (<span class="math inline">\(H_0: p = p_0\)</span>; <span class="math inline">\(H_1: p \neq p_0\)</span> or <span class="math inline">\(p &lt; p_0\)</span> or <span class="math inline">\(p &gt; p_0\)</span>).</li>
+</ol>
+<p>All hypothesis tests follow a common methodology. The <em>null hypothesis</em>, <span class="math inline">\(H_0\)</span>, specifies a particular value for the statistic (mean/variance/proportion/etc), whereas the <em>alternative hypothesis</em>, <span class="math inline">\(H_1\)</span>, usually specifies a range of alternative values. The null hypothesis is conservative and represents the status quo, a theory that we want to give priority to or the hypothesis of no-change. It is the default state.</p>
+<p>The alternative hypothesis <span class="math inline">\(H_1\)</span> represents a feasible alternative to <span class="math inline">\(H_0\)</span>. It is one-sided or two-sided, and accordingly the test is called a one-sided (one-tailed) or two-sided (two-tailed) test.</p>
+<section id="test-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="test-statistics">Test Statistics</h3>
+<p>One of the important tasks in a hypothesis testing is to form a test statistic <span class="math inline">\(T\)</span>, and determine its distribution under <span class="math inline">\(H_0\)</span>. We assume <span class="math inline">\(H_0\)</span> is true when finding the distribution for the test statistic <span class="math inline">\(T\)</span>. Using the same numbering as above for the different types of hypothesis test, we can write down the relevant test statistics.</p>
+<ol type="1">
+<li><em>Test statistic in the hypothesis testing about a population mean</em> <span class="math display">\[
+H_0: \qquad \mu = \mu_0.
+\]</span>
+<ol type="a">
+<li><span class="math inline">\(\sigma\)</span> known <span class="math display">\[
+T = \frac{\overline{X}-\mu_0}{\sigma/\sqrt{n}}\ \approx \ N(0,1) \ \ \mbox{by CLT for n sufficient large;}
+\]</span></li>
+<li><span class="math inline">\(\sigma\)</span> unknown <span class="math display">\[
+T = \frac{\overline{X}-\mu_0}{S/\sqrt{n}} \left\{
+\begin{array}{ll}
+\approx N(0,1)\qquad &amp; \mbox{by CLT for} \ n \geq 100\\ [0.8ex]
+\sim t_{n-1}\qquad &amp; \mbox{if $X_i$ are normal.}
+\end{array}
+\right.
+\]</span></li>
+</ol>
+<ol start="2" type="1">
+<li><em>Test statistic in the hypothesis testing about the means of two populations</em></li>
+</ol>
+<span class="math display">\[
+    H_0: \qquad \mu_X = \mu_Y.
+\]</span>
+<ol type="a">
+<li><p>Known variances <span class="math inline">\(\sigma_1\)</span> and <span class="math inline">\(\sigma_2\)</span></p>
+<p><span class="math display">\[
+T = \frac{\overline{X} - \overline{Y} - (\mu_X - \mu_Y)}{\sqrt{\sigma_1^2 /n_X + \sigma_2^2 /n_Y}} \approx \  N(0,1).
+\]</span></p></li>
+<li><p>Unknown variances Let us define (pooled variance) <span class="math inline">\(S^2_p = ((n_X - 1)S^2_X + (n_Y - 1)S^2_Y)/(n_X +n_Y - 2)\)</span>. <span class="math display">\[
+T = \frac{\overline{X} - \overline{Y}}{\sqrt{S^2_p(\frac{1}{n_X} + \frac{1}{n_Y})}} \sim t_{n_X + n_Y - 2}
+\]</span> if <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span> are normally distributed.</p></li>
+</ol></li>
+<li><em>Test statistic in the hypothesis testing about a variance in a single population</em> <span class="math display">\[
+T = \frac{(n-1)S^2}{\sigma^2_0} = \frac{1}{\sigma^2_0} \sum^2_{i=1}(X_i-\overline{X})^2 \ \sim \ \chi^2_{n-1},
+\ \ \ \mbox{if $X_i$ are normal;}
+\]</span></li>
+</ol>
+</section>
+<section id="rejection-region" class="level3">
+<h3 class="anchored" data-anchor-id="rejection-region">Rejection Region</h3>
+<blockquote class="blockquote">
+<h3 id="definition-rejection-region" class="anchored">Definition: Rejection Region</h3>
+<p>A <em>rejection region</em> (or <em>critical region</em>) of the sample test statistic <span class="math inline">\(T\)</span> is the range of values for which the null hypothesis is not probable. In particular, for a given significance level <span class="math inline">\(\alpha\)</span>, the rejection or critical region <span class="math inline">\(C\)</span> is computed as follows.</p>
+</blockquote>
+<p>For the left-tailed test, <span class="math display">\[
+       C = (-\infty, \; t_\alpha),
+    \]</span> where <span class="math inline">\(t_\alpha\)</span> is decided by <span class="math display">\[
+     P(T \le t_\alpha) = \alpha.
+    \]</span> For the right-tailed test, <span class="math display">\[
+    C = ( t_\alpha, \ \infty),
+    \]</span> where <span class="math inline">\(t_\alpha\)</span> is decided by <span class="math display">\[
+    P(T \ge t_\alpha) = \alpha.
+    \]</span> For the two-tailed test, <span class="math display">\[
+    C = (-\infty, \; t_{\alpha/2}) \cup (t_{1-\alpha/2}, \ \infty),
+    \]</span> where <span class="math inline">\(t_{\alpha}\)</span> and <span class="math inline">\(t_{1-\alpha/2}\)</span> are respectively decided by <span class="math display">\[
+    P(T \le t_{\alpha/2}) = \frac 12 \alpha \qquad \mbox{and} \qquad
+    P(T \ge t_{1-\alpha/2}) = \frac 12 \alpha.
+    \]</span></p>
+<p>The rejection region is illustrated in the three figures below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/LeftTailedTest.png" class="img-fluid figure-img"></p>
+<figcaption>Left-Tailed Test</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/RightTailedTest.png" class="img-fluid figure-img"></p>
+<figcaption>Right-Tailed Test</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/TwoTailedTest.png" class="img-fluid figure-img"></p>
+<figcaption>Two-Tailed Test</figcaption>
+</figure>
+</div>
+<p>If the sample statistic <span class="math inline">\(t \in C\)</span>, then reject <span class="math inline">\(H_0\)</span>. If the sample statistic <span class="math inline">\(t \not\in C\)</span>, then fail to reject <span class="math inline">\(H_0\)</span>.</p>
+<p>We can think of the rejection region as the set of all values of the test statistic that cause us to reject the null hypothesis, where the significance level <span class="math inline">\(\alpha\)</span> is the probability that the test statistic will fall in the rejection region when the null hypothesis is actually true (Type I error). Failing to reject the null hypothesis does not mean that we have accepted the null hypothesis as true. We just do not have enough evidence to reject the null hypothesis.</p>
+</section>
+<section id="p-values" class="level3">
+<h3 class="anchored" data-anchor-id="p-values"><span class="math inline">\(p\)</span>-Values</h3>
+<blockquote class="blockquote">
+<h3 id="definition-p-value-or-probability-value" class="anchored">Definition: <span class="math inline">\(p\)</span>-value or Probability value</h3>
+<p>Assume that the null hypothesis is true, a sample test statistic <span class="math inline">\(T\)</span> is available and its sample value is <span class="math inline">\(t\)</span>. The <span class="math inline">\(p\)</span>-value of <span class="math inline">\(T\)</span> at <span class="math inline">\(t\)</span> is the probability that the test statistic <span class="math inline">\(T\)</span> is worse than the observed value <span class="math inline">\(t\)</span>. In particular,</p>
+<ol type="1">
+<li>the left-tailed test <span class="math display">\[
+p = P(T &lt; t);
+  \]</span></li>
+<li>the right-tailed test <span class="math display">\[
+   p = P(T &gt; t);
+  \]</span></li>
+<li>the two-tailed test <span class="math display">\[
+  p = 2 \times \min \{ P(T &lt; t), \ P(T&gt;t) \}.
+  \]</span></li>
+</ol>
+</blockquote>
+<p>To use a P-value to make a decision in a hypothesis test, compare the p-value with the significance level <span class="math inline">\(\alpha\)</span>. If <span class="math inline">\(p \leq \alpha\)</span>, then reject <span class="math inline">\(H_0\)</span> and if <span class="math inline">\(p &gt; \alpha\)</span>, then fail to reject <span class="math inline">\(H_0\)</span>.</p>
+<p>This means that a small p-value indicates that the observed test statistic would be unlikely if the null hypothesis were true. The lower the p-value, the more evidence there is in favour of rejecting the null hypothesis. The following table gives a summary of possible results of any hypothesis test:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;"><span class="math inline">\(H_0\)</span> is true</th>
+<th style="text-align: right;"><span class="math inline">\(H_0\)</span> is false</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fail to reject <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: right;">Correct decision</td>
+<td style="text-align: right;">Type II error</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reject <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: right;">Type I error</td>
+<td style="text-align: right;">Correct decision</td>
+</tr>
+</tbody>
+</table>
+<p>Type I errors are considered to be more serious and therefore more important to avoid. The probability of committing both types of errors can be reduced by increasing the sample size.</p>
+</section>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<p>We now use a number of examples to demonstrate the steps in a hypothesis test.</p>
+<section id="test-of-the-mean-of-a-normal-distribution-population-variance-known" class="level3">
+<h3 class="anchored" data-anchor-id="test-of-the-mean-of-a-normal-distribution-population-variance-known">Test of the mean of a normal distribution: population variance known</h3>
+<blockquote class="blockquote">
+<h3 id="example-breakfast-bars-1" class="anchored">Example: Breakfast Bars</h3>
+<p>It is known that the weights (in grams g) of breakfast bars produced by a food company follow a normal distribution with the standard deviation <span class="math inline">\(\sigma = 0.4g\)</span>. The company would like to make sure each of the produced bars weights over <span class="math inline">\(42\)</span>g. The company sampled <span class="math inline">\(36\)</span> bars and the sample mean is <span class="math inline">\(42.3\)</span>g. At the significance level <span class="math inline">\(\alpha = 5\%\)</span>, would the company be able to conclude that each of its produced bars weights over <span class="math inline">\(42\)</span>g?</p>
+</blockquote>
+<p>The null hypothesis is: <span class="math inline">\(H_0 : \mu = \mu_0 = 42\)</span>.</p>
+<p>The alternative hypothesis is: <span class="math inline">\(H_1 : \mu &gt; 42\)</span> (right-tailed test).</p>
+<p>The test statistic <span class="math inline">\(T\)</span> can be written as <span class="math display">\[
+    T = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}}  = \frac{\overline{X} - 42}{0.4/\sqrt{36}} \ \sim \ N(0,1).
+    \]</span> We can either determine the rejection region or use a calculated p-value to make a decision. Below we consider each in turn.</p>
+<p>The rejection region is given by <span class="math display">\[
+            C =  (z_\alpha, \ \infty),
+            \]</span> where <span class="math inline">\(z_\alpha\)</span> is defined by <span class="math display">\[
+            P(T \geq  z_\alpha ) = \alpha = 0.05.
+            \]</span> Using the statistical table for the standard normal distribution, we know that <span class="math display">\[
+              z_\alpha = z_{0.05} = 1.6449.
+            \]</span> So the rejection region is<br>
+<span class="math display">\[
+            C = (1.6449,\ \infty).
+            \]</span> For this problem, we can evaluate <span class="math inline">\(z\)</span> as<br>
+<span class="math display">\[
+            t = \frac{42.3-42}{0.4/\sqrt{36}} = 4.5.
+            \]</span> We can see that <span class="math inline">\(t \in C\)</span> (the sample statistic lies in the rejection region), hence we <em>reject null hypothesis</em>.</p>
+<p>If we instead find the p-value, we use <span class="math display">\[
+                p  = P( Z &gt; 4.5) = 0.0005
+            \]</span> The p-value, <span class="math inline">\(p &lt; \alpha = 0.05\)</span>, therefore we reject <span class="math inline">\(H_0\)</span>.</p>
+<p>The rejection region can be equivalently stated for the sample mean <span class="math inline">\(\overline{X}\)</span>: <span class="math display">\[
+C = \left(
+   \mu_0 + z_\alpha \times \frac{\sigma}{n}, \ \infty
+\right) = (41.0966, \ \infty).
+\]</span> The observed sample mean is <span class="math inline">\(42.3\)</span>, which obviously falls in above region. Hence we reject <span class="math inline">\(H_0\)</span>, as we did above.</p>
+<p>Even if the population does not follow a normal distribution, we can still use the <span class="math inline">\(Z\)</span> test as long as the sample size <span class="math inline">\(n\)</span> is large enough.</p>
+</section>
+<section id="test-of-the-mean-of-a-normal-distribution-population-variance-unknown" class="level3">
+<h3 class="anchored" data-anchor-id="test-of-the-mean-of-a-normal-distribution-population-variance-unknown">Test of the mean of a normal distribution: population variance unknown</h3>
+<blockquote class="blockquote">
+<h3 id="example-children-walking" class="anchored">Example: Children Walking</h3>
+<p>A psychologist claims that the mean age at which children start walking is <span class="math inline">\(12.5\)</span> months. In order to check this claim another researcher takes a sample of <span class="math inline">\(20\)</span> children. In the sample the mean age for walking is <span class="math inline">\(12.9\)</span> months, and the standard deviation is <span class="math inline">\(0.8\)</span> months. It is known that the ages at which children start walking is approximately normally distributed. What would you conclude for a significance level of <span class="math inline">\(5\%\)</span>?</p>
+</blockquote>
+<p>We can test whether the sample agrees with the assumed mean of <span class="math inline">\(12.5\)</span> months using a hypothesis test. From the information given, we have <span class="math display">\[
+  \mu_0 = 12.5, \quad n = 20, \quad  \bar{x} = 12.9, \quad s = 0.8, \quad \alpha = 5\%.
+\]</span></p>
+<p>The null hypothesis: <span class="math inline">\(H_0 : \mu = \mu_0 = 12.5\)</span></p>
+<p>The alternative hypothesis: <span class="math inline">\(H_1 : \mu \neq 12.5\)</span> (two-tailed test)</p>
+<p>The test statistic <span class="math inline">\(T\)</span>, <span class="math display">\[
+    T = \frac{\overline{X} - \mu_0}{S/\sqrt{n}}  = \frac{\overline{X} - 12.5}{S/\sqrt{20}} \ \sim \ t_{n-1} = t_{19}.
+    \]</span> We can either find the rejection region or calculate the p-value in order to make a decision.</p>
+<p>The rejection region is given by<br>
+<span class="math display">\[
+            C = (-\infty, \ - t_{19, \alpha/2}) \cup (t_{19, \alpha/2}, \ \infty),
+         \]</span> where <span class="math inline">\(t_{19, \alpha/2}\)</span> is defined by <span class="math display">\[
+           P(T \ge  t_{19, \alpha/2} ) = \frac 12 \alpha = 0.025.
+        \]</span> Using the statistical table for <span class="math inline">\(t\)</span> distribution, we have <span class="math display">\[
+          t_{19, 0.025} = 2.093.
+        \]</span> So the rejection region is<br>
+<span class="math display">\[
+          C =   (-\infty, -2.093)\cup(2.093, \infty).
+        \]</span> Note that because the distribution of <span class="math inline">\(t\)</span> is symmetric about <span class="math inline">\(0\)</span>, the two tails are also symmetric.</p>
+<p>Calculating the observed value <span class="math inline">\(t\)</span> for the statistic T, <span class="math display">\[
+    t = \frac{12.9-12.5}{0.8/\sqrt{20}} = 2.236.
+    \]</span> This shows that <span class="math inline">\(t \in C\)</span> (the sample statistic lies in the rejection region), hence we <em>reject the null hypothesis</em>.</p>
+<p>If we instead calculate the p-value, <span class="math display">\[\begin{align*}
+                p &amp; = P(T&lt; -2.236) + P(T &gt; 2.236) = 2P(T &gt; 2.236) \\
+                               &amp; = 2(1-P(T&lt;2.236)) = 2(1-0.9753) = 0.0494.
+           \end{align*}\]</span></p>
+<p>We can see that <span class="math inline">\(p &lt; \alpha = 0.05\)</span>, hecne we reject <span class="math inline">\(H_0\)</span>.</p>
+<p>As above, the rejection region can be equivalently stated for the sample mean <span class="math inline">\(\overline{X}\)</span>: <span class="math display">\[\begin{eqnarray*}
+      C &amp;=&amp; \left(
+        -\infty, \ \mu_0 - t_{n-1, \alpha/2} \times \frac{s}{\sqrt{n}}
+      \right) \cup
+      \left(
+       \mu_0 + t_{n-1, \alpha/2} \times \frac{s}{\sqrt{n}}, \ \infty
+      \right)  \\ [0.8ex]
+      &amp;=&amp; (-\infty, \ 12.5-0.3744) \cup (12.5 + 0.3744, \ \infty)  \\ [0.8ex]
+      &amp;=&amp;     (-\infty, \ 12.1256) \cup (12.8744, \ \infty).
+     \end{eqnarray*}\]</span> The observed mean is <span class="math inline">\(12.9\)</span>, which obviuously falls in the rejection region. Hence, reject <span class="math inline">\(H_0\)</span>.</p>
+</section>
+<section id="test-of-the-population-proportion-large-samples" class="level3">
+<h3 class="anchored" data-anchor-id="test-of-the-population-proportion-large-samples">Test of the Population Proportion (Large Samples)</h3>
+<p>We have stated before that the distribution of the sample proportion can be reasonably accurately approximated by the normal distribution. Therefore, the test framework goes as follows.</p>
+<p>If the null hypothesis is that the population proportion is <span class="math display">\[
+   H_0: \qquad P = P_0,
+\]</span> then the test statistic <span class="math inline">\(Z\)</span> <span class="math display">\[
+   Z = \frac{\hat{P} - P_0}{\sqrt{P_0(1-P_0)/n}} \ \sim \ N(0,1),
+\]</span> when <span class="math inline">\(nP_0(1-P_0) &gt; 5\)</span>. For a given significance level <span class="math inline">\(\alpha\)</span>, let <span class="math inline">\(z_\alpha\)</span> be defined by <span class="math display">\[
+  \mbox{Prob}( Z &gt; z_\alpha) = \alpha.
+\]</span> We can consider the following three types of tests.</p>
+<ol type="1">
+<li><em>Left-tailed test</em>. The null hypothesis is <span class="math display">\[
+    H_0: \qquad P = P_0 \qquad \mbox{or} \qquad H_0: \qquad P \ge P_0.
+\]</span> The alternative is <span class="math display">\[
+   H_1: \qquad P &lt; P_0.
+\]</span> The decision rule is <span class="math display">\[
+  \mbox{if} \ \ \frac{\hat{p} - P_0}{\sqrt{P_0(1-P_0)/n}} &lt; - z_\alpha
+  \qquad \mbox{then reject }\ H_0.
+\]</span></li>
+<li><em>Right-tailed test</em>. The null hypothesis is <span class="math display">\[
+  H_0: \qquad P = P_0 \qquad \mbox{or} \qquad H_0: \qquad P \le P_0.
+  \]</span> The alternative is <span class="math display">\[
+  H_1: \qquad P &gt; P_0.
+  \]</span> The decision rule is <span class="math display">\[
+  \mbox{if} \ \ \frac{\hat{p} - P_0}{\sqrt{P_0(1-P_0)/n}} &gt; z_\alpha
+  \qquad \mbox{then reject }\ H_0.
+  \]</span></li>
+<li><em>Two-tailed test</em>. The null hypothesis is <span class="math display">\[
+  H_0: \qquad P = P_0.
+  \]</span> The alternative is <span class="math display">\[
+  H_1: \qquad P \not= P_0.
+  \]</span> The decision rule is <span class="math display">\[
+  \mbox{if} \ \ \frac{\hat{p} - P_0}{\sqrt{P_0(1-P_0)/n}} &lt; - z_{\alpha/2}
+  \ \ \mbox{or} \ \ \frac{\hat{p} - P_0}{\sqrt{P_0(1-P_0)/n}} &gt;  z_{\alpha/2}
+  \qquad \mbox{then reject }\ H_0.
+  \]</span></li>
+</ol>
+<p>We can define the p-value in a similar way to the previous two sections.</p>
+<blockquote class="blockquote">
+<h3 id="example-susu-shop" class="anchored">Example: SUSU Shop</h3>
+<p>The student union shop at a university would like to know whether students are sensitive to the prices of items sold in its shop. A random sample of <span class="math inline">\(500\)</span> students was obtained and <span class="math inline">\(238\)</span> of them were able to state the correct price of an item immediately after putting it in their cart. Test at the <span class="math inline">\(5\%\)</span> significance level the null hypothesis that at least <span class="math inline">\(50\%\)</span> of the students are able to state the correct price.</p>
+</blockquote>
+<p>The null hypothesis is <span class="math display">\[
+  H_0: \qquad P \ge P_0 = 0.50
+\]</span> and the alternative is <span class="math display">\[
+  H_1: \qquad P &lt; 0.50.
+\]</span> For this example, we have <span class="math display">\[
+  n = 500, \quad \hat{p} = \frac{238}{500} = 0.476, \quad \alpha = 0.05.
+\]</span> Hence, <span class="math inline">\(z_\alpha = -1.6449\)</span> (from the statistical tables) and the rejection region is <span class="math display">\[
+  C = (-\infty, \ -1.6449).
+\]</span> The observed test statistic is <span class="math display">\[
+  z = \frac{\hat{p} - P_0}{\sqrt{P_0(1-P_0)/n}}
+  = \frac{0.476 - 0.5}{\sqrt{0.5(1-0.5)/500}} = -1.0733.
+\]</span> It lies outside of the rejection region. Therefore, there is not enough evidence to reject <span class="math inline">\(H_0\)</span> (Fail to reject <span class="math inline">\(H_0\)</span>).</p>
+</section>
+<section id="two-tailed-significance-tests-for-population-mean-and-confidence-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="two-tailed-significance-tests-for-population-mean-and-confidence-intervals">Two-Tailed Significance Tests for Population Mean and Confidence Intervals</h3>
+<p>Recall the confidence interval introduced before. We construct an interval that would include the true value of the population mean <span class="math inline">\(\mu\)</span> with a specified probability <span class="math inline">\(C\)</span>. For example, suppose we use a <span class="math inline">\(C = 95\%\)</span> confidence interval. Then the values of <span class="math inline">\(\mu\)</span> are not in our interval would seem to be incompatible with the data. This sounds like a significance test with <span class="math inline">\(\alpha = 1-C= 0.05\)</span>. We use an example studied before to demonstrate that this interpretation is correct.</p>
+<blockquote class="blockquote">
+<h3 id="example-waiting-times" class="anchored">Example: Waiting Times</h3>
+<p>Suppose that the waiting times for students at a university student service centre are normally distributed with known population standard deviation of <span class="math inline">\(18\)</span> minutes. A random sample of <span class="math inline">\(81\)</span> students in the center has a mean waiting time of <span class="math inline">\(25\)</span> minutes. The <span class="math inline">\(C=95\%\)</span> significance interval was found to be <span class="math display">\[
+  \mbox{CI} = (21.08, \ 28.92).
+\]</span> Now we would like to test whether the true mean <span class="math inline">\(\mu\)</span> is the value of <span class="math inline">\(21\)</span> at the significance level <span class="math inline">\(\alpha = 1-C = 5\%\)</span>. Based on the CI, <span class="math inline">\(21\)</span> is not in the interval, hence we would say with <span class="math inline">\(95\%\)</span> confidence, <span class="math inline">\(21\)</span> is the not the true value of <span class="math inline">\(\mu\)</span>. What can we say from the hypothesis testing perspective?</p>
+</blockquote>
+<p>We would like to test the claim <span class="math display">\[
+H_0: \qquad \mu = \mu_0 = 21 \qquad \mbox{against} \qquad H_1: \qquad \mu \not= \mu_0.
+\]</span> From the example, we have <span class="math display">\[
+  \bar{x} = 25, \quad \sigma = 25, \quad n=81.
+\]</span> The test statistic is <span class="math display">\[
+   Z = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}} \ \sim \ N(0,1)
+\]</span> and this is a two-tailed test. The critical value <span class="math inline">\(z_{\alpha/2}\)</span> is given by <span class="math display">\[
+P(Z \ge z_{\alpha/2}) = \frac{\alpha}2 = 0.025 \qquad \Longrightarrow \qquad
+z_{\alpha/2} = 1.96.
+\]</span> The rejection region is <span class="math display">\[\begin{eqnarray*}
+    C &amp;=&amp; (-\infty, \ -z_{\alpha/2}) \cup (z_{\alpha/2}, \ \infty) \\ [1ex]
+      &amp;=&amp; (-\infty, \ -1.96) \cup (1.96, \infty).
+\end{eqnarray*}\]</span> The observed <span class="math inline">\(z\)</span>-statistic is <span class="math display">\[
+  z = \frac{25-21}{18/\sqrt{81}} = \frac 42 = 2.
+\]</span> Obviously, <span class="math inline">\(z\in C\)</span>, and we reject <span class="math inline">\(H_0\)</span> in favour of <span class="math inline">\(H_1\)</span>.</p>
+</section>
+<section id="optional-the-power-of-a-test" class="level3">
+<h3 class="anchored" data-anchor-id="optional-the-power-of-a-test">(Optional) The Power of a Test</h3>
+<p>We first explain why we need to find the <em>power</em> of a test and why it is useful. Suppose we would like to test the mean of a normal distribution <span class="math display">\[
+  H_0: \quad \mu = \mu_0 \quad \mbox{against} \quad
+  H_1: \quad \mu &gt; \mu_0.
+\]</span> We have seen that we can use the decision rule (by finding the rejection region) <span class="math display">\[
+\mbox{Reject} \ H_0 \ \ \mbox{if} \
+z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}} &gt; z_\alpha
+\]</span> or equivalently <span class="math display">\[
+\mbox{Reject} \ H_0 \ \ \mbox{if} \ \bar{x} &gt; \bar{x}_c = \mu_0 + z_\alpha \frac{\sigma}{\sqrt{n}},
+\]</span> where <span class="math inline">\(z_\alpha\)</span> is the critical value in this test and is computed by <span class="math display">\[
+  P(Z \ge z_\alpha) = \alpha.
+\]</span> Now suppose <span class="math inline">\(H_0\)</span> is not true. If we reject it, then we make a correct decision. But if we fail to reject it, then we committed a Type II error. The question is how big this Type II error is and how to compute it.</p>
+<p>Suppose the true mean is <span class="math inline">\(\mu = \mu^* &gt; \mu_0\)</span> so that <span class="math inline">\(H_0\)</span> is false. The Type II error is the probability that the sample mean <span class="math inline">\(\bar{x}\)</span> will be in the non-rejection region of the null hypothesis (so that we failed to reject <span class="math inline">\(H_0\)</span>). This probability is the Type II error associated with <span class="math inline">\(\mu^*\)</span> and denoted by <span class="math inline">\(\beta\)</span>: <span class="math display">\[
+\beta = P( \overline{X} &lt; \bar{x}_c \ | \ \mu = \mu^*)
+= P \left(
+Z &lt; \frac{\bar{x}_c - \mu^*}{\sigma/\sqrt{n}}
+\right).
+\]</span> The power of this test is defined by <span class="math display">\[
+  \text{Power of Test} = 1 - \beta.
+\]</span> The value of <span class="math inline">\(\beta\)</span> and the power will be different for every <span class="math inline">\(\mu^*\)</span>.</p>
+<p>We now give an example that summarises what we have learned so far.</p>
+<blockquote class="blockquote">
+<h3 id="example-fast-food-chain" class="anchored">Example: Fast Food Chain</h3>
+<p>Each day, a fast-food chain, tests that the average weight of its “Twin-pounders” is at least <span class="math inline">\(32\)</span> ounces (<span class="math inline">\(H_0: \ \mu \ge 32\)</span>). The alternative is <span class="math inline">\(H_1: \ \mu &lt; 32\)</span>, indicating that new processing procedures are needed. The weights of twin-pounders can be assumed to be normally distributed, with a standard deviation of <span class="math inline">\(3\)</span> ounces (<span class="math inline">\(\sigma = 3\)</span>). The decision rule adopted is to reject the null hypothesis if the sample mean weight is less than <span class="math inline">\(30.8\)</span> ounces. If a random sample of (i) <span class="math inline">\(n=36\)</span> or (ii) <span class="math inline">\(n=9\)</span> twin-pounders are selected, what is the probability of a Type I error, using this decision rule? (iii) Suppose that the true mean weights is <span class="math inline">\(31\)</span> ounces. If random sample of <span class="math inline">\(36\)</span> twin-pounders are selected, what is the probability of a Type II error, using the decision rule?</p>
+</blockquote>
+<p>The decision rule used in the example is <span class="math display">\[
+\mbox{Reject} \ H_0 \ \ \mbox{if} \ \bar{x} &lt; \bar{x}_c = 30.8.
+\]</span></p>
+<ol type="i">
+<li><p>The test statistic is <span class="math display">\[
+  Z = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}} \ \sim \ N(0,1).
+\]</span> Let the Type I error be <span class="math inline">\(\alpha\)</span> (the significance level used in the decision rule). Then the critical value <span class="math inline">\(\bar{x}_c\)</span> satisfies: <span class="math display">\[
+  \bar{x}_c = \mu_0 + z_\alpha \frac{\sigma}{\sqrt{n}} = 32 + z_\alpha \times \frac 12,
+\]</span> which yields <span class="math display">\[
+  z_\alpha = -2.4.
+\]</span> Therefore <span class="math display">\[
+\alpha = P(Z \le -2.4) = 1 - P(Z \le 2.4) = 1-0.9918 = 0.0082.
+\]</span> Type I error is <span class="math inline">\(\alpha = 0.82\%\)</span>.</p></li>
+<li><p>Similar to (i) but with <span class="math inline">\(n=9\)</span>, we can compute <span class="math display">\[
+    30.8= \bar{x}_c = \mu_0 + z_\alpha \frac{\sigma}{\sqrt{n}} = 32 + z_\alpha,
+    \]</span> which yields <span class="math display">\[
+    z_\alpha = -1.2.
+    \]</span> Therefore <span class="math display">\[
+    \alpha = P(Z \le -1.2) = 1 - P(Z \le 1.2) = 1-0.8849 = 0.1151.
+    \]</span> Type I error is <span class="math inline">\(\alpha = 11.51\%\)</span>.</p></li>
+<li><p>In this case, the true mean is <span class="math inline">\(\mu^* = 31\)</span>. We compute the Type II error as follows. <span class="math display">\[\begin{eqnarray*}
+  \beta &amp;=&amp; P (\overline{X} \le \bar{x}_c \ | \ \mu = \mu^*) \\ [1ex]
+  &amp;=&amp; = P \left(
+  Z &lt; \frac{\bar{x}_c - \mu^*}{\sigma/\sqrt{n}}
+  \right) \\ [1ex]
+  &amp;=&amp; = P \left(
+  Z &lt; \frac{30.8 - 31}{3/6}
+  \right) = P (Z &lt; -0.4) \\ [1ex]
+  &amp;=&amp; 1 - P(Z \le 0.4) = 1-0.6554 = 0.3446 = 34.46\%.
+    \end{eqnarray*}\]</span></p></li>
+</ol>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
