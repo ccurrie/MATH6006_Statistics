@@ -14,10 +14,10 @@ execute:
 
 ## Concepts of Hypothesis Testing ##
 
-Hypothesis tests are used to determine whether a result is real or has happened by chance. It is not possible to claim this with certainty and consequently hypotehesis tests have a probability associated with them.
+Hypothesis tests are used to determine whether a result is real or has happened by chance. It is not possible to claim this with certainty and consequently hypothesis tests have a probability associated with them.
 We describe the basic process of a hypothesis test below.
 
-1. Make a claim (e.g. the mean is less than or equal to some critical value) denoted by $H_0$ and an alternative claim (the mean is greater than the same critical value).	
+1. Make a claim (e.g. the mean is less than or equal to some critical value) denoted by $H_0$ and an alternative claim (the mean is greater than the same critical value), denoted by $H_{1}$.	
 2. Develop a test statistic $T$, which is based on $H_0$ being true and on the sample data.
 4. Check whether your statistic $T$ satisfies the conditions laid out in part 1 at a given significance level (typically $\alpha = 0.05$).
 
@@ -65,9 +65,9 @@ Interpreting the result of a hypothesis test requires care.
 
 ## Types of Hypothesis Tests ##
 
-We will consider a five types of hypothesis tests in this module.
+We will consider five types of hypothesis tests in this module.
 
-1. Testing the mean of a single population $E[X] = \mu$ ($H_0: \mu = \mu_0$; $H_1: \mu \neq \mu_0$ or $\mu < \mu_0$ or $\mu > \mu_0$).
+1. Testing the mean of a single population $E[X] = \mu$ $(H_0: \mu = \mu_0$; $H_1: \mu \neq \mu_0$ or $\mu < \mu_0$ or $\mu > \mu_0)$.
 2. Testing the variance of a single population $Var(X) = \sigma^2$ ($H_0: \sigma^2 = \sigma^2_0$; $H_1: \sigma^2 \neq \sigma^2_0$ or $\sigma^2 < \sigma^2_0$ or $\sigma^2 > \sigma^2_0$).
 3. Comparing the means of two populations $E[X] = \mu_X$ and $E[Y] = \mu_Y$ ($H_0: \mu_X = \mu_Y$; $H_1: \mu_X \neq \mu_Y$ or $\mu_X < \mu_Y$ or $\mu_X > \mu_Y$).
 4. Comparing the variances of two populations $Var(X) = \sigma^2_X$ and $VarY = \sigma^2_Y$ ($H_0: \sigma^2_X = \sigma^2_Y$; $H_1: \sigma^2_X \neq \sigma^2_Y$ or $\sigma^2_X < \sigma^2_Y$ or $\sigma^2_X > \sigma^2_Y$).
@@ -85,7 +85,7 @@ or two-sided, and accordingly the test is called a one-sided (one-tailed) or two
 
 ### Test Statistics ###
 
-One of the important tasks in a hypothesis testing is to
+One of the important tasks in hypothesis testing is to
 form a test statistic $T$, and determine its distribution under $H_0$.
 We assume $H_0$ is true when finding the distribution for the test statistic $T$. Using the same numbering as above for the different types of hypothesis test, we can write down the relevant test statistics.
 
@@ -106,7 +106,7 @@ $$
 		\end{array}
 		\right.
 		$$
-	2. *Test statistic in the hypothesis testing about the means of two populations*
+2. *Test statistic in the hypothesis testing about the means of two populations*
 
 	$$
 	   H_0: \qquad \mu_X = \mu_Y.
@@ -117,6 +117,7 @@ $$
 		T = \frac{\overline{X} - \overline{Y} - (\mu_X - \mu_Y)}{\sqrt{\sigma_1^2 /n_X + \sigma_2^2 /n_Y}} \approx \  N(0,1).
 		$$
     (b) Unknown variances
+
 		Let us define (pooled variance) $S^2_p = ((n_X - 1)S^2_X + (n_Y - 1)S^2_Y)/(n_X +n_Y - 2)$.
 		$$
 		T = \frac{\overline{X} - \overline{Y}}{\sqrt{S^2_p(\frac{1}{n_X} + \frac{1}{n_Y})}} \sim t_{n_X + n_Y - 2}
@@ -221,7 +222,7 @@ We now use a number of examples to demonstrate the steps in a hypothesis test.
 
 > ### Example: Breakfast Bars ###
 > It is known that the weights (in grams g) of breakfast bars produced by a food company follow a
-> normal distribution with the standard deviation $\sigma = 0.4g$.
+> normal distribution with standard deviation $\sigma = 0.4g$.
 > The company would like to make sure each of the produced bars weights over $42$g.
 > The company sampled $36$ bars and the sample mean is $42.3$g. At the significance level $\alpha = 5\%$,
 > would the company be able to conclude that each of its produced bars weights over $42$g? 
@@ -252,16 +253,16 @@ So the rejection region is
 			$$
 			C =	(1.6449,\ \infty).
 			$$
-For this problem, we can evaluate $z$ as	
+For this problem, we can evaluate $t$ as	
 			$$
 			t = \frac{42.3-42}{0.4/\sqrt{36}} = 4.5.
 			$$
 We can see that $t \in C$ (the sample statistic lies in the
-			rejection region), hence we *reject null hypothesis*.
+			rejection region), hence we *reject the null hypothesis*.
 			
 If we instead find the p-value, we use
 			$$
-			    p  = P( Z > 4.5) = 0.0005
+			    p  = P( T > 4.5) = 0.0005.
 		    $$
 The p-value, $p < \alpha = 0.05$, therefore we reject $H_0$.
 
@@ -308,7 +309,7 @@ where $t_{19, \alpha/2}$ is defined by
        	$$
        	   P(T \ge  t_{19, \alpha/2} ) = \frac 12 \alpha = 0.025.
        	$$
-Using the statistical table for $t$ distribution, we have
+Using the statistical table for the $t$ distribution, we have
        	$$
        	  t_{19, 0.025} = 2.093.
        	$$
@@ -340,11 +341,11 @@ As above, the rejection region can be equivalently stated for the sample mean $\
 	  \right) \cup 
 	  \left(
 	   \mu_0 + t_{n-1, \alpha/2} \times \frac{s}{\sqrt{n}}, \ \infty
-	  \right)  \\ [0.8ex]
-	  &=& (-\infty, \ 12.5-0.3744) \cup (12.5 + 0.3744, \ \infty)  \\ [0.8ex]
+	  \right)  \\ 
+	  &=& (-\infty, \ 12.5-0.3744) \cup (12.5 + 0.3744, \ \infty)  \\ 
 	  &=&	  (-\infty, \ 12.1256) \cup (12.8744, \ \infty).
 	 \end{eqnarray*}
-    The observed mean is $12.9$, which obviuously falls in the rejection region. Hence, reject $H_0$. 
+    The observed mean is $12.9$, which obviously falls in the rejection region. Hence, reject $H_0$. 
 
 ### Test of the Population Proportion (Large Samples) ###
 
@@ -352,17 +353,17 @@ We have stated before that the distribution of the sample proportion can be reas
  accurately approximated by the normal distribution. Therefore, the test framework
 goes as follows.
 
-If the null hypothesis is that the population proportion is
+If the null hypothesis is that the population proportion is $P_{0}$ then
 $$
    H_0: \qquad P = P_0,
 $$
-then the test statistic $Z$ 
+then the test statistic $T$ 
 $$
-   Z = \frac{\hat{P} - P_0}{\sqrt{P_0(1-P_0)/n}} \ \sim \ N(0,1),
+   T = \frac{\hat{P} - P_0}{\sqrt{P_0(1-P_0)/n}} \ \sim \ N(0,1),
 $$
 when $nP_0(1-P_0) > 5$. For a given significance level $\alpha$, let $z_\alpha$ be defined by
 $$
-  \mbox{Prob}( Z > z_\alpha) = \alpha.
+  \mbox{Prob}( T > z_\alpha) = \alpha.
 $$
 We can consider the following three types of tests.
 
@@ -413,7 +414,7 @@ We can define the p-value in a similar way to the previous two sections.
 > The student union shop at a university would like to know whether students are sensitive
 > to the prices of items sold in its shop. A random sample of $500$ students was obtained
 > and $238$ of them were able to state the correct price of an item immediately after putting
-> it in their cart. Test at the $5\%$  significance level the null hypothesis that at least $50\%$ of the students are able to state the correct price.	
+> it in their basket. Test at the $5\%$  significance level the null hypothesis that at least $50\%$ of the students are able to state the correct price.	
 
 The null hypothesis is
 $$
@@ -451,7 +452,7 @@ demonstrate that this interpretation is correct.
 > ### Example: Waiting Times ###
 > Suppose that the waiting times for students at a university student service centre are 
 > normally distributed with known population standard deviation of $18$ minutes.
-> A random sample of $81$ students in the center has a mean waiting time of $25$ minutes.
+> A random sample of $81$ students in the centre has a mean waiting time of $25$ minutes.
 > The $C=95\%$ significance interval was found to be
 > $$
 >   \mbox{CI} = (21.08, \ 28.92).
@@ -480,7 +481,7 @@ $$
 $$
 The rejection region is
 \begin{eqnarray*}
-	C &=& (-\infty, \ -z_{\alpha/2}) \cup (z_{\alpha/2}, \ \infty) \\ [1ex]
+	C &=& (-\infty, \ -z_{\alpha/2}) \cup (z_{\alpha/2}, \ \infty) \\
 	  &=& (-\infty, \ -1.96) \cup (1.96, \infty).
 \end{eqnarray*} 
 The observed $z$-statistic is
@@ -532,7 +533,7 @@ The value of $\beta$ and the power will be different for every $\mu^*$.
 We now give an example that summarises what we have learned so far.
 
 > ### Example: Fast Food Chain ###
-> Each day, a fast-food chain, tests that the average weight of its "Twin-pounders" is at
+> Each day, a fast-food chain tests that the average weight of its "Twin-pounders" is at
 > least $32$ ounces ($H_0: \ \mu \ge 32$). The alternative is $H_1: \ \mu < 32$, indicating
 > that new processing procedures are needed. The weights of twin-pounders can be assumed to be
 > normally distributed, with a standard deviation of $3$ ounces ($\sigma = 3$).
@@ -582,13 +583,13 @@ $$
 
 (iii) In this case, the true mean is $\mu^* = 31$. We compute the Type II error as follows.
 	\begin{eqnarray*}
-		\beta &=& P (\overline{X} \le \bar{x}_c \ | \ \mu = \mu^*) \\ [1ex]
-		&=& = P \left(
+		\beta &=& P (\overline{X} \le \bar{x}_c \ | \ \mu = \mu^*) \\ 
+		&=&  P \left(
 		Z < \frac{\bar{x}_c - \mu^*}{\sigma/\sqrt{n}}
-		\right) \\ [1ex]
-		&=& = P \left(
+		\right) \\ 
+		&=&  P \left(
 		Z < \frac{30.8 - 31}{3/6}
-		\right) = P (Z < -0.4) \\ [1ex]
+		\right) = P (Z < -0.4) \\ 
 		&=& 1 - P(Z \le 0.4) = 1-0.6554 = 0.3446 = 34.46\%.
 	\end{eqnarray*}
 

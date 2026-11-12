@@ -115,9 +115,9 @@ window.Quarto = {
 
 <section id="concepts-of-hypothesis-testing" class="level2">
 <h2 class="anchored" data-anchor-id="concepts-of-hypothesis-testing">Concepts of Hypothesis Testing</h2>
-<p>Hypothesis tests are used to determine whether a result is real or has happened by chance. It is not possible to claim this with certainty and consequently hypotehesis tests have a probability associated with them. We describe the basic process of a hypothesis test below.</p>
+<p>Hypothesis tests are used to determine whether a result is real or has happened by chance. It is not possible to claim this with certainty and consequently hypothesis tests have a probability associated with them. We describe the basic process of a hypothesis test below.</p>
 <ol type="1">
-<li>Make a claim (e.g.&nbsp;the mean is less than or equal to some critical value) denoted by <span class="math inline">\(H_0\)</span> and an alternative claim (the mean is greater than the same critical value).<br>
+<li>Make a claim (e.g.&nbsp;the mean is less than or equal to some critical value) denoted by <span class="math inline">\(H_0\)</span> and an alternative claim (the mean is greater than the same critical value), denoted by <span class="math inline">\(H_{1}\)</span>.<br>
 </li>
 <li>Develop a test statistic <span class="math inline">\(T\)</span>, which is based on <span class="math inline">\(H_0\)</span> being true and on the sample data.</li>
 <li>Check whether your statistic <span class="math inline">\(T\)</span> satisfies the conditions laid out in part 1 at a given significance level (typically <span class="math inline">\(\alpha = 0.05\)</span>).</li>
@@ -160,9 +160,9 @@ window.Quarto = {
 </section>
 <section id="types-of-hypothesis-tests" class="level2">
 <h2 class="anchored" data-anchor-id="types-of-hypothesis-tests">Types of Hypothesis Tests</h2>
-<p>We will consider a five types of hypothesis tests in this module.</p>
+<p>We will consider five types of hypothesis tests in this module.</p>
 <ol type="1">
-<li>Testing the mean of a single population <span class="math inline">\(E[X] = \mu\)</span> (<span class="math inline">\(H_0: \mu = \mu_0\)</span>; <span class="math inline">\(H_1: \mu \neq \mu_0\)</span> or <span class="math inline">\(\mu &lt; \mu_0\)</span> or <span class="math inline">\(\mu &gt; \mu_0\)</span>).</li>
+<li>Testing the mean of a single population <span class="math inline">\(E[X] = \mu\)</span> <span class="math inline">\((H_0: \mu = \mu_0\)</span>; <span class="math inline">\(H_1: \mu \neq \mu_0\)</span> or <span class="math inline">\(\mu &lt; \mu_0\)</span> or <span class="math inline">\(\mu &gt; \mu_0)\)</span>.</li>
 <li>Testing the variance of a single population <span class="math inline">\(Var(X) = \sigma^2\)</span> (<span class="math inline">\(H_0: \sigma^2 = \sigma^2_0\)</span>; <span class="math inline">\(H_1: \sigma^2 \neq \sigma^2_0\)</span> or <span class="math inline">\(\sigma^2 &lt; \sigma^2_0\)</span> or <span class="math inline">\(\sigma^2 &gt; \sigma^2_0\)</span>).</li>
 <li>Comparing the means of two populations <span class="math inline">\(E[X] = \mu_X\)</span> and <span class="math inline">\(E[Y] = \mu_Y\)</span> (<span class="math inline">\(H_0: \mu_X = \mu_Y\)</span>; <span class="math inline">\(H_1: \mu_X \neq \mu_Y\)</span> or <span class="math inline">\(\mu_X &lt; \mu_Y\)</span> or <span class="math inline">\(\mu_X &gt; \mu_Y\)</span>).</li>
 <li>Comparing the variances of two populations <span class="math inline">\(Var(X) = \sigma^2_X\)</span> and <span class="math inline">\(VarY = \sigma^2_Y\)</span> (<span class="math inline">\(H_0: \sigma^2_X = \sigma^2_Y\)</span>; <span class="math inline">\(H_1: \sigma^2_X \neq \sigma^2_Y\)</span> or <span class="math inline">\(\sigma^2_X &lt; \sigma^2_Y\)</span> or <span class="math inline">\(\sigma^2_X &gt; \sigma^2_Y\)</span>).</li>
@@ -172,11 +172,11 @@ window.Quarto = {
 <p>The alternative hypothesis <span class="math inline">\(H_1\)</span> represents a feasible alternative to <span class="math inline">\(H_0\)</span>. It is one-sided or two-sided, and accordingly the test is called a one-sided (one-tailed) or two-sided (two-tailed) test.</p>
 <section id="test-statistics" class="level3">
 <h3 class="anchored" data-anchor-id="test-statistics">Test Statistics</h3>
-<p>One of the important tasks in a hypothesis testing is to form a test statistic <span class="math inline">\(T\)</span>, and determine its distribution under <span class="math inline">\(H_0\)</span>. We assume <span class="math inline">\(H_0\)</span> is true when finding the distribution for the test statistic <span class="math inline">\(T\)</span>. Using the same numbering as above for the different types of hypothesis test, we can write down the relevant test statistics.</p>
+<p>One of the important tasks in hypothesis testing is to form a test statistic <span class="math inline">\(T\)</span>, and determine its distribution under <span class="math inline">\(H_0\)</span>. We assume <span class="math inline">\(H_0\)</span> is true when finding the distribution for the test statistic <span class="math inline">\(T\)</span>. Using the same numbering as above for the different types of hypothesis test, we can write down the relevant test statistics.</p>
 <ol type="1">
-<li><em>Test statistic in the hypothesis testing about a population mean</em> <span class="math display">\[
+<li><p><em>Test statistic in the hypothesis testing about a population mean</em> <span class="math display">\[
 H_0: \qquad \mu = \mu_0.
-\]</span>
+\]</span></p>
 <ol type="a">
 <li><span class="math inline">\(\sigma\)</span> known <span class="math display">\[
 T = \frac{\overline{X}-\mu_0}{\sigma/\sqrt{n}}\ \approx \ N(0,1) \ \ \mbox{by CLT for n sufficient large;}
@@ -189,26 +189,25 @@ T = \frac{\overline{X}-\mu_0}{S/\sqrt{n}} \left\{
 \end{array}
 \right.
 \]</span></li>
-</ol>
-<ol start="2" type="1">
-<li><em>Test statistic in the hypothesis testing about the means of two populations</em></li>
-</ol>
-<span class="math display">\[
+</ol></li>
+<li><p><em>Test statistic in the hypothesis testing about the means of two populations</em></p>
+<p><span class="math display">\[
     H_0: \qquad \mu_X = \mu_Y.
-\]</span>
+\]</span></p>
 <ol type="a">
 <li><p>Known variances <span class="math inline">\(\sigma_1\)</span> and <span class="math inline">\(\sigma_2\)</span></p>
 <p><span class="math display">\[
 T = \frac{\overline{X} - \overline{Y} - (\mu_X - \mu_Y)}{\sqrt{\sigma_1^2 /n_X + \sigma_2^2 /n_Y}} \approx \  N(0,1).
 \]</span></p></li>
-<li><p>Unknown variances Let us define (pooled variance) <span class="math inline">\(S^2_p = ((n_X - 1)S^2_X + (n_Y - 1)S^2_Y)/(n_X +n_Y - 2)\)</span>. <span class="math display">\[
+<li><p>Unknown variances</p>
+<p>Let us define (pooled variance) <span class="math inline">\(S^2_p = ((n_X - 1)S^2_X + (n_Y - 1)S^2_Y)/(n_X +n_Y - 2)\)</span>. <span class="math display">\[
 T = \frac{\overline{X} - \overline{Y}}{\sqrt{S^2_p(\frac{1}{n_X} + \frac{1}{n_Y})}} \sim t_{n_X + n_Y - 2}
 \]</span> if <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span> are normally distributed.</p></li>
 </ol></li>
-<li><em>Test statistic in the hypothesis testing about a variance in a single population</em> <span class="math display">\[
+<li><p><em>Test statistic in the hypothesis testing about a variance in a single population</em> <span class="math display">\[
 T = \frac{(n-1)S^2}{\sigma^2_0} = \frac{1}{\sigma^2_0} \sum^2_{i=1}(X_i-\overline{X})^2 \ \sim \ \chi^2_{n-1},
 \ \ \ \mbox{if $X_i$ are normal;}
-\]</span></li>
+\]</span></p></li>
 </ol>
 </section>
 <section id="rejection-region" class="level3">
@@ -270,7 +269,7 @@ p = P(T &lt; t);
   \]</span></li>
 </ol>
 </blockquote>
-<p>To use a P-value to make a decision in a hypothesis test, compare the p-value with the significance level <span class="math inline">\(\alpha\)</span>. If <span class="math inline">\(p \leq \alpha\)</span>, then reject <span class="math inline">\(H_0\)</span> and if <span class="math inline">\(p &gt; \alpha\)</span>, then fail to reject <span class="math inline">\(H_0\)</span>.</p>
+<p>To use a p-value to make a decision in a hypothesis test, compare the p-value with the significance level <span class="math inline">\(\alpha\)</span>. If <span class="math inline">\(p \leq \alpha\)</span>, then reject <span class="math inline">\(H_0\)</span> and if <span class="math inline">\(p &gt; \alpha\)</span>, then fail to reject <span class="math inline">\(H_0\)</span>.</p>
 <p>This means that a small p-value indicates that the observed test statistic would be unlikely if the null hypothesis were true. The lower the p-value, the more evidence there is in favour of rejecting the null hypothesis. The following table gives a summary of possible results of any hypothesis test:</p>
 <table class="caption-top table">
 <thead>
@@ -303,7 +302,7 @@ p = P(T &lt; t);
 <h3 class="anchored" data-anchor-id="test-of-the-mean-of-a-normal-distribution-population-variance-known">Test of the mean of a normal distribution: population variance known</h3>
 <blockquote class="blockquote">
 <h3 id="example-breakfast-bars-1" class="anchored">Example: Breakfast Bars</h3>
-<p>It is known that the weights (in grams g) of breakfast bars produced by a food company follow a normal distribution with the standard deviation <span class="math inline">\(\sigma = 0.4g\)</span>. The company would like to make sure each of the produced bars weights over <span class="math inline">\(42\)</span>g. The company sampled <span class="math inline">\(36\)</span> bars and the sample mean is <span class="math inline">\(42.3\)</span>g. At the significance level <span class="math inline">\(\alpha = 5\%\)</span>, would the company be able to conclude that each of its produced bars weights over <span class="math inline">\(42\)</span>g?</p>
+<p>It is known that the weights (in grams g) of breakfast bars produced by a food company follow a normal distribution with standard deviation <span class="math inline">\(\sigma = 0.4g\)</span>. The company would like to make sure each of the produced bars weights over <span class="math inline">\(42\)</span>g. The company sampled <span class="math inline">\(36\)</span> bars and the sample mean is <span class="math inline">\(42.3\)</span>g. At the significance level <span class="math inline">\(\alpha = 5\%\)</span>, would the company be able to conclude that each of its produced bars weights over <span class="math inline">\(42\)</span>g?</p>
 </blockquote>
 <p>The null hypothesis is: <span class="math inline">\(H_0 : \mu = \mu_0 = 42\)</span>.</p>
 <p>The alternative hypothesis is: <span class="math inline">\(H_1 : \mu &gt; 42\)</span> (right-tailed test).</p>
@@ -319,12 +318,12 @@ p = P(T &lt; t);
             \]</span> So the rejection region is<br>
 <span class="math display">\[
             C = (1.6449,\ \infty).
-            \]</span> For this problem, we can evaluate <span class="math inline">\(z\)</span> as<br>
+            \]</span> For this problem, we can evaluate <span class="math inline">\(t\)</span> as<br>
 <span class="math display">\[
             t = \frac{42.3-42}{0.4/\sqrt{36}} = 4.5.
-            \]</span> We can see that <span class="math inline">\(t \in C\)</span> (the sample statistic lies in the rejection region), hence we <em>reject null hypothesis</em>.</p>
+            \]</span> We can see that <span class="math inline">\(t \in C\)</span> (the sample statistic lies in the rejection region), hence we <em>reject the null hypothesis</em>.</p>
 <p>If we instead find the p-value, we use <span class="math display">\[
-                p  = P( Z &gt; 4.5) = 0.0005
+                p  = P( T &gt; 4.5) = 0.0005.
             \]</span> The p-value, <span class="math inline">\(p &lt; \alpha = 0.05\)</span>, therefore we reject <span class="math inline">\(H_0\)</span>.</p>
 <p>The rejection region can be equivalently stated for the sample mean <span class="math inline">\(\overline{X}\)</span>: <span class="math display">\[
 C = \left(
@@ -352,7 +351,7 @@ C = \left(
             C = (-\infty, \ - t_{19, \alpha/2}) \cup (t_{19, \alpha/2}, \ \infty),
          \]</span> where <span class="math inline">\(t_{19, \alpha/2}\)</span> is defined by <span class="math display">\[
            P(T \ge  t_{19, \alpha/2} ) = \frac 12 \alpha = 0.025.
-        \]</span> Using the statistical table for <span class="math inline">\(t\)</span> distribution, we have <span class="math display">\[
+        \]</span> Using the statistical table for the <span class="math inline">\(t\)</span> distribution, we have <span class="math display">\[
           t_{19, 0.025} = 2.093.
         \]</span> So the rejection region is<br>
 <span class="math display">\[
@@ -372,20 +371,20 @@ C = \left(
       \right) \cup
       \left(
        \mu_0 + t_{n-1, \alpha/2} \times \frac{s}{\sqrt{n}}, \ \infty
-      \right)  \\ [0.8ex]
-      &amp;=&amp; (-\infty, \ 12.5-0.3744) \cup (12.5 + 0.3744, \ \infty)  \\ [0.8ex]
+      \right)  \\
+      &amp;=&amp; (-\infty, \ 12.5-0.3744) \cup (12.5 + 0.3744, \ \infty)  \\
       &amp;=&amp;     (-\infty, \ 12.1256) \cup (12.8744, \ \infty).
-     \end{eqnarray*}\]</span> The observed mean is <span class="math inline">\(12.9\)</span>, which obviuously falls in the rejection region. Hence, reject <span class="math inline">\(H_0\)</span>.</p>
+     \end{eqnarray*}\]</span> The observed mean is <span class="math inline">\(12.9\)</span>, which obviously falls in the rejection region. Hence, reject <span class="math inline">\(H_0\)</span>.</p>
 </section>
 <section id="test-of-the-population-proportion-large-samples" class="level3">
 <h3 class="anchored" data-anchor-id="test-of-the-population-proportion-large-samples">Test of the Population Proportion (Large Samples)</h3>
 <p>We have stated before that the distribution of the sample proportion can be reasonably accurately approximated by the normal distribution. Therefore, the test framework goes as follows.</p>
-<p>If the null hypothesis is that the population proportion is <span class="math display">\[
+<p>If the null hypothesis is that the population proportion is <span class="math inline">\(P_{0}\)</span> then <span class="math display">\[
    H_0: \qquad P = P_0,
-\]</span> then the test statistic <span class="math inline">\(Z\)</span> <span class="math display">\[
-   Z = \frac{\hat{P} - P_0}{\sqrt{P_0(1-P_0)/n}} \ \sim \ N(0,1),
+\]</span> then the test statistic <span class="math inline">\(T\)</span> <span class="math display">\[
+   T = \frac{\hat{P} - P_0}{\sqrt{P_0(1-P_0)/n}} \ \sim \ N(0,1),
 \]</span> when <span class="math inline">\(nP_0(1-P_0) &gt; 5\)</span>. For a given significance level <span class="math inline">\(\alpha\)</span>, let <span class="math inline">\(z_\alpha\)</span> be defined by <span class="math display">\[
-  \mbox{Prob}( Z &gt; z_\alpha) = \alpha.
+  \mbox{Prob}( T &gt; z_\alpha) = \alpha.
 \]</span> We can consider the following three types of tests.</p>
 <ol type="1">
 <li><em>Left-tailed test</em>. The null hypothesis is <span class="math display">\[
@@ -417,7 +416,7 @@ C = \left(
 <p>We can define the p-value in a similar way to the previous two sections.</p>
 <blockquote class="blockquote">
 <h3 id="example-susu-shop" class="anchored">Example: SUSU Shop</h3>
-<p>The student union shop at a university would like to know whether students are sensitive to the prices of items sold in its shop. A random sample of <span class="math inline">\(500\)</span> students was obtained and <span class="math inline">\(238\)</span> of them were able to state the correct price of an item immediately after putting it in their cart. Test at the <span class="math inline">\(5\%\)</span> significance level the null hypothesis that at least <span class="math inline">\(50\%\)</span> of the students are able to state the correct price.</p>
+<p>The student union shop at a university would like to know whether students are sensitive to the prices of items sold in its shop. A random sample of <span class="math inline">\(500\)</span> students was obtained and <span class="math inline">\(238\)</span> of them were able to state the correct price of an item immediately after putting it in their basket. Test at the <span class="math inline">\(5\%\)</span> significance level the null hypothesis that at least <span class="math inline">\(50\%\)</span> of the students are able to state the correct price.</p>
 </blockquote>
 <p>The null hypothesis is <span class="math display">\[
   H_0: \qquad P \ge P_0 = 0.50
@@ -437,7 +436,7 @@ C = \left(
 <p>Recall the confidence interval introduced before. We construct an interval that would include the true value of the population mean <span class="math inline">\(\mu\)</span> with a specified probability <span class="math inline">\(C\)</span>. For example, suppose we use a <span class="math inline">\(C = 95\%\)</span> confidence interval. Then the values of <span class="math inline">\(\mu\)</span> are not in our interval would seem to be incompatible with the data. This sounds like a significance test with <span class="math inline">\(\alpha = 1-C= 0.05\)</span>. We use an example studied before to demonstrate that this interpretation is correct.</p>
 <blockquote class="blockquote">
 <h3 id="example-waiting-times" class="anchored">Example: Waiting Times</h3>
-<p>Suppose that the waiting times for students at a university student service centre are normally distributed with known population standard deviation of <span class="math inline">\(18\)</span> minutes. A random sample of <span class="math inline">\(81\)</span> students in the center has a mean waiting time of <span class="math inline">\(25\)</span> minutes. The <span class="math inline">\(C=95\%\)</span> significance interval was found to be <span class="math display">\[
+<p>Suppose that the waiting times for students at a university student service centre are normally distributed with known population standard deviation of <span class="math inline">\(18\)</span> minutes. A random sample of <span class="math inline">\(81\)</span> students in the centre has a mean waiting time of <span class="math inline">\(25\)</span> minutes. The <span class="math inline">\(C=95\%\)</span> significance interval was found to be <span class="math display">\[
   \mbox{CI} = (21.08, \ 28.92).
 \]</span> Now we would like to test whether the true mean <span class="math inline">\(\mu\)</span> is the value of <span class="math inline">\(21\)</span> at the significance level <span class="math inline">\(\alpha = 1-C = 5\%\)</span>. Based on the CI, <span class="math inline">\(21\)</span> is not in the interval, hence we would say with <span class="math inline">\(95\%\)</span> confidence, <span class="math inline">\(21\)</span> is the not the true value of <span class="math inline">\(\mu\)</span>. What can we say from the hypothesis testing perspective?</p>
 </blockquote>
@@ -451,7 +450,7 @@ H_0: \qquad \mu = \mu_0 = 21 \qquad \mbox{against} \qquad H_1: \qquad \mu \not= 
 P(Z \ge z_{\alpha/2}) = \frac{\alpha}2 = 0.025 \qquad \Longrightarrow \qquad
 z_{\alpha/2} = 1.96.
 \]</span> The rejection region is <span class="math display">\[\begin{eqnarray*}
-    C &amp;=&amp; (-\infty, \ -z_{\alpha/2}) \cup (z_{\alpha/2}, \ \infty) \\ [1ex]
+    C &amp;=&amp; (-\infty, \ -z_{\alpha/2}) \cup (z_{\alpha/2}, \ \infty) \\
       &amp;=&amp; (-\infty, \ -1.96) \cup (1.96, \infty).
 \end{eqnarray*}\]</span> The observed <span class="math inline">\(z\)</span>-statistic is <span class="math display">\[
   z = \frac{25-21}{18/\sqrt{81}} = \frac 42 = 2.
@@ -481,7 +480,7 @@ Z &lt; \frac{\bar{x}_c - \mu^*}{\sigma/\sqrt{n}}
 <p>We now give an example that summarises what we have learned so far.</p>
 <blockquote class="blockquote">
 <h3 id="example-fast-food-chain" class="anchored">Example: Fast Food Chain</h3>
-<p>Each day, a fast-food chain, tests that the average weight of its “Twin-pounders” is at least <span class="math inline">\(32\)</span> ounces (<span class="math inline">\(H_0: \ \mu \ge 32\)</span>). The alternative is <span class="math inline">\(H_1: \ \mu &lt; 32\)</span>, indicating that new processing procedures are needed. The weights of twin-pounders can be assumed to be normally distributed, with a standard deviation of <span class="math inline">\(3\)</span> ounces (<span class="math inline">\(\sigma = 3\)</span>). The decision rule adopted is to reject the null hypothesis if the sample mean weight is less than <span class="math inline">\(30.8\)</span> ounces. If a random sample of (i) <span class="math inline">\(n=36\)</span> or (ii) <span class="math inline">\(n=9\)</span> twin-pounders are selected, what is the probability of a Type I error, using this decision rule? (iii) Suppose that the true mean weights is <span class="math inline">\(31\)</span> ounces. If random sample of <span class="math inline">\(36\)</span> twin-pounders are selected, what is the probability of a Type II error, using the decision rule?</p>
+<p>Each day, a fast-food chain tests that the average weight of its “Twin-pounders” is at least <span class="math inline">\(32\)</span> ounces (<span class="math inline">\(H_0: \ \mu \ge 32\)</span>). The alternative is <span class="math inline">\(H_1: \ \mu &lt; 32\)</span>, indicating that new processing procedures are needed. The weights of twin-pounders can be assumed to be normally distributed, with a standard deviation of <span class="math inline">\(3\)</span> ounces (<span class="math inline">\(\sigma = 3\)</span>). The decision rule adopted is to reject the null hypothesis if the sample mean weight is less than <span class="math inline">\(30.8\)</span> ounces. If a random sample of (i) <span class="math inline">\(n=36\)</span> or (ii) <span class="math inline">\(n=9\)</span> twin-pounders are selected, what is the probability of a Type I error, using this decision rule? (iii) Suppose that the true mean weights is <span class="math inline">\(31\)</span> ounces. If random sample of <span class="math inline">\(36\)</span> twin-pounders are selected, what is the probability of a Type II error, using the decision rule?</p>
 </blockquote>
 <p>The decision rule used in the example is <span class="math display">\[
 \mbox{Reject} \ H_0 \ \ \mbox{if} \ \bar{x} &lt; \bar{x}_c = 30.8.
@@ -504,13 +503,13 @@ Z &lt; \frac{\bar{x}_c - \mu^*}{\sigma/\sqrt{n}}
     \alpha = P(Z \le -1.2) = 1 - P(Z \le 1.2) = 1-0.8849 = 0.1151.
     \]</span> Type I error is <span class="math inline">\(\alpha = 11.51\%\)</span>.</p></li>
 <li><p>In this case, the true mean is <span class="math inline">\(\mu^* = 31\)</span>. We compute the Type II error as follows. <span class="math display">\[\begin{eqnarray*}
-  \beta &amp;=&amp; P (\overline{X} \le \bar{x}_c \ | \ \mu = \mu^*) \\ [1ex]
+  \beta &amp;=&amp; P (\overline{X} \le \bar{x}_c \ | \ \mu = \mu^*) \\
   &amp;=&amp; = P \left(
   Z &lt; \frac{\bar{x}_c - \mu^*}{\sigma/\sqrt{n}}
-  \right) \\ [1ex]
+  \right) \\
   &amp;=&amp; = P \left(
   Z &lt; \frac{30.8 - 31}{3/6}
-  \right) = P (Z &lt; -0.4) \\ [1ex]
+  \right) = P (Z &lt; -0.4) \\
   &amp;=&amp; 1 - P(Z \le 0.4) = 1-0.6554 = 0.3446 = 34.46\%.
     \end{eqnarray*}\]</span></p></li>
 </ol>
