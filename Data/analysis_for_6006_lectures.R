@@ -364,3 +364,15 @@ ggplot(die_sample_means, aes(x = `colMeans(replicated_matrix)`)) +
     y = "Density"
   )
 
+#Read in equipment store data
+motors_df <- data.frame(x=c(1, 3, 2, 1, 3), y=c(14, 24, 18, 17, 27))
+
+#Draw scatterplot`
+ggplot(motors_df, aes(x=`x`, y=`y`)) +
+  geom_point()  +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    title = "Soton Motors Example",
+    x = "Number of Commercials",
+    y = "Sales Volume"
+  )
