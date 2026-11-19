@@ -79,7 +79,7 @@ window.Quarto = {
   <li><a href="#the-method-of-least-squares" id="toc-the-method-of-least-squares" class="nav-link" data-scroll-target="#the-method-of-least-squares">The Method of Least Squares</a></li>
   <li><a href="#sum-of-squares" id="toc-sum-of-squares" class="nav-link" data-scroll-target="#sum-of-squares">Sum of Squares</a></li>
   <li><a href="#coefficient-of-determination" id="toc-coefficient-of-determination" class="nav-link" data-scroll-target="#coefficient-of-determination">Coefficient of Determination</a></li>
-  <li><a href="#model-assumptions" id="toc-model-assumptions" class="nav-link" data-scroll-target="#model-assumptions">Model assumptions</a></li>
+  <li><a href="#model-assumptions" id="toc-model-assumptions" class="nav-link" data-scroll-target="#model-assumptions">Model Assumptions</a></li>
   <li><a href="#estimation-of-model-error-variance" id="toc-estimation-of-model-error-variance" class="nav-link" data-scroll-target="#estimation-of-model-error-variance">Estimation of Model Error Variance</a></li>
   <li><a href="#testing-for-significance-t-test" id="toc-testing-for-significance-t-test" class="nav-link" data-scroll-target="#testing-for-significance-t-test">Testing for Significance: t Test</a>
   <ul class="collapse">
@@ -245,7 +245,7 @@ Var(x) = \left(\sum_{i=1}^{n}x_{i}^{2} - n\bar{x}^{2}\right)/(n-1).
 <p>For this example, <span class="math inline">\(n=5\)</span>, <span class="math inline">\(\bar{x} = 2\)</span> and <span class="math inline">\(\bar{y} = 20\)</span>. We can calculate <span class="math inline">\(\sum_{i=1}^{5} x_{i}y_{i} = 220\)</span> and <span class="math inline">\(\sum_{i=1}^{5} x_{i}^{2} = 24\)</span>. Combining, <span class="math display">\[
 \hat{\beta}_{1} = \frac{220 - 5\times 2 \times 10}{24 - 5 \times 4} = 5
 \]</span> and <span class="math display">\[
-\hat{beta}_{0} = 20 - 5 \times 2 = 10$.
+\hat{\beta}_{0} = 20 - 5 \times 2 = 10$.
 \]</span> Therefore, <span class="math inline">\(\hat{y} = 10 + 5x\)</span>.</p>
 <p>We can view the fitted line on the plot.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -293,7 +293,7 @@ Var(x) = \left(\sum_{i=1}^{n}x_{i}^{2} - n\bar{x}^{2}\right)/(n-1).
 \]</span></p>
 </section>
 <section id="model-assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="model-assumptions">Model assumptions</h2>
+<h2 class="anchored" data-anchor-id="model-assumptions">Model Assumptions</h2>
 <p>We have seen that a simple linear regression model is <span class="math display">\[
 y = \beta_0 + \beta_1 x + \varepsilon
 \]</span> and the estimated regression equation is <span class="math display">\[

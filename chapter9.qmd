@@ -174,7 +174,7 @@ $$
 $$
 and
 $$
-\hat{beta}_{0} = 20 - 5 \times 2 = 10$.
+\hat{\beta}_{0} = 20 - 5 \times 2 = 10$.
 $$
 Therefore, $\hat{y} = 10 + 5x$.
 
@@ -246,7 +246,7 @@ $$
   R^2 = \rho^2.
 $$	
 
-## Model assumptions ##
+## Model Assumptions ##
 
 We have seen that a simple linear regression model is
 $$

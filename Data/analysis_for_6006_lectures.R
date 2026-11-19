@@ -1,7 +1,7 @@
 library(ggplot2)
 library(dplyr)
 
-setwd("C:/Users/ccurrie/OneDrive - University of Southampton/Documents/Teaching/MATH6006 Stoch Proc and Stats/Statistics Section/Data")
+setwd("C:/Users/ccurrie/OneDrive - University of Southampton/Documents/Teaching/MATH6006 Stoch Proc and Stats/Statistics Section/Figures")
 
 # Read in names data
 names <- readLines("names.txt")
@@ -376,3 +376,18 @@ ggplot(motors_df, aes(x=`x`, y=`y`)) +
     x = "Number of Commercials",
     y = "Sales Volume"
   )
+
+#Read in income versus food data
+income_df <- data.frame(x = c( 35, 49, 21, 39, 15, 28, 25, 21, 15, 15), 
+                        y = c( 9, 15, 7, 11, 5, 8, 9, 10, 7, 8))
+
+#Draw scatterplot`
+ggplot(income_df, aes(x=`x`, y=`y`)) +
+  geom_point()  +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    title = "Income versus Food Expenditure",
+    x = "Income",
+    y = "Food Expenditure"
+  )
+
