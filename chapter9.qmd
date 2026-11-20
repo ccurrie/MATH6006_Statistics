@@ -140,7 +140,7 @@ Cov(x,y) = \left(\sum_{i=1}^{n}x_{i}y_{i} -n\bar{x}\bar{y}\right)/(n-1)
 $$
 and
 $$
-Var(x) = \left(\sum_{i=1}^{n}x_{i}^{2} - n\bar{x}^{2}\right)/(n-1).
+s_x^2(x) = \left(\sum_{i=1}^{n}x_{i}^{2} - n\bar{x}^{2}\right)/(n-1).
 $$
 Therefore, we can rewrite the previous formula for $\hat{\beta}_1$ as
 $$
@@ -281,12 +281,12 @@ Assumptions about the Error Term $\varepsilon$
 ## Estimation of Model Error Variance ##
 
 The mean square error (MSE) is an unbiased estimate of the model error variance
-$\sigma^2$ and it is given by
+$\sigma^2$ and is given by
 $$
   \hat{\sigma}^2 = s_e^2 = \texttt{MSE} = \frac{\sum_{i=1}^n e_i^2}{n-2} 
   =\frac{\text{SSE}}{n-2}.
 $$ 
-The division by $(n-2)$ instead of $(n-1)$ is because the simple regression uses two estimated parameters $\hat{\beta}_0$ and $\hat{\beta}_1$. $s_e$ is called the *standard deviation of errors*.
+The division by $(n-2)$ instead of $(n-1)$ is because the simple regression uses two estimated parameters $\hat{\beta}_0$ and $\hat{\beta}_1$, and $s_e$ is called the *standard deviation of errors*.
 
 
 ## Testing for Significance: t Test ##
@@ -379,11 +379,65 @@ $$
 $$
 and the random variable $t_{n-2}$ follows a Student's $t$ distribution with $(n-2)$ degree of freedom.	
 
-> ### Example: Age Height ###
-> The data set contains age in months as the explanatory variable and average height in centimetres for children at this age as
-> response. The data set with 12 observations is given as:
+> ### Example: Income vs Food Expenditure ###
+> Return to this example and interpret the output. We include a plot of the residuals and the output of the regression model below.
 
-| Age | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 |
-|:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
-|Height | 76.1 | 77.0 | 78.1 | 78.2 | 78.8 | 79.7 | 79.9 | 81.1 | 81.2 | 81.8 | 82.8 | 83.5 |		
+```{r, echo=TRUE, eval=FALSE}
+#Read in income versus food data
+income_df <- data.frame(x = c( 35, 49, 21, 39, 15, 28, 25, 21, 15, 15), 
+                        y = c( 9, 15, 7, 11, 5, 8, 9, 10, 7, 8))
 
+#Draw scatterplot`
+ggplot(income_df, aes(x=`x`, y=`y`)) +
+  geom_point()  +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    title = "Income versus Food Expenditure",
+    x = "Income",
+    y = "Food Expenditure"
+  )
+
+income_model <- lm(y ~ x, data = income_df)
+summary(income_model)
+
+#Plot residuals
+income_df$residuals <- resid(income_model)
+
+ggplot(income_df, aes(x=`x`, y=`residuals`)) +
+  geom_point() +
+  labs(
+    title = "Residuals Plot for Income versus Food Expenditure",
+    x = "Income",
+    y = "Residuals"
+  )
+```
+We consider first the residuals plot
+
+![Income vs Food Expenditure Residuals](Figures/income_residuals.png)
+
+The distribution of the *residuals* can be useful for assessing the suitability of the regression
+model, to explore the quality of fit and the property
+of the error distribution. If the relationship between $x$ and $y$ is
+linear, corresponding residual plot typically shows no patterns,
+cycles, trends or outliers. Typical checks on the residuals are:
+
+1. Check for normality
+2. Plot residuals versus fitted values
+3. Check for outliers
+
+We can then examine the summary output from the regression model.
+
+![Income vs Food Expenditure Residuals](Figures/income_R_output.png)
+
+## Prediction ##
+Previously, based on the sample 
+$$
+  (x_1, y_1), \ (x_2, y_2), \ \ldots, \ (x_n, y_n)
+$$
+we get OLS line
+$$
+  \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x.
+$$
+
+Given a new value $x$, we can use the OLS line to predict the expected value of $y$ at
+$x$ (conditional expectation). 

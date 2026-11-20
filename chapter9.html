@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -86,6 +120,7 @@ window.Quarto = {
   <li><a href="#tests-of-the-population-regression-slope-beta_1" id="toc-tests-of-the-population-regression-slope-beta_1" class="nav-link" data-scroll-target="#tests-of-the-population-regression-slope-beta_1">Tests of the Population Regression Slope <span class="math inline">\(\beta_1\)</span></a></li>
   </ul></li>
   <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals">Confidence Intervals</a></li>
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction">Prediction</a></li>
   </ul>
 </nav>
 </div>
@@ -202,7 +237,7 @@ E(Y | X = x) = \beta_0 + \beta_1 x.
 <p>There is an alternative way to write this formula using covariances. This uses the fact that <span class="math display">\[
 Cov(x,y) = \left(\sum_{i=1}^{n}x_{i}y_{i} -n\bar{x}\bar{y}\right)/(n-1)
 \]</span> and <span class="math display">\[
-Var(x) = \left(\sum_{i=1}^{n}x_{i}^{2} - n\bar{x}^{2}\right)/(n-1).
+s_x^2(x) = \left(\sum_{i=1}^{n}x_{i}^{2} - n\bar{x}^{2}\right)/(n-1).
 \]</span> Therefore, we can rewrite the previous formula for <span class="math inline">\(\hat{\beta}_1\)</span> as <span class="math display">\[
 \hat{\beta}_{1} = \frac{Cov(x, y)}{s_x^2}.
 \]</span></p>
@@ -312,10 +347,10 @@ y = \beta_0 + \beta_1 x + \varepsilon
 </section>
 <section id="estimation-of-model-error-variance" class="level2">
 <h2 class="anchored" data-anchor-id="estimation-of-model-error-variance">Estimation of Model Error Variance</h2>
-<p>The mean square error (MSE) is an unbiased estimate of the model error variance <span class="math inline">\(\sigma^2\)</span> and it is given by <span class="math display">\[
+<p>The mean square error (MSE) is an unbiased estimate of the model error variance <span class="math inline">\(\sigma^2\)</span> and is given by <span class="math display">\[
   \hat{\sigma}^2 = s_e^2 = \texttt{MSE} = \frac{\sum_{i=1}^n e_i^2}{n-2}
   =\frac{\text{SSE}}{n-2}.
-\]</span> The division by <span class="math inline">\((n-2)\)</span> instead of <span class="math inline">\((n-1)\)</span> is because the simple regression uses two estimated parameters <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>. <span class="math inline">\(s_e\)</span> is called the <em>standard deviation of errors</em>.</p>
+\]</span> The division by <span class="math inline">\((n-2)\)</span> instead of <span class="math inline">\((n-1)\)</span> is because the simple regression uses two estimated parameters <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>, and <span class="math inline">\(s_e\)</span> is called the <em>standard deviation of errors</em>.</p>
 </section>
 <section id="testing-for-significance-t-test" class="level2">
 <h2 class="anchored" data-anchor-id="testing-for-significance-t-test">Testing for Significance: t Test</h2>
@@ -372,60 +407,67 @@ And <span class="math inline">\(t_{n-2,\; \alpha}\)</span> is defined similarly.
   P(t_{n-2}   &gt; t_{n-2,\; \alpha/2}) = \frac{\alpha}{2}
 \]</span> and the random variable <span class="math inline">\(t_{n-2}\)</span> follows a Student’s <span class="math inline">\(t\)</span> distribution with <span class="math inline">\((n-2)\)</span> degree of freedom.</p>
 <blockquote class="blockquote">
-<h3 id="example-age-height" class="anchored">Example: Age Height</h3>
-<p>The data set contains age in months as the explanatory variable and average height in centimetres for children at this age as response. The data set with 12 observations is given as:</p>
+<h3 id="example-income-vs-food-expenditure" class="anchored">Example: Income vs Food Expenditure</h3>
+<p>Return to this example and interpret the output. We include a plot of the residuals and the output of the regression model below.</p>
 </blockquote>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Age</th>
-<th style="text-align: right;">18</th>
-<th style="text-align: right;">19</th>
-<th style="text-align: right;">20</th>
-<th style="text-align: right;">21</th>
-<th style="text-align: right;">22</th>
-<th style="text-align: right;">23</th>
-<th style="text-align: right;">24</th>
-<th style="text-align: right;">25</th>
-<th style="text-align: right;">26</th>
-<th style="text-align: right;">27</th>
-<th style="text-align: right;">28</th>
-<th style="text-align: right;">29</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Height</td>
-<td style="text-align: right;">76.1</td>
-<td style="text-align: right;">77.0</td>
-<td style="text-align: right;">78.1</td>
-<td style="text-align: right;">78.2</td>
-<td style="text-align: right;">78.8</td>
-<td style="text-align: right;">79.7</td>
-<td style="text-align: right;">79.9</td>
-<td style="text-align: right;">81.1</td>
-<td style="text-align: right;">81.2</td>
-<td style="text-align: right;">81.8</td>
-<td style="text-align: right;">82.8</td>
-<td style="text-align: right;">83.5</td>
-</tr>
-</tbody>
-</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Read in income versus food data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>income_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>( <span class="dv">35</span>, <span class="dv">49</span>, <span class="dv">21</span>, <span class="dv">39</span>, <span class="dv">15</span>, <span class="dv">28</span>, <span class="dv">25</span>, <span class="dv">21</span>, <span class="dv">15</span>, <span class="dv">15</span>), </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">y =</span> <span class="fu">c</span>( <span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">7</span>, <span class="dv">8</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Draw scatterplot`</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_df, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">`</span><span class="at">x</span><span class="st">`</span>, <span class="at">y=</span><span class="st">`</span><span class="at">y</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()  <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Income versus Food Expenditure"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Income"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Food Expenditure"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>income_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> income_df)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(income_model)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot residuals</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>income_df<span class="sc">$</span>residuals <span class="ot">&lt;-</span> <span class="fu">resid</span>(income_model)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_df, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">`</span><span class="at">x</span><span class="st">`</span>, <span class="at">y=</span><span class="st">`</span><span class="at">residuals</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Residuals Plot for Income versus Food Expenditure"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Income"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Residuals"</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We consider first the residuals plot</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/income_residuals.png" class="img-fluid figure-img"></p>
+<figcaption>Income vs Food Expenditure Residuals</figcaption>
+</figure>
+</div>
+<p>The distribution of the <em>residuals</em> can be useful for assessing the suitability of the regression model, to explore the quality of fit and the property of the error distribution. If the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is linear, corresponding residual plot typically shows no patterns, cycles, trends or outliers. Typical checks on the residuals are:</p>
+<ol type="1">
+<li>Check for normality</li>
+<li>Plot residuals versus fitted values</li>
+<li>Check for outliers</li>
+</ol>
+<p>We can then examine the summary output from the regression model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figures/income_R_output.png" class="img-fluid figure-img"></p>
+<figcaption>Income vs Food Expenditure Residuals</figcaption>
+</figure>
+</div>
+</section>
+<section id="prediction" class="level2">
+<h2 class="anchored" data-anchor-id="prediction">Prediction</h2>
+<p>Previously, based on the sample <span class="math display">\[
+  (x_1, y_1), \ (x_2, y_2), \ \ldots, \ (x_n, y_n)
+\]</span> we get OLS line <span class="math display">\[
+  \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x.
+\]</span></p>
+<p>Given a new value <span class="math inline">\(x\)</span>, we can use the OLS line to predict the expected value of <span class="math inline">\(y\)</span> at <span class="math inline">\(x\)</span> (conditional expectation).</p>
 </section>
 
 </main>
